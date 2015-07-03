@@ -1,0 +1,34 @@
+$main-font-color: #555;
+$error-font-color: #990000;
+$highlight-font-color: #006699;
+
+html,
+body {
+  font-size: 18px;
+}
+
+body,
+input,
+button, {
+  color: $main-font-color;
+}
+
+a {
+  color: $highlight-font-color;
+  text-decoration: none;
+}
+
+.link-list {
+
+  .link {
+    padding: 5px;
+
+    .title {
+      font-weight: bold;
+    }
+
+    .details {
+      font-size: 0.9rem;
+    }
+  }
+}

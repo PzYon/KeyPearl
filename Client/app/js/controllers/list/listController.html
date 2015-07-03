@@ -1,0 +1,12 @@
+<div data-search-box data-on-change="c.loadLinks(searchString, tagIds)"></div>
+
+<ul class="link-list">
+	<li data-ng-repeat="link in c.links" class="link">
+		<a class="title" data-ng-href="{{link.url}}" target="_blank">
+			{{link.name}} ({{link.url}})
+		</a>
+		<div class="details">
+			{{link.description}} | {{link.tagString}}
+		</div>
+	</li>
+</ul>

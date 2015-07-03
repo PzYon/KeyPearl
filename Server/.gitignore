@@ -1,0 +1,7 @@
+*.suo
+*.DotSettings
+*.user
+*/bin/*
+*/obj/*
+/packages
+/TestResults
