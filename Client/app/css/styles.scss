@@ -3,14 +3,12 @@ $error-font-color: #990000;
 $highlight-font-color: #006699;
 
 html,
-body {
-  font-size: 18px;
-}
-
 body,
 input,
 button, {
   color: $main-font-color;
+  font-size: 16px;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 
 a {
@@ -18,10 +16,34 @@ a {
   text-decoration: none;
 }
 
+ul {
+  list-style-type: none;
+  padding: 0;
+
+  ul {
+    padding-left: 20px;
+  }
+}
+
+.tag-tree,
+.search-box {
+  font-size: 0.9rem;
+}
+
+.tag-tree {
+  .tag-collapser {
+    cursor: pointer;
+  }
+
+  .tag-label.selected {
+    font-weight: bold;
+  }
+}
+
 .link-list {
 
   .link {
-    padding: 5px;
+    padding: 5px 0;
 
     .title {
       font-weight: bold;

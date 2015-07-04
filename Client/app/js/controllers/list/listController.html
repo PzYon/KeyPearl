@@ -1,7 +1,19 @@
-<div data-search-box data-on-change="c.loadLinks(searchString, tagIds)"></div>
+<h1>Keep &Ouml;hrl</h1>
 
+<h2>Tag Tree</h2>
+<div class="tag-tree"
+     data-on-select="c.selectTag(tagId)"
+     data-on-select-function="c.selectTag"
+     data-tag-tree="c.tags"></div>
+
+<h2>Search</h2>
+<div class="search-box"
+     data-search-box
+     data-on-change="c.setSearchString(searchString)"></div>
+
+<h2>Links</h2>
 <ul class="link-list">
-	<li data-ng-repeat="link in c.links" class="link">
+	<li class="link" data-ng-repeat="link in c.links">
 		<a class="title" data-ng-href="{{link.url}}" target="_blank">
 			{{link.name}} ({{link.url}})
 		</a>

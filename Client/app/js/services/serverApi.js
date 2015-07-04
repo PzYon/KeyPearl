@@ -12,6 +12,7 @@
             if (searchString) {
                 searchQuery += "$searchString(" + searchString + ")";
             }
+
             if (tagIds) {
                 searchQuery += "$tagIds(" + tagIds + ")";
             }
@@ -22,8 +23,12 @@
         };
 
         return {
-            getLinks: function (searchString, tagIds, onSuccess, onError) {
+            loadLinks: function (searchString, tagIds, onSuccess, onError) {
                 get(config.serverApiBaseUrl + "links/" + buildQuery(searchString, tagIds), onSuccess, onError);
+            },
+
+            loadTags: function (onSuccess, onError) {
+                get(config.serverApiBaseUrl + "tags/", onSuccess, onError);
             }
         };
     };

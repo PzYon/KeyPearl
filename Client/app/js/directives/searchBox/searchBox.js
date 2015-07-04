@@ -14,8 +14,7 @@
 
                 delay = $timeout(function () {
                     scope.onChange({
-                        searchString: scope.searchString,
-                        tagIds: scope.tagIds
+                        searchString: scope.searchString
                     });
                 }, config.queryDelay);
             };
@@ -26,8 +25,7 @@
             scope: {
                 onChange: "&"
             },
-            template: "SearchString: <input type='text' data-ng-model='searchString' data-ng-change='fireChange()' />" +
-                      " TagIds: <input type='text' data-ng-model='tagIds' data-ng-change='fireChange()' />",
+            template: "SearchString: <input type='text' data-ng-model='searchString' data-ng-change='fireChange()' />",
             link: link
         };
 
