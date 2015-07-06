@@ -17,15 +17,15 @@ function Tag(tagRow) {
 
     function constructor() {
 
+        me.children = [];
+        me.collapsed = false;
+
         if (tagRow) {
             Object.keys(tagRow).map(function (key) {
                 var value = tagRow[key];
                 me[key] = value;
             });
         }
-
-        me.children = [];
-        me.collapsed = false;
 
     }
 
