@@ -11,7 +11,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace KeyPearl.Library.Tests.UnitTests
 {
   [TestClass]
-  public class QueryHandlerTests
+  public class QueryExecuterTests
   {
     [TestMethod]
     public void Execute_ConsidersStringSearch()
@@ -58,7 +58,7 @@ namespace KeyPearl.Library.Tests.UnitTests
     private static IEnumerable<Link> GetFilteredData(string tagIds, string searchString)
     {
       DbSet<Link> links = GetTestData("foo X", String.Empty, null, "/1/2/3/;/1/2/4/");
-      return QueryHandler.Execute(links, GetQueryString(tagIds, searchString));
+      return QueryExecuter.Execute(links, GetQueryString(tagIds, searchString));
     }
 
     private static DbSet<Link> GetTestData(string name, string description, string url, string tagString)

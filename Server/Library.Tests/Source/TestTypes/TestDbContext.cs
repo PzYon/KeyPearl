@@ -13,6 +13,16 @@ namespace KeyPearl.Library.Tests.TestTypes
     public DbSet<Tag> Tags { get; set; }
     public DbSet<Link> Links { get; set; }
 
+    public int SaveChanges()
+    {
+      throw new System.NotImplementedException();
+    }
+
+    public T Update<T>(T t) where T : class, IEntity
+    {
+      return t;
+    }
+
     public TestDbContext()
     {
       Links = new TestDbSet<Link>
@@ -23,8 +33,6 @@ namespace KeyPearl.Library.Tests.TestTypes
       };
 
     }
-
-  
 
     public void Dispose()
     {

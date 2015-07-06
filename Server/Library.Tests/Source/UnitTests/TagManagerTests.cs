@@ -7,7 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace KeyPearl.Library.Tests.UnitTests
 {
   [TestClass]
-  public class TaggerTests
+  public class TagManagerTests
   {
     private TestDbContext dbContext;
 
@@ -30,9 +30,9 @@ namespace KeyPearl.Library.Tests.UnitTests
     {
       var taggable = new Link();
 
-      Tagger.EnsureTag(dbContext, taggable, new Tag { Id = 1, ParentId = 0 });
+      TagManager.EnsureTag(dbContext, taggable, new Tag { Id = 1, ParentId = 0 });
 
-      Assert.IsTrue(taggable.TagString.StartsWith(Tagger.PathSeparator));
+      Assert.IsTrue(taggable.TagString.StartsWith(TagManager.PathSeparator));
     }
 
     [TestMethod]
@@ -40,9 +40,9 @@ namespace KeyPearl.Library.Tests.UnitTests
     {
       var taggable = new Link();
 
-      Tagger.EnsureTag(dbContext, taggable, new Tag { Id = 1, ParentId = 0 });
+      TagManager.EnsureTag(dbContext, taggable, new Tag { Id = 1, ParentId = 0 });
 
-      Assert.IsTrue(taggable.TagString.EndsWith(Tagger.PathSeparator));
+      Assert.IsTrue(taggable.TagString.EndsWith(TagManager.PathSeparator));
     }
 
     [TestMethod]
@@ -50,7 +50,7 @@ namespace KeyPearl.Library.Tests.UnitTests
     {
       var taggable = new Link();
 
-      Tagger.EnsureTag(dbContext, taggable, GetFirstLevelTag());
+      TagManager.EnsureTag(dbContext, taggable, GetFirstLevelTag());
 
       Assert.AreEqual("/1/", taggable.TagString);
     }
@@ -60,7 +60,7 @@ namespace KeyPearl.Library.Tests.UnitTests
     {
       var taggable = new Link();
 
-      Tagger.EnsureTag(dbContext, taggable, GetSecondLevelTag());
+      TagManager.EnsureTag(dbContext, taggable, GetSecondLevelTag());
 
       Assert.AreEqual("/1/2/", taggable.TagString);
     }
@@ -70,7 +70,7 @@ namespace KeyPearl.Library.Tests.UnitTests
     {
       var taggable = new Link();
 
-      Tagger.EnsureTag(dbContext, taggable, GetThirdLevelTag());
+      TagManager.EnsureTag(dbContext, taggable, GetThirdLevelTag());
 
       Assert.AreEqual("/1/2/3/", taggable.TagString);
     }
@@ -81,8 +81,8 @@ namespace KeyPearl.Library.Tests.UnitTests
       var taggable = new Link();
 
       Tag tag = GetFirstLevelTag();
-      Tagger.EnsureTag(dbContext, taggable, tag);
-      Tagger.EnsureTag(dbContext, taggable, tag);
+      TagManager.EnsureTag(dbContext, taggable, tag);
+      TagManager.EnsureTag(dbContext, taggable, tag);
 
       Assert.AreEqual("/1/", taggable.TagString);
     }
@@ -92,10 +92,10 @@ namespace KeyPearl.Library.Tests.UnitTests
     {
       var taggable = new Link();
 
-      Tagger.EnsureTag(dbContext, taggable, GetFirstLevelTag());
-      Tagger.EnsureTag(dbContext, taggable, GetSecondLevelTag());
+      TagManager.EnsureTag(dbContext, taggable, GetFirstLevelTag());
+      TagManager.EnsureTag(dbContext, taggable, GetSecondLevelTag());
 
-      string[] tagStrings = taggable.TagString.Split(Tagger.Separator);
+      string[] tagStrings = taggable.TagString.Split(TagManager.Separator);
 
       Assert.IsTrue(tagStrings.Contains("/1/"));
       Assert.IsTrue(tagStrings.Contains("/1/2/"));
@@ -108,9 +108,9 @@ namespace KeyPearl.Library.Tests.UnitTests
 
       var taggable = new Link {TagString = originalTagString};
 
-      Tagger.EnsureTag(dbContext, taggable, GetSecondLevelTag());
+      TagManager.EnsureTag(dbContext, taggable, GetSecondLevelTag());
 
-      string[] tagStrings = taggable.TagString.Split(Tagger.Separator);
+      string[] tagStrings = taggable.TagString.Split(TagManager.Separator);
       Assert.IsTrue(tagStrings.Contains(originalTagString));
       Assert.IsTrue(tagStrings.Contains("/1/2/"));
     }

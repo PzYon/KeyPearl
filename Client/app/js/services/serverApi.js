@@ -7,6 +7,10 @@
             $http.get(url).success(onSuccess).error(onError);
         };
 
+        var post = function (url, data, onSuccess, onError) {
+            $http.post(url, data).success(onSuccess).error(onError);
+        };
+
         var buildQuery = function (searchString, tagIds) {
             var searchQuery = "";
             if (searchString) {
@@ -27,6 +31,14 @@
                 get(config.serverApiBaseUrl + "links/" + buildQuery(searchString, tagIds), onSuccess, onError);
             },
 
+            loadLink: function (id, onSuccess, onError) {
+                get(config.serverApiBaseUrl + "links/getbyid/" + id, onSuccess, onError);
+            },
+
+            updateLink: function (link, onSuccess, onError) {
+                post(config.serverApiBaseUrl + "links/", link, onSuccess, onError);
+            },
+
             loadTags: function (onSuccess, onError) {
                 get(config.serverApiBaseUrl + "tags/", onSuccess, onError);
             }
@@ -34,6 +46,6 @@
     };
 
     ServerApiService.$inject = ["$http", "$timeout", "config"];
-    app.service("ServerApi", ServerApiService);
+    app.service("serverApi", ServerApiService);
 
 })(keyPearlClientApp);

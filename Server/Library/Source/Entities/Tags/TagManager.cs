@@ -5,7 +5,7 @@ using KeyPearl.Library.Persistance;
 
 namespace KeyPearl.Library.Entities.Tags
 {
-  public static class Tagger
+  public static class TagManager
   {
     public const char Separator = ';';
     public const string PathSeparator = "/";

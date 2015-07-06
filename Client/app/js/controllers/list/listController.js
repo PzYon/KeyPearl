@@ -1,9 +1,12 @@
 (function (app) {
     "use strict";
 
-    var ListController = function (serverApi, tagHelper) {
+    var ListController = function (serverApi, tagHelper, navigator) {
         var c = this;
 
+        c.navigator = navigator;
+
+        // todo: improve error handling! consider firing an event once error occurs?!
         c.handleError = function () {
             alert("error!");
         };
@@ -52,7 +55,7 @@
         c.initialize();
     };
 
-    ListController.$inject = ["ServerApi", "TagHelper"];
-    app.controller("ListController", ListController);
+    ListController.$inject = ["serverApi", "tagHelper", "navigator"];
+    app.controller("listController", ListController);
 
 })(keyPearlClientApp);

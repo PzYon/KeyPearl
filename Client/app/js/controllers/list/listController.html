@@ -1,5 +1,3 @@
-<h1>Keep &Ouml;hrl</h1>
-
 <h2>Tag Tree</h2>
 <div class="tag-tree"
      data-on-select="c.selectTag(tagId)"
@@ -20,5 +18,8 @@
 		<div class="details">
 			{{link.description}} | {{link.tagString}}
 		</div>
+		<span class="action-link">
+			<a href="javascript: void(0);" data-ng-click="c.navigator.goToLink(link.id)">edit</a>
+		</span>
 	</li>
 </ul>

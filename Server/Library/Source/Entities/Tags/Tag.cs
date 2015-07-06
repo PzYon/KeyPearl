@@ -1,6 +1,8 @@
-﻿namespace KeyPearl.Library.Entities.Tags
+﻿using KeyPearl.Library.Persistance;
+
+namespace KeyPearl.Library.Entities.Tags
 {
-  public class Tag
+  public class Tag : IEntity
   {
     public int Id { get; set; }
 

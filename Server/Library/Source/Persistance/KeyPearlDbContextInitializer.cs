@@ -51,7 +51,7 @@ namespace KeyPearl.Library.Persistance
         Description = description
       };
 
-      Tagger.EnsureTags(dbContext, link, tags);
+      TagManager.EnsureTags(dbContext, link, tags);
 
       dbContext.Links.Add(link);
     }

@@ -5,7 +5,7 @@ using KeyPearl.Library.Entities.Links;
 
 namespace KeyPearl.Library.Queries
 {
-  public static class QueryHandler
+  public static class QueryExecuter
   {
     public static IEnumerable<Link> Execute(IQueryable<Link> links, string queryString)
     {

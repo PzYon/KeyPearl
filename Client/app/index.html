@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html data-ng-app="keyPearl" data-ng-controller="RootController as root">
+<html data-ng-app="keyPearl" data-ng-controller="rootController as root">
 	<head lang="en">
 		<meta charset="UTF-8">
 		<title>KeyPearl | Client</title>
@@ -11,12 +11,28 @@
 		<script type="text/javascript" src="js/types/tag.js"></script>
 		<script type="text/javascript" src="js/services/serverApi.js"></script>
 		<script type="text/javascript" src="js/services/tagHelper.js"></script>
+		<script type="text/javascript" src="js/services/navigator.js"></script>
+		<script type="text/javascript" src="js/directives/formElement/formElement.js"></script>
 		<script type="text/javascript" src="js/directives/searchBox/searchBox.js"></script>
 		<script type="text/javascript" src="js/directives/tagTree/tagTree.js"></script>
 		<script type="text/javascript" src="js/directives/tagTree/tag/tag.js"></script>
 		<script type="text/javascript" src="js/controllers/list/listController.js"></script>
+		<script type="text/javascript" src="js/controllers/manageLinkController/manageLinkController.js"></script>
 	</head>
 	<body>
+		<h1>Keep &Ouml;hrl</h1>
+
+		<!-- todo: add status panel -->
+
+		<!-- todo: make directive(s) for navigation -->
+		<ul class="main-navigation">
+			<li class="navigation-node">
+				<a href="javascript: void(0);" data-ng-click="root.navigator.goToNewLink()">new link</a>
+			</li>
+			<li class="navigation-node">
+				<a href="javascript: void(0);" data-ng-click="root.navigator.goToHome()">home</a>
+			</li>
+		</ul>
 		<div data-ng-view></div>
 	</body>
 </html>

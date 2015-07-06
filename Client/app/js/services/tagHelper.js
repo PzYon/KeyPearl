@@ -30,6 +30,6 @@
     };
 
     TagHelperService.$inject = [];
-    app.service("TagHelper", TagHelperService);
+    app.service("tagHelper", TagHelperService);
 
 })(keyPearlClientApp);

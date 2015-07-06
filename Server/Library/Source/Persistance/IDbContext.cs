@@ -9,5 +9,7 @@ namespace KeyPearl.Library.Persistance
   {
     DbSet<Tag> Tags { get; set; }
     DbSet<Link> Links { get; set; }
+    int SaveChanges();
+    T Update<T>(T t) where T : class, IEntity;
   }
 }

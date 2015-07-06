@@ -25,18 +25,37 @@ ul {
   }
 }
 
+.main-navigation {
+  list-style-type: none;
+
+  .navigation-node {
+    display: inline-block;
+    cursor: pointer;
+  }
+}
+
 .tag-tree,
 .search-box {
   font-size: 0.9rem;
 }
 
 .tag-tree {
+
   .tag-collapser {
     cursor: pointer;
   }
 
   .tag-label.selected {
     font-weight: bold;
+  }
+}
+
+.form-row {
+  display: table-row;
+
+  .form-cell {
+    display: table-cell;
+    padding: 10px 10px 10px 0;
   }
 }
 
@@ -51,6 +70,11 @@ ul {
 
     .details {
       font-size: 0.9rem;
+    }
+
+    .action-link {
+      font-size: 0.8rem;
+      cursor: pointer;
     }
   }
 }

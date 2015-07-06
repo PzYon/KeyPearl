@@ -46,8 +46,9 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\Configuration\KeyPearlConfiguration.cs" />
+    <Compile Include="Source\Persistance\IEntity.cs" />
     <Compile Include="Source\Queries\Exceptions\InvalidQueryException.cs" />
-    <Compile Include="Source\Queries\QueryHandler.cs" />
+    <Compile Include="Source\Queries\QueryExecuter.cs" />
     <Compile Include="Source\Entities\Links\Link.cs" />
     <Compile Include="Source\Persistance\IDbContext.cs" />
     <Compile Include="Source\Persistance\KeyPearlDbContext.cs" />
@@ -56,7 +57,7 @@
     <Compile Include="Source\Queries\StringQuery.cs" />
     <Compile Include="Source\Queries\Exceptions\InvalidTagQueryException.cs" />
     <Compile Include="Source\Entities\Tags\ITaggable.cs" />
-    <Compile Include="Source\Entities\Tags\Tagger.cs" />
+    <Compile Include="Source\Entities\Tags\TagManager.cs" />
     <Compile Include="Source\Entities\Tags\Tag.cs" />
     <Compile Include="Source\Queries\TagQuery.cs" />
   </ItemGroup>
