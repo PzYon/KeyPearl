@@ -6,11 +6,6 @@
 
         c.navigator = navigator;
 
-        // todo: improve error handling! consider firing an event once error occurs?!
-        c.handleError = function () {
-            alert("error!");
-        };
-
         c.selectTag = function (tagId) {
             var index = c.selectedTagIds.indexOf(tagId);
             if (index > -1) {
@@ -29,7 +24,7 @@
         };
 
         c.loadLinks = function () {
-            serverApi.loadLinks(c.searchString, c.selectedTagIds.join(";"), c.setLinks, c.handleError);
+            serverApi.loadLinks(c.searchString, c.selectedTagIds.join(";"), c.setLinks);
         };
 
         c.setLinks = function (links) {
@@ -37,7 +32,7 @@
         };
 
         c.loadTags = function () {
-            serverApi.loadTags(c.setTags, c.handleError);
+            serverApi.loadTags(c.setTags);
         };
 
         c.setTags = function (tags) {

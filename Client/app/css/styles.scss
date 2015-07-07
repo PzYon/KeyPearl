@@ -25,12 +25,28 @@ ul {
   }
 }
 
+.notification-panel {
+  font-size: 0.9rem;
+
+  .notification {
+    border: 1px solid $main-font-color;
+    margin: 3px 0;
+    padding: 3px;
+  }
+
+  .notification.error {
+    border: 1px solid $error-font-color;
+    color: $error-font-color;
+  }
+}
+
 .main-navigation {
   list-style-type: none;
 
   .navigation-node {
     display: inline-block;
     cursor: pointer;
+    padding: 5px 15px 5px 0;
   }
 }
 

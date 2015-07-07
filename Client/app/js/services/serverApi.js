@@ -1,17 +1,38 @@
 (function (app) {
     "use strict";
 
-    var ServerApiService = function ($http, $timeout, config) {
+    var ServerApiService = function ($http, $timeout, config, notificationHelper) {
 
-        var get = function (url, onSuccess, onError) {
-            $http.get(url).success(onSuccess).error(onError);
-        };
+        function errorHandler(data, status, headers, config) {
+            if (!status) {
+                notificationHelper.add("Cannot connect to server.. Maybe it's down?", true);
+            } else {
+                notificationHelper.add(config.url + ": " + data.exceptionMessage, true);
+            }
+        }
 
-        var post = function (url, data, onSuccess, onError) {
-            $http.post(url, data).success(onSuccess).error(onError);
-        };
+        function getOnErrorWrapper() {
+            return getOnCompleteWrapper(errorHandler);
+        }
 
-        var buildQuery = function (searchString, tagIds) {
+        function getOnCompleteWrapper(onComplete) {
+            return function (data, status, headers, config) {
+                notificationHelper.pendingRequests--;
+                onComplete(data, status, headers, config);
+            };
+        }
+
+        function get(url, onSuccess, onError) {
+            notificationHelper.pendingRequests++;
+            $http.get(url).success(getOnCompleteWrapper(onSuccess)).error(getOnErrorWrapper());
+        }
+
+        function post(url, data, onSuccess, onError) {
+            notificationHelper.pendingRequests++;
+            $http.post(url, data).success(getOnCompleteWrapper(onSuccess)).error(getOnErrorWrapper());
+        }
+
+        function buildQuery(searchString, tagIds) {
             var searchQuery = "";
             if (searchString) {
                 searchQuery += "$searchString(" + searchString + ")";
@@ -24,28 +45,28 @@
             return searchQuery.length
                     ? "?queryString=" + searchQuery
                     : searchQuery;
-        };
+        }
 
         return {
-            loadLinks: function (searchString, tagIds, onSuccess, onError) {
-                get(config.serverApiBaseUrl + "links/" + buildQuery(searchString, tagIds), onSuccess, onError);
+            loadLinks: function (searchString, tagIds, onSuccess) {
+                get(config.serverApiBaseUrl + "links/" + buildQuery(searchString, tagIds), onSuccess);
             },
 
-            loadLink: function (id, onSuccess, onError) {
-                get(config.serverApiBaseUrl + "links/getbyid/" + id, onSuccess, onError);
+            loadLink: function (id, onSuccess) {
+                get(config.serverApiBaseUrl + "links/getbyid/" + id, onSuccess);
             },
 
-            updateLink: function (link, onSuccess, onError) {
-                post(config.serverApiBaseUrl + "links/", link, onSuccess, onError);
+            updateLink: function (link, onSuccess) {
+                post(config.serverApiBaseUrl + "links/", link, onSuccess);
             },
 
-            loadTags: function (onSuccess, onError) {
-                get(config.serverApiBaseUrl + "tags/", onSuccess, onError);
+            loadTags: function (onSuccess) {
+                get(config.serverApiBaseUrl + "tags/", onSuccess);
             }
         };
     };
 
-    ServerApiService.$inject = ["$http", "$timeout", "config"];
+    ServerApiService.$inject = ["$http", "$timeout", "config", "notificationHelper"];
     app.service("serverApi", ServerApiService);
 
 })(keyPearlClientApp);

@@ -13,22 +13,18 @@
             c.formValues = link;
         }
 
-        function onError() {
-            alert("error");
-        }
-
         function initialize() {
             var id = $routeParams.id;
             if (id) {
                 c.actionName = "Update";
-                serverApi.loadLink(id, setLink, onError);
+                serverApi.loadLink(id, setLink);
             } else {
                 c.actionName = "Create";
             }
         }
 
         c.updateLink = function () {
-            serverApi.updateLink(c.formValues, setLink, onError);
+            serverApi.updateLink(c.formValues, setLink);
         };
 
         initialize();

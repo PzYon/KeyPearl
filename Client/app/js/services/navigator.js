@@ -7,7 +7,7 @@
             $window.location.hash = "#" + url;
         }
 
-        return {
+        var instance = {
             goToHome: function () {
                 goTo("/");
             },
@@ -20,6 +20,14 @@
                 goTo("/link/" + id);
             }
         };
+
+        // specified here in order to be able to access "instance"
+        instance.navigationNodes = [
+            {label: "home", action: instance.goToHome},
+            {label: "new link", action: instance.goToNewLink}
+        ];
+
+        return instance;
 
     };
 

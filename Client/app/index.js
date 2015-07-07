@@ -18,11 +18,12 @@ var keyPearlClientApp = (function () {
     var app = angular.module("keyPearl", ["ngRoute"]);
     app.config(routing);
 
-    var RootController = function (navigator) {
+    var RootController = function (navigator, notificationHelper) {
         this.navigator = navigator;
+        this.notificationHelper = notificationHelper;
     };
 
-    RootController.$inject = ["navigator"];
+    RootController.$inject = ["navigator", "notificationHelper"];
     app.controller("rootController", RootController);
 
     return app;

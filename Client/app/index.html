@@ -12,6 +12,7 @@
 		<script type="text/javascript" src="js/services/serverApi.js"></script>
 		<script type="text/javascript" src="js/services/tagHelper.js"></script>
 		<script type="text/javascript" src="js/services/navigator.js"></script>
+		<script type="text/javascript" src="js/services/notificationHelper.js"></script>
 		<script type="text/javascript" src="js/directives/formElement/formElement.js"></script>
 		<script type="text/javascript" src="js/directives/searchBox/searchBox.js"></script>
 		<script type="text/javascript" src="js/directives/tagTree/tagTree.js"></script>
@@ -20,19 +21,30 @@
 		<script type="text/javascript" src="js/controllers/manageLinkController/manageLinkController.js"></script>
 	</head>
 	<body>
+
 		<h1>Keep &Ouml;hrl</h1>
 
-		<!-- todo: add status panel -->
+		<div class="notification-panel">
+			<ul>
+				<li data-ng-repeat="notification in root.notificationHelper.notifications track by $index"
+				    class="notification" data-ng-class="{'error': notification.isError}">
+					{{notification.message}}
+				</li>
+			</ul>
+			<div data-ng-if="root.notificationHelper.pendingRequests > 0" class="notification">
+				Please hang on, I'm waiting for {{root.notificationHelper.pendingRequests}} server request(s)..
+			</div>
+		</div>
 
-		<!-- todo: make directive(s) for navigation -->
 		<ul class="main-navigation">
-			<li class="navigation-node">
-				<a href="javascript: void(0);" data-ng-click="root.navigator.goToNewLink()">new link</a>
-			</li>
-			<li class="navigation-node">
-				<a href="javascript: void(0);" data-ng-click="root.navigator.goToHome()">home</a>
+			<li class="navigation-node" data-ng-repeat="node in root.navigator.navigationNodes">
+				<a href="javascript: void(0);" data-ng-click="node.action()">
+					{{node.label}}
+				</a>
 			</li>
 		</ul>
+
 		<div data-ng-view></div>
+
 	</body>
 </html>
