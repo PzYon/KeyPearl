@@ -14,5 +14,12 @@ namespace KeyPearl.Library.Entities.Links
     public string Description { get; set; }
 
     public string TagString { get; set; }
+
+    public int[] TagIds
+    {
+      get { return tagIds ?? (tagIds = TagManager.GetIdsFromTagString(TagString)); }
+      set { tagIds = value; }
+    }
+    private int[] tagIds;
   }
 }

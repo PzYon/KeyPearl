@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Http;
 using KeyPearl.Library.Entities.Links;
+using KeyPearl.Library.Entities.Tags;
 using KeyPearl.Library.Queries;
 
 namespace KeyPearl.WebApi.Controllers
@@ -27,6 +28,8 @@ namespace KeyPearl.WebApi.Controllers
     [Route("api/links/")]
     public Link Post(Link link)
     {
+      TagManager.SyncTagStringWithTagIds(DbContext, link);
+
       return DbContext.Update(link);
     }
   }

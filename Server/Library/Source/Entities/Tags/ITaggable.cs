@@ -3,5 +3,6 @@
   public interface ITaggable
   {
     string TagString { get; set; }
+    int[] TagIds { get; set; }
   }
 }

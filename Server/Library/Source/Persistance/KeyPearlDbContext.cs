@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using System.Diagnostics;
+using System.Linq;
 using KeyPearl.Library.Configuration;
 using KeyPearl.Library.Entities.Links;
 using KeyPearl.Library.Entities.Tags;
@@ -13,9 +14,18 @@ namespace KeyPearl.Library.Persistance
 
     public T Update<T>(T t) where T: class, IEntity
     {
-      Entry(t).State = t.Id == 0
-                         ? EntityState.Added
-                         : EntityState.Modified;
+      DbSet<T> dbSet = Set<T>();
+
+      T current = dbSet.FirstOrDefault(s => s.Id == t.Id);
+
+      if (current == null)
+      {
+        dbSet.Add(t);
+      }
+      else
+      {
+        Entry(current).CurrentValues.SetValues(t);
+      }
 
       SaveChanges();
 
