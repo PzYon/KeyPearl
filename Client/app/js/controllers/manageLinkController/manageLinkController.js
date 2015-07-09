@@ -3,17 +3,16 @@
 
     var ManageLinkController = function ($routeParams, $interval, serverApi, tagHelper, navigator) {
 
-        // todo: add possibility to manage tags for link
         // todo: add some validation (required: yes/no, format: regex, etc.)
 
         var c = this;
         c.link = {};
 
-        function setLink (link) {
+        var setLink = function (link) {
             c.link = link;
-        }
+        };
 
-        function initialize() {
+        var initialize = function () {
             var id = $routeParams.id;
             if (id) {
                 c.actionName = "Update";
@@ -30,7 +29,7 @@
                     }
                 }, 10);
             });
-        }
+        };
 
         c.selectTag = function (tagId) {
             c.link.tagIds = tagHelper.toggleSelected(c.link.tagIds, tagId);

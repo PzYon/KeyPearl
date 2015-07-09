@@ -3,7 +3,7 @@
 
     var SearchBoxDirective = function ($timeout, config) {
 
-        function link(scope) {
+        var link = function (scope) {
 
             var delay = null;
 
@@ -18,7 +18,7 @@
                     });
                 }, config.queryDelay);
             };
-        }
+        };
 
         return {
             restrict: "A",

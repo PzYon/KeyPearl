@@ -3,36 +3,36 @@
 
     var ServerApiService = function ($http, $timeout, config, notificationHelper) {
 
-        function errorHandler(data, status, headers, config) {
+        var errorHandler = function (data, status, headers, config) {
             if (!status) {
                 notificationHelper.add("Cannot connect to server.. Maybe it's down?", true);
             } else {
                 notificationHelper.add(config.url + ": " + data.exceptionMessage, true);
             }
-        }
+        };
 
-        function getOnErrorWrapper() {
+        var getOnErrorWrapper = function () {
             return getOnCompleteWrapper(errorHandler);
-        }
+        };
 
-        function getOnCompleteWrapper(onComplete) {
+        var getOnCompleteWrapper = function (onComplete) {
             return function (data, status, headers, config) {
                 notificationHelper.pendingRequests--;
                 onComplete(data, status, headers, config);
             };
-        }
+        };
 
-        function get(url, onSuccess, onError) {
+        var get = function (url, onSuccess) {
             notificationHelper.pendingRequests++;
             $http.get(url).success(getOnCompleteWrapper(onSuccess)).error(getOnErrorWrapper());
-        }
+        };
 
-        function post(url, data, onSuccess, onError) {
+        var post = function (url, data, onSuccess) {
             notificationHelper.pendingRequests++;
             $http.post(url, data).success(getOnCompleteWrapper(onSuccess)).error(getOnErrorWrapper());
-        }
+        };
 
-        function buildQuery(searchString, tagIds) {
+        var buildQuery = function (searchString, tagIds) {
             var searchQuery = "";
             if (searchString) {
                 searchQuery += "$searchString(" + searchString + ")";
@@ -45,7 +45,7 @@
             return searchQuery.length
                     ? "?queryString=" + searchQuery
                     : searchQuery;
-        }
+        };
 
         return {
             loadLinks: function (searchString, tagIds, onSuccess) {
