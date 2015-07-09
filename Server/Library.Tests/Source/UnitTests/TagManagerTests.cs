@@ -113,6 +113,17 @@ namespace KeyPearl.Library.Tests.UnitTests
     }
 
     [TestMethod]
+    public void SyncTagStringWithTagIds_PreviousTagsAreRemovedIfNotInTagIds()
+    {
+      var updatedTaggable = new Link { Id = 1, TagString = lv2TagString, TagIds = new []{1}};
+      TagManager.SyncTagStringWithTagIds(dbContext, updatedTaggable);
+
+      string[] tagPaths = updatedTaggable.TagString.Split(TagManager.Separator);
+      Assert.AreEqual(1, tagPaths.Length);
+      Assert.IsTrue(tagPaths.Contains(lv1TagString));
+    }
+
+    [TestMethod]
     public void EnsureTag_TagStringStartsWithPathStarter()
     {
       var taggable = new Link();

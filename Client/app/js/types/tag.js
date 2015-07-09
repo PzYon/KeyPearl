@@ -18,7 +18,8 @@ function Tag(tagRow) {
     function constructor() {
 
         me.children = [];
-        me.collapsed = false;
+        me.isCollapsed = false;
+        me.isSelected = false;
 
         if (tagRow) {
             Object.keys(tagRow).map(function (key) {

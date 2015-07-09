@@ -7,19 +7,12 @@
         c.navigator = navigator;
 
         c.selectTag = function (tagId) {
-            var index = c.selectedTagIds.indexOf(tagId);
-            if (index > -1) {
-                c.selectedTagIds.splice(index, 1);
-            } else {
-                c.selectedTagIds.push(tagId);
-            }
-
+            c.selectedTagIds = tagHelper.toggleSelected(c.selectedTagIds, tagId);
             c.loadLinks();
         };
 
         c.setSearchString = function(searchString){
             c.searchString = searchString;
-
             c.loadLinks();
         };
 

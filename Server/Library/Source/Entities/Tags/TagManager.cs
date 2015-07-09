@@ -38,6 +38,8 @@ namespace KeyPearl.Library.Entities.Tags
         return;
       }
 
+      link.TagString = String.Empty;
+
       Tag[] allTags = dbContext.Tags.ToArray();
 
       foreach (Tag tag in link.TagIds
