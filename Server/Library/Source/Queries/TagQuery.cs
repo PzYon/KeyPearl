@@ -19,10 +19,11 @@ namespace KeyPearl.Library.Queries
       }
 
       string[] tagIds = tagQuery.Split(TagManager.Separator);
+      string pathSeparator = TagManager.PathSeparator.ToString();
 
       return taggables.Where(l => tagIds.Distinct()
                                         .All(tagId => !String.IsNullOrEmpty(l.TagString)
-                                                      && l.TagString.Contains(tagId)))
+                                                      && l.TagString.Contains(pathSeparator + tagId + pathSeparator)))
                       .OfType<T>();
     }
   }

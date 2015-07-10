@@ -15,11 +15,11 @@ namespace KeyPearl.Library.Tests.UnitTests
   {
     private TestDbContext dbContext;
 
-    private const string lv1TagString = "[1]";
-    private const string lv2TagString = "[1/2]";
-    private const string lv3TagString = "[1/2/3]";
-    private const string otherLv1TagString = "[4]";
-    private const string otherLv2TagString = "[4/5]";
+    private const string lv1TagString = "[/1/]";
+    private const string lv2TagString = "[/1/2/]";
+    private const string lv3TagString = "[/1/2/3/]";
+    private const string otherLv1TagString = "[/4/]";
+    private const string otherLv2TagString = "[/4/5/]";
 
     [TestInitialize]
     public void Setup()
@@ -60,7 +60,7 @@ namespace KeyPearl.Library.Tests.UnitTests
     [TestMethod]
     public void GetIdsFromTagString_ReturnIdFromSingleTag()
     {
-      int[] tagIds = TagManager.GetIdsFromTagString("[123]");
+      int[] tagIds = TagManager.GetIdsFromTagString("[/123/]");
       Assert.AreEqual(1, tagIds.Length);
       Assert.AreEqual(123, tagIds[0]);
     }
@@ -85,7 +85,7 @@ namespace KeyPearl.Library.Tests.UnitTests
     [TestMethod]
     public void GetIdsFromTagString_ReturnsSortedIds()
     {
-      int[] tagIds = TagManager.GetIdsFromTagString("[30];[50];[10]");
+      int[] tagIds = TagManager.GetIdsFromTagString("[/30/];[/50/];[/10/]");
       Assert.AreEqual(3, tagIds.Length);
       Assert.AreEqual(10, tagIds[0]);
       Assert.AreEqual(30, tagIds[1]);
@@ -124,23 +124,23 @@ namespace KeyPearl.Library.Tests.UnitTests
     }
 
     [TestMethod]
-    public void EnsureTag_TagStringStartsWithPathStarter()
+    public void EnsureTag_TagStringStartsWithPathStarterAndPathSeparator()
     {
       var taggable = new Link();
 
       TagManager.EnsureTag(dbContext, taggable, new Tag {Id = 1, ParentId = 0});
 
-      Assert.IsTrue(taggable.TagString.StartsWith(TagManager.PathStarter.ToString()));
+      Assert.IsTrue(taggable.TagString.StartsWith(TagManager.PathStarter.ToString() + TagManager.PathSeparator));
     }
 
     [TestMethod]
-    public void EnsureTag_TagStringEndsWithPathEnder()
+    public void EnsureTag_TagStringEndsWithPathSeparatorAndPathEnder()
     {
       var taggable = new Link();
 
       TagManager.EnsureTag(dbContext, taggable, new Tag {Id = 1, ParentId = 0});
 
-      Assert.IsTrue(taggable.TagString.EndsWith(TagManager.PathEnder.ToString()));
+      Assert.IsTrue(taggable.TagString.EndsWith(TagManager.PathSeparator + TagManager.PathEnder.ToString()));
     }
 
     [TestMethod]
@@ -201,7 +201,7 @@ namespace KeyPearl.Library.Tests.UnitTests
     [TestMethod]
     public void EnsureTag_DoesNotDestroyExistingTags()
     {
-      const string originalTagString = "[100/101/102]";
+      const string originalTagString = "[/100/101/102/]";
 
       var taggable = new Link {TagString = originalTagString};
 

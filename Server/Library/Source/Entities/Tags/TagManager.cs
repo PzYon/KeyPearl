@@ -99,7 +99,9 @@ namespace KeyPearl.Library.Entities.Tags
       tagIds.Reverse();
 
       return String.Concat(PathStarter,
+                           PathSeparator.ToString(),
                            String.Join(PathSeparator.ToString(), tagIds),
+                           PathSeparator.ToString(),
                            PathEnder);
     }
   }
