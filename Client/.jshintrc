@@ -16,7 +16,7 @@
     "forin": true,
     "globals": [
         "angular",
-        "keyPearlClientApp",
+        "keyPearlApp",
         "Tag"
     ]
 }

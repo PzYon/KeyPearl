@@ -1,7 +1,7 @@
 (function (app) {
     "use strict";
 
-    var ListController = function (serverApi, tagHelper, navigator) {
+    var HomeController = function (serverApi, tagHelper, navigator) {
         var c = this;
 
         c.navigator = navigator;
@@ -43,7 +43,7 @@
         c.initialize();
     };
 
-    ListController.$inject = ["serverApi", "tagHelper", "navigator"];
-    app.controller("listController", ListController);
+    HomeController.$inject = ["serverApi", "tagHelper", "navigator"];
+    app.controller("homeController", HomeController);
 
-})(keyPearlClientApp);
+})(keyPearlApp);

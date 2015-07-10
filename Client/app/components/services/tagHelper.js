@@ -50,4 +50,4 @@
     TagHelperService.$inject = [];
     app.service("tagHelper", TagHelperService);
 
-})(keyPearlClientApp);
+})(keyPearlApp);

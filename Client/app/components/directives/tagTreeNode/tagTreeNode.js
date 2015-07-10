@@ -1,17 +1,17 @@
 (function(app){
     "use strict";
 
-    var TagDirective = function ($compile) {
+    var TagTreeNodeDirective = function ($compile) {
         return {
             restrict: "A",
             scope: {
-                tag: "=",
+                tag: "=tagTreeNode",
                 onSelect: "&",
                 onSelectFunction: "="
             },
             template: "",
             link: function (scope, element) {
-                element.append(TagDirective.template);
+                element.append(TagTreeNodeDirective.template);
                 $compile(element.contents())(scope);
 
                 scope.handleOnSelect = function (tag) {
@@ -23,7 +23,7 @@
     };
 
     // we specify template here so it is only "built" once
-    TagDirective.template = "" +
+    TagTreeNodeDirective.template = "" +
         "<span class='tag-collapser' data-ng-if='tag.hasChildren()' data-ng-click='tag.toggleCollapsed()'>" +
           "{{tag.collapsed ? '+' : '-'}}" +
         "</span>" +
@@ -33,7 +33,7 @@
         "<span data-tag-tree='tag' data-on-select='onSelectFunction({tagId: tagId})' " +
               "data-on-select-function='onSelectFunction' data-ng-if='!tag.isCollapsed'></span>";
 
-    TagDirective.$inject = ["$compile"];
-    app.directive("tag", TagDirective);
+    TagTreeNodeDirective.$inject = ["$compile"];
+    app.directive("tagTreeNode", TagTreeNodeDirective);
 
-})(keyPearlClientApp);
+})(keyPearlApp);

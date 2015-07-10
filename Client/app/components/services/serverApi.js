@@ -1,13 +1,13 @@
 (function (app) {
     "use strict";
 
-    var ServerApiService = function ($http, $timeout, config, notificationHelper) {
+    var ServerApiService = function ($http, $timeout, config, notifier) {
 
         var errorHandler = function (data, status, headers, config) {
             if (!status) {
-                notificationHelper.add("Cannot connect to server.. Maybe it's down?", true);
+                notifier.add("Cannot connect to server.. Maybe it's down?", true);
             } else {
-                notificationHelper.add(config.url + ": " + data.exceptionMessage, true);
+                notifier.add(config.url + ": " + data.exceptionMessage, true);
             }
         };
 
@@ -17,18 +17,18 @@
 
         var getOnCompleteWrapper = function (onComplete) {
             return function (data, status, headers, config) {
-                notificationHelper.pendingRequests--;
+                notifier.pendingRequests--;
                 onComplete(data, status, headers, config);
             };
         };
 
         var get = function (url, onSuccess) {
-            notificationHelper.pendingRequests++;
+            notifier.pendingRequests++;
             $http.get(url).success(getOnCompleteWrapper(onSuccess)).error(getOnErrorWrapper());
         };
 
         var post = function (url, data, onSuccess) {
-            notificationHelper.pendingRequests++;
+            notifier.pendingRequests++;
             $http.post(url, data).success(getOnCompleteWrapper(onSuccess)).error(getOnErrorWrapper());
         };
 
@@ -66,7 +66,7 @@
         };
     };
 
-    ServerApiService.$inject = ["$http", "$timeout", "config", "notificationHelper"];
+    ServerApiService.$inject = ["$http", "$timeout", "config", "notifier"];
     app.service("serverApi", ServerApiService);
 
-})(keyPearlClientApp);
+})(keyPearlApp);

@@ -2,23 +2,24 @@
 <html data-ng-app="keyPearl" data-ng-controller="rootController as root">
 	<head lang="en">
 		<meta charset="UTF-8">
-		<title>KeyPearl | Client</title>
+		<title>KeyPearl</title>
 		<link rel="stylesheet" href="css/styles.css"/>
 		<script type="text/javascript" src="../bower_components/angular/angular.js"></script>
 		<script type="text/javascript" src="../bower_components/angular-route/angular-route.js"></script>
-		<script type="text/javascript" src="index.js"></script>
+		<script type="text/javascript" src="keyPearlApp.js"></script>
 		<script type="text/javascript" src="config.js"></script>
-		<script type="text/javascript" src="js/types/tag.js"></script>
-		<script type="text/javascript" src="js/services/serverApi.js"></script>
-		<script type="text/javascript" src="js/services/tagHelper.js"></script>
-		<script type="text/javascript" src="js/services/navigator.js"></script>
-		<script type="text/javascript" src="js/services/notificationHelper.js"></script>
-		<script type="text/javascript" src="js/directives/formElement/formElement.js"></script>
-		<script type="text/javascript" src="js/directives/searchBox/searchBox.js"></script>
-		<script type="text/javascript" src="js/directives/tagTree/tagTree.js"></script>
-		<script type="text/javascript" src="js/directives/tagTree/tag/tag.js"></script>
-		<script type="text/javascript" src="js/controllers/list/listController.js"></script>
-		<script type="text/javascript" src="js/controllers/manageLinkController/manageLinkController.js"></script>
+		<script type="text/javascript" src="types/tag.js"></script>
+		<script type="text/javascript" src="components/services/serverApi.js"></script>
+		<script type="text/javascript" src="components/services/tagHelper.js"></script>
+		<script type="text/javascript" src="components/services/navigator.js"></script>
+		<script type="text/javascript" src="components/services/notifier.js"></script>
+		<script type="text/javascript" src="components/directives/formElement/formElement.js"></script>
+		<script type="text/javascript" src="components/directives/searchBox/searchBox.js"></script>
+		<script type="text/javascript" src="components/directives/tagTree/tagTree.js"></script>
+		<script type="text/javascript" src="components/directives/tagTreeNode/tagTreeNode.js"></script>
+		<script type="text/javascript" src="components/controllers/root/rootController.js"></script>
+		<script type="text/javascript" src="components/controllers/home/homeController.js"></script>
+		<script type="text/javascript" src="components/controllers/link/linkController.js"></script>
 	</head>
 	<body>
 
@@ -26,13 +27,13 @@
 
 		<div class="notification-panel">
 			<ul>
-				<li data-ng-repeat="notification in root.notificationHelper.notifications track by $index"
+				<li data-ng-repeat="notification in root.notifier.notifications track by $index"
 				    class="notification" data-ng-class="{'error': notification.isError}">
 					{{notification.message}}
 				</li>
 			</ul>
-			<div data-ng-if="root.notificationHelper.pendingRequests > 0" class="notification">
-				Please hang on, I'm waiting for {{root.notificationHelper.pendingRequests}} server request(s)..
+			<div data-ng-if="root.notifier.pendingRequests > 0" class="notification">
+				Please hang on, I'm waiting for {{root.notifier.pendingRequests}} server request(s)..
 			</div>
 		</div>
 

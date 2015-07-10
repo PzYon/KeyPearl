@@ -1,7 +1,7 @@
 (function (app) {
     "use strict";
 
-    var ManageLinkController = function ($routeParams, $interval, serverApi, tagHelper, navigator) {
+    var LinkController = function ($routeParams, $interval, serverApi, tagHelper, navigator) {
 
         // todo: add some validation (required: yes/no, format: regex, etc.)
 
@@ -44,7 +44,7 @@
         initialize();
     };
 
-    ManageLinkController.$inject = ["$routeParams", "$interval", "serverApi", "tagHelper", "navigator"];
-    app.controller("manageLinkController", ManageLinkController);
+    LinkController.$inject = ["$routeParams", "$interval", "serverApi", "tagHelper", "navigator"];
+    app.controller("linkController", LinkController);
 
-})(keyPearlClientApp);
+})(keyPearlApp);

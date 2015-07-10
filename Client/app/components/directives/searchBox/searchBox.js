@@ -34,4 +34,4 @@
     SearchBoxDirective.$inject = ["$timeout", "config"];
     app.directive("searchBox", SearchBoxDirective);
 
-})(keyPearlClientApp);
+})(keyPearlApp);

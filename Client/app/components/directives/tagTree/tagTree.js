@@ -11,7 +11,7 @@
                 onSelect: "&",
                 onSelectFunction: "="
             },
-            templateUrl: "js/directives/tagTree/tagTree.html"
+            templateUrl: "components/directives/tagTree/tagTree.html"
         };
 
     };
@@ -19,4 +19,4 @@
     TagTreeDirective.$inject = [];
     app.directive("tagTree", TagTreeDirective);
 
-})(keyPearlClientApp);
+})(keyPearlApp);

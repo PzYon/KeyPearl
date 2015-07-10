@@ -6,4 +6,4 @@
         "queryDelay": 400
     });
 
-})(keyPearlClientApp);
+})(keyPearlApp);

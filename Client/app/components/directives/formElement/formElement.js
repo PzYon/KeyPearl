@@ -10,11 +10,11 @@
                 type: "=",
                 model: "="
             },
-            templateUrl: "js/directives/formElement/formElement.html",
+            templateUrl: "components/directives/formElement/formElement.html",
         };
     };
 
     FormElementDirective.$inject = [];
     app.directive("formElement", FormElementDirective);
 
-})(keyPearlClientApp);
+})(keyPearlApp);

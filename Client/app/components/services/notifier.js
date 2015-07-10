@@ -1,12 +1,18 @@
 (function (app) {
     "use strict";
 
-    var NotificationHelper = function ($timeout) {
+    var NotifierService = function ($timeout) {
 
         var instance = {
             pendingRequests: 0,
             notifications: [],
             add: function (message, isError) {
+
+                // todo:
+                // - consider waiting one second or so to prevent flashing notifications for fast requests
+                //   --> what if we have two requests at the same time!?
+                // - consider adding an overload for addError, addSuccess, addInfo, etc.
+
                 instance.notifications.push({
                     message: message,
                     isError: isError
@@ -22,7 +28,7 @@
         return instance;
     };
 
-    NotificationHelper.$inject = ["$timeout"];
-    app.service("notificationHelper", NotificationHelper);
+    NotifierService.$inject = ["$timeout"];
+    app.service("notifier", NotifierService);
 
-})(keyPearlClientApp);
+})(keyPearlApp);

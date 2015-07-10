@@ -1,7 +1,7 @@
 (function (app) {
     "use strict";
 
-    var Navigator = function ($window) {
+    var NavigatorService = function ($window) {
 
         var goTo = function (url) {
             $window.location.hash = "#" + url;
@@ -31,7 +31,7 @@
 
     };
 
-    Navigator.$inject = ["$window"];
-    app.service("navigator", Navigator);
+    NavigatorService.$inject = ["$window"];
+    app.service("navigator", NavigatorService);
 
-})(keyPearlClientApp);
+})(keyPearlApp);
