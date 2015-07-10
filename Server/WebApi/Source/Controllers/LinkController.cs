@@ -14,7 +14,7 @@ namespace KeyPearl.WebApi.Controllers
     {
       return (queryString == null
                 ? DbContext.Links
-                : QueryExecuter.Execute(DbContext.Links, queryString)).ToArray();
+                : QueryExecutor.Execute(DbContext.Links, queryString)).ToArray();
     }
 
     [HttpGet]

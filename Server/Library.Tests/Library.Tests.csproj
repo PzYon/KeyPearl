@@ -59,7 +59,7 @@
     <Compile Include="Source\TestTypes\TestDbAsyncQueryProvider.cs" />
     <Compile Include="Source\TestTypes\TestDbSet.cs" />
     <Compile Include="Source\UnitTests\QueryParamsTests.cs" />
-    <Compile Include="Source\UnitTests\QueryExecuterTests.cs" />
+    <Compile Include="Source\UnitTests\QueryExecutorTests.cs" />
     <Compile Include="Source\UnitTests\StringQueryTests.cs" />
     <Compile Include="Source\UnitTests\TagManagerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

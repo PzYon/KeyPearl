@@ -48,7 +48,7 @@
     <Compile Include="Source\Configuration\KeyPearlConfiguration.cs" />
     <Compile Include="Source\Persistance\IEntity.cs" />
     <Compile Include="Source\Queries\Exceptions\InvalidQueryException.cs" />
-    <Compile Include="Source\Queries\QueryExecuter.cs" />
+    <Compile Include="Source\Queries\QueryExecutor.cs" />
     <Compile Include="Source\Entities\Links\Link.cs" />
     <Compile Include="Source\Persistance\IDbContext.cs" />
     <Compile Include="Source\Persistance\KeyPearlDbContext.cs" />
