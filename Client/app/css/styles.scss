@@ -1,6 +1,8 @@
 $main-font-color: #555;
 $error-font-color: #990000;
 $highlight-font-color: #006699;
+$tooltip-background-color: #EEE;
+$tooltip-border-color: #CCC;
 
 html,
 body,
@@ -19,10 +21,6 @@ a {
 ul {
   list-style-type: none;
   padding: 0;
-
-  ul {
-    padding-left: 20px;
-  }
 }
 
 .notification-panel {
@@ -57,7 +55,13 @@ ul {
 
 .tag-tree {
 
-  .tag-collapser {
+  ul {
+    ul {
+      padding-left: 20px;
+    }
+  }
+
+  .tag-collapsor {
     cursor: pointer;
   }
 
@@ -90,6 +94,33 @@ ul {
 
     .details {
       font-size: 0.9rem;
+    }
+
+    .tags {
+      font-size: 0.9rem;
+
+      .tag-hierarchy {
+        display: inline-block;
+        position: relative;
+        vertical-align: top;
+        margin-right: 20px;
+
+        .applied-tag {
+          .tag-label {
+            padding: 0 10px;
+            display:inline-block;
+          }
+          .tooltip {
+            z-index: 1;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            white-space: nowrap;
+            background-color: $tooltip-background-color;
+            border: 1px solid $tooltip-border-color;
+          }
+        }
+      }
     }
 
     .action-link {

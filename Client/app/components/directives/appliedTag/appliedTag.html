@@ -1,0 +1,12 @@
+<span class="applied-tag"
+      data-ng-mouseover="onMouseOver()"
+      data-ng-mouseleave="onMouseLeave()">
+	<span class="tag-label">{{tag.name}}</span>
+	<span class="tooltip" data-ng-if="isHover">
+		<ul>
+			<li data-ng-repeat="tag in tagHierarchy">
+				<span class="tag-label">{{tag.name}}</span>
+			</li>
+		</ul>
+	</span>
+</span>

@@ -17,9 +17,9 @@ namespace KeyPearl.Library.Entities.Links
 
     public int[] TagIds
     {
-      get { return tagIds ?? (tagIds = TagManager.GetIdsFromTagString(TagString)); }
-      set { tagIds = value; }
+      get { return _tagIds ?? (_tagIds = TagManager.GetIdsFromTagString(TagString)); }
+      set { _tagIds = value; }
     }
-    private int[] tagIds;
+    private int[] _tagIds;
   }
 }

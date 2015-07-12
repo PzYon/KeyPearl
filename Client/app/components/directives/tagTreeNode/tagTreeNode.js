@@ -24,7 +24,7 @@
 
     // we specify template here so it is only "built" once
     TagTreeNodeDirective.template = "" +
-        "<span class='tag-collapser' data-ng-if='tag.hasChildren()' data-ng-click='tag.toggleCollapsed()'>" +
+        "<span class='tag-collapsor' data-ng-if='tag.hasChildren()' data-ng-click='tag.toggleCollapsed()'>" +
           "{{tag.collapsed ? '+' : '-'}}" +
         "</span>" +
         "<span class='tag-label' data-ng-click='handleOnSelect(tag)' data-ng-class='{selected: tag.isSelected}'>" +

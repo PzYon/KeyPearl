@@ -21,6 +21,7 @@
         };
 
         c.setLinks = function (links) {
+            // todo: do we need to ensure that only nodes which are actually available on the data are shown?
             c.links = links;
         };
 
@@ -29,7 +30,9 @@
         };
 
         c.setTags = function (tags) {
-            c.tags = tagHelper.buildTree(tags);
+            var tree = tagHelper.buildTree(tags);
+            c.rootTag = tree.rootTag;
+            c.tagHash = tree.tagHash;
         };
 
         c.initialize = function () {

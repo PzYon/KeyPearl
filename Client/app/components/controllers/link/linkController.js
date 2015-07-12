@@ -25,7 +25,7 @@
                 var waitUntilLinkIsLoad = $interval(function () {
                     if (c.link || !c.link.id) {
                         $interval.cancel(waitUntilLinkIsLoad);
-                        c.tags = tagHelper.buildTree(tags, c.link.tagIds);
+                        c.rootTag = tagHelper.buildTree(tags, c.link.tagIds).rootTag;
                     }
                 }, 10);
             });

@@ -1,6 +1,10 @@
 (function (app) {
     "use strict";
 
+    // todo: consider handling loadTags via tagHelper and caching the tags here, e.g.
+    // - rename buildTree to getTree
+    // - cache hierarchy here
+    // - add overload to force reload from service
     var TagHelperService = function () {
 
         return {
@@ -22,7 +26,7 @@
             },
             buildTree: function (tagRows, selectedTagIds) {
 
-                var hash = {};
+                var tagHash = {};
                 var parentId = 0;
                 var rootTag = new Tag();
                 var parentTag = rootTag;
@@ -31,17 +35,31 @@
                     var tag = new Tag(tagRow);
                     tag.isSelected = selectedTagIds && selectedTagIds.indexOf(tag.id) > -1;
 
-                    hash[tag.id] = tag;
+                    tagHash[tag.id] = tag;
 
                     if (tag.parentId > parentId) {
-                        parentTag = hash[tag.parentId];
+                        parentTag = tagHash[tag.parentId];
                         parentId = parentTag.id;
                     }
 
                     parentTag.children.push(tag);
                 });
 
-                return rootTag;
+                return {
+                    rootTag: rootTag,
+                    tagHash: tagHash
+                };
+            },
+            getHierarchyTopDown: function (tagHash, tagId) {
+                var tags = [];
+
+                var tag = null;
+                do {
+                    tag = tagHash[tag ? tag.parentId : tagId];
+                    tags.push(tag);
+                } while (tag.parentId > 0);
+
+                return tags.reverse();
             }
         };
 

@@ -2,7 +2,7 @@
 <div class="tag-tree"
      data-on-select="c.selectTag(tagId)"
      data-on-select-function="c.selectTag"
-     data-tag-tree="c.tags"></div>
+     data-tag-tree="c.rootTag"></div>
 
 <h2>Search</h2>
 <div class="search-box"
@@ -12,14 +12,21 @@
 <h2>Links</h2>
 <ul class="link-list">
 	<li class="link" data-ng-repeat="link in c.links">
-		<a class="title" data-ng-href="{{link.url}}" target="_blank">
-			{{link.name}} ({{link.url}})
+		<a class="title" data-ng-href="{{link.url}}" title="{{link.url}}" target="_blank">
+			{{link.name}}
 		</a>
 		<div class="details">
-			{{link.description}} | {{link.tagString}}
+			{{link.description}}
 		</div>
+		<div class="tags"
+		     data-applied-tags
+		     data-tag-hash="c.tagHash"
+		     data-ng-if="c.tagHash"
+		     data-tag-ids="link.tagIds"></div>
 		<span class="action-link">
-			<a href="javascript: void(0);" data-ng-click="c.navigator.goToLink(link.id)">edit</a>
+			<a href="javascript: void(0);" data-ng-click="c.navigator.goToLink(link.id)">
+				edit
+			</a>
 		</span>
 	</li>
 </ul>
