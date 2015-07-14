@@ -1,7 +1,7 @@
 (function (app) {
     "use strict";
 
-    // todo: consider handling loadTags via tagHelper and caching the tags here, e.g.
+    // todo: consider handling loadTags/updateTags via tagHelper and caching the tags here, e.g.
     // - rename buildTree to getTree
     // - cache hierarchy here
     // - add overload to force reload from service
@@ -60,6 +60,18 @@
                 } while (tag.parentId > 0);
 
                 return tags.reverse();
+            },
+            transformToTagRows: function (tagHash) {
+                var tagRows = [];
+                angular.forEach(Object.keys(tagHash), function (tagId) {
+                    var tag = tagHash[tagId];
+                    tagRows.push({
+                        id: tag.id,
+                        parentId: tag.parentId,
+                        name: tag.name
+                    });
+                });
+                return tagRows;
             }
         };
 

@@ -1,39 +1,40 @@
 (function(app){
     "use strict";
 
-    var TagTreeNodeDirective = function ($compile) {
+    var TagTreeNodeDirective = function ($compile, tagTreeTemplates) {
         return {
             restrict: "A",
             scope: {
                 tag: "=tagTreeNode",
                 onSelect: "&",
-                onSelectFunction: "="
+                onSelectFunction: "=",
+                isEditable: "=",
+                onChange: "&",
+                onChangeFunction: "="
             },
             template: "",
             link: function (scope, element) {
-                element.append(TagTreeNodeDirective.template);
+
+                // todo: do we need to add some validation (i.e throw exceptions) here?
+                // e.g. isEditable && onChangeFunction == 'undefined'
+
+                var template = scope.isEditable ? tagTreeTemplates.editableTemplate : tagTreeTemplates.defaultTemplate;
+                element.append(template);
                 $compile(element.contents())(scope);
 
                 scope.handleOnSelect = function (tag) {
                     tag.toggleSelected();
                     scope.onSelect({tagId: tag.id});
                 };
+
+                scope.handleOnChange = function(tag) {
+                    scope.onChange({tag: tag});
+                };
             }
         };
     };
 
-    // we specify template here so it is only "built" once
-    TagTreeNodeDirective.template = "" +
-        "<span class='tag-collapsor' data-ng-if='tag.hasChildren()' data-ng-click='tag.toggleCollapsed()'>" +
-          "{{tag.collapsed ? '+' : '-'}}" +
-        "</span>" +
-        "<span class='tag-label' data-ng-click='handleOnSelect(tag)' data-ng-class='{selected: tag.isSelected}'>" +
-          "{{tag.name}} [id {{tag.id}}]" +
-        "</span>" +
-        "<span data-tag-tree='tag' data-on-select='onSelectFunction({tagId: tagId})' " +
-              "data-on-select-function='onSelectFunction' data-ng-if='!tag.isCollapsed'></span>";
-
-    TagTreeNodeDirective.$inject = ["$compile"];
+    TagTreeNodeDirective.$inject = ["$compile", "tagTreeTemplates"];
     app.directive("tagTreeNode", TagTreeNodeDirective);
 
 })(keyPearlApp);

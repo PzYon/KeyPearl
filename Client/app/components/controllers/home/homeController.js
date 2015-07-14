@@ -6,7 +6,7 @@
 
         c.navigator = navigator;
 
-        c.selectTag = function (tagId) {
+        c.setSelectedTagIds = function (tagId) {
             c.selectedTagIds = tagHelper.toggleSelected(c.selectedTagIds, tagId);
             c.loadLinks();
         };

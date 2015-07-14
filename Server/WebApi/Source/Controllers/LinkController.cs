@@ -8,7 +8,6 @@ namespace KeyPearl.WebApi.Controllers
 {
   public class LinkController : BaseDbContextApiController
   {
-    [HttpGet]
     [Route("api/links/")]
     public Link[] Get(string queryString = null)
     {
@@ -17,20 +16,21 @@ namespace KeyPearl.WebApi.Controllers
                 : QueryExecutor.Execute(DbContext.Links, queryString)).ToArray();
     }
 
-    [HttpGet]
     [Route("api/links/getbyid/{id}")]
     public Link GetById(int id)
     {
       return DbContext.Links.FirstOrDefault(l => l.Id == id);
     }
 
-    [HttpPost]
     [Route("api/links/")]
     public Link Post(Link link)
     {
       TagManager.SyncTagStringWithTagIds(DbContext, link);
 
-      return DbContext.Update(link);
+      Link updatedLink = DbContext.Update(link);
+      DbContext.SaveChanges();
+
+      return updatedLink;
     }
   }
 }

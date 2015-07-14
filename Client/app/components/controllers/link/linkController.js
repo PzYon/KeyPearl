@@ -22,16 +22,16 @@
             }
 
             serverApi.loadTags(function (tags) {
-                var waitUntilLinkIsLoad = $interval(function () {
+                var waitUntilLinkIsLoaded = $interval(function () {
                     if (c.link || !c.link.id) {
-                        $interval.cancel(waitUntilLinkIsLoad);
+                        $interval.cancel(waitUntilLinkIsLoaded);
                         c.rootTag = tagHelper.buildTree(tags, c.link.tagIds).rootTag;
                     }
                 }, 10);
             });
         };
 
-        c.selectTag = function (tagId) {
+        c.setSelectedTagIds = function (tagId) {
             c.link.tagIds = tagHelper.toggleSelected(c.link.tagIds, tagId);
         };
 

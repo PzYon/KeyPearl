@@ -47,12 +47,12 @@
         };
 
         return {
-            loadLinks: function (searchString, tagIds, onSuccess) {
-                get(config.serverApiBaseUrl + "links/" + buildQuery(searchString, tagIds), onSuccess);
-            },
-
             loadLink: function (id, onSuccess) {
                 get(config.serverApiBaseUrl + "links/getbyid/" + id, onSuccess);
+            },
+
+            loadLinks: function (searchString, tagIds, onSuccess) {
+                get(config.serverApiBaseUrl + "links/" + buildQuery(searchString, tagIds), onSuccess);
             },
 
             updateLink: function (link, onSuccess) {
@@ -61,6 +61,10 @@
 
             loadTags: function (onSuccess) {
                 get(config.serverApiBaseUrl + "tags/", onSuccess);
+            },
+
+            updateTags: function (tags, onSuccess) {
+                post(config.serverApiBaseUrl + "tags/", tags, onSuccess);
             }
         };
     };

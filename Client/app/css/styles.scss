@@ -54,6 +54,7 @@ ul {
 }
 
 .tag-tree {
+  margin-left: 10px;
 
   ul {
     ul {
@@ -61,15 +62,25 @@ ul {
     }
   }
 
-  .tag-collapsor {
-    cursor: pointer;
-  }
+  .tag-tree-node {
+    position: relative;
 
-  .tag-label {
-    cursor: pointer;
+    .tag-collapsor {
+      position: absolute;
+      left: -10px;
+      cursor: pointer;
+    }
 
-    &.selected {
-      font-weight: bold;
+    .tag-label {
+      cursor: pointer;
+
+      &.selected {
+        font-weight: bold;
+      }
+
+      input {
+        margin: 2px;
+      }
     }
   }
 }

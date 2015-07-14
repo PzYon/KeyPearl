@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using KeyPearl.Library.Entities.Links;
 using KeyPearl.Library.Entities.Tags;
@@ -13,16 +15,6 @@ namespace KeyPearl.Library.Tests.TestTypes
     public DbSet<Tag> Tags { get; set; }
     public DbSet<Link> Links { get; set; }
 
-    public int SaveChanges()
-    {
-      throw new System.NotImplementedException();
-    }
-
-    public T Update<T>(T t) where T : class, IEntity
-    {
-      return t;
-    }
-
     public TestDbContext()
     {
       Links = new TestDbSet<Link>
@@ -31,7 +23,21 @@ namespace KeyPearl.Library.Tests.TestTypes
         new Link {TagString = "/1/2/"},
         new Link {TagString = "/1/"}
       };
+    }
 
+    public T Update<T>(T entity) where T : class, IEntity
+    {
+      return entity;
+    }
+
+    public List<T> BatchUpdate<T>(List<T> entities) where T : class, IEntity
+    {
+      throw new NotImplementedException();
+    }
+
+    public int SaveChanges()
+    {
+      throw new NotImplementedException();
     }
 
     public void Dispose()

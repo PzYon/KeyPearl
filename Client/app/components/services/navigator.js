@@ -18,13 +18,18 @@
 
             goToLink: function (id) {
                 goTo("/link/" + id);
+            },
+
+            goToTags: function () {
+                goTo("/tags/");
             }
         };
 
         // specified here in order to be able to access "instance"
         instance.navigationNodes = [
             {label: "home", action: instance.goToHome},
-            {label: "new link", action: instance.goToNewLink}
+            {label: "new link", action: instance.goToNewLink},
+            {label: "tags", action: instance.goToTags}
         ];
 
         return instance;

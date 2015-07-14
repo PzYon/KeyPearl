@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
 using KeyPearl.Library.Configuration;
@@ -12,24 +13,31 @@ namespace KeyPearl.Library.Persistance
     public DbSet<Tag> Tags { get; set; }
     public DbSet<Link> Links { get; set; }
 
-    public T Update<T>(T t) where T: class, IEntity
+    public T Update<T>(T entity) where T: class, IEntity
     {
       DbSet<T> dbSet = Set<T>();
 
-      T current = dbSet.FirstOrDefault(s => s.Id == t.Id);
+      T existingEntity = dbSet.FirstOrDefault(s => s.Id == entity.Id);
 
-      if (current == null)
+      if (existingEntity == null)
       {
-        dbSet.Add(t);
+        dbSet.Add(entity);
       }
       else
       {
-        Entry(current).CurrentValues.SetValues(t);
+        Entry(existingEntity).CurrentValues.SetValues(entity);
       }
 
-      SaveChanges();
+      return entity;
+    }
 
-      return t;
+    public List<T> BatchUpdate<T>(List<T> entities) where T : class, IEntity
+    {
+      foreach (T entity in entities)
+      {
+        Update(entity);
+      }
+      return entities;
     }
 
     public KeyPearlDbContext() : base(KeyPearlConfiguration.ConnectionString)

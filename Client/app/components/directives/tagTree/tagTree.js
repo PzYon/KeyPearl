@@ -9,7 +9,10 @@
             scope: {
                 tagTree: "=",
                 onSelect: "&",
-                onSelectFunction: "="
+                onSelectFunction: "=",
+                onChange: "&",
+                onChangeFunction: "=",
+                isEditable: "="
             },
             templateUrl: "components/directives/tagTree/tagTree.html"
         };

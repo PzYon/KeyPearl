@@ -10,6 +10,10 @@ var keyPearlApp = (function () {
             controller: "linkController",
             controllerAs: "c",
             templateUrl: "components/controllers/link/linkController.html"
+        }).when("/tags/", {
+            controller: "tagController",
+            controllerAs: "c",
+            templateUrl: "components/controllers/tag/tagController.html"
         }).otherwise({
             redirectTo: "/"
         });

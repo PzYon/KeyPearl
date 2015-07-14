@@ -1,6 +1,10 @@
 <ul>
-	<li data-tag-tree-node="tag"
+	<li class="tag-tree-node"
+	    data-ng-repeat="tag in tagTree.children"
+	    data-tag-tree-node="tag"
+	    data-is-editable="isEditable"
 	    data-on-select="onSelectFunction(tag.id)"
 	    data-on-select-function="onSelectFunction"
-	    data-ng-repeat="tag in tagTree.children"></li>
+	    data-on-change="onChangeFunction(tag)"
+	    data-on-change-function="onChangeFunction"></li>
 </ul>
