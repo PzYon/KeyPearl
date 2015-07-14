@@ -13,6 +13,8 @@
 		<script type="text/javascript" src="components/services/tagHelper.js"></script>
 		<script type="text/javascript" src="components/services/navigator.js"></script>
 		<script type="text/javascript" src="components/services/notifier.js"></script>
+		<script type="text/javascript" src="components/directives/notifications/notifications.js"></script>
+		<script type="text/javascript" src="components/directives/navigation/navigation.js"></script>
 		<script type="text/javascript" src="components/directives/formElement/formElement.js"></script>
 		<script type="text/javascript" src="components/directives/searchBox/searchBox.js"></script>
 		<script type="text/javascript" src="components/directives/tagTree/tagTree.js"></script>
@@ -27,25 +29,9 @@
 
 		<h1>Keep &Ouml;hrl</h1>
 
-		<div class="notification-panel">
-			<ul>
-				<li data-ng-repeat="notification in root.notifier.notifications track by $index"
-				    class="notification" data-ng-class="{'error': notification.isError}">
-					{{notification.message}}
-				</li>
-			</ul>
-			<div data-ng-if="root.notifier.pendingRequests > 0" class="notification">
-				Please hang on, I'm waiting for {{root.notifier.pendingRequests}} server request(s)..
-			</div>
-		</div>
+		<div data-notifications></div>
 
-		<ul class="main-navigation">
-			<li class="navigation-node" data-ng-repeat="node in root.navigator.navigationNodes">
-				<a href="javascript: void(0);" data-ng-click="node.action()">
-					{{node.label}}
-				</a>
-			</li>
-		</ul>
+		<div data-navigation></div>
 
 		<div data-ng-view></div>
 

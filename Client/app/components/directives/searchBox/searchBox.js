@@ -16,7 +16,7 @@
                     scope.onChange({
                         searchString: scope.searchString
                     });
-                }, config.queryDelay);
+                }, config.executeQueryAfter);
             };
         };
 

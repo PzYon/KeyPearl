@@ -23,18 +23,18 @@ ul {
   padding: 0;
 }
 
-.notification-panel {
+.notifications {
   font-size: 0.9rem;
 
   .notification {
     border: 1px solid $main-font-color;
     margin: 3px 0;
     padding: 3px;
-  }
 
-  .notification.error {
-    border: 1px solid $error-font-color;
-    color: $error-font-color;
+    &.error {
+      border: 1px solid $error-font-color;
+      color: $error-font-color;
+    }
   }
 }
 
@@ -108,7 +108,7 @@ ul {
         .applied-tag {
           .tag-label {
             padding: 0 10px;
-            display:inline-block;
+            display: inline-block;
           }
           .tooltip {
             z-index: 1;
