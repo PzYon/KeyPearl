@@ -16,12 +16,14 @@ namespace KeyPearl.WebApi.Controllers
     }
 
     [Route("api/tags/")]
-    public List<Tag> Post(List<Tag> tags)
+    public Tag[] Post(List<Tag> tags)
     {
-      List<Tag> updatedTags = DbContext.BatchUpdate(tags);
+      DbContext.BatchUpdate(tags);
       DbContext.SaveChanges();
 
-      return updatedTags;
+      // we return all tags in order to be able to recreate the tag tree from scratch
+      // on the client without needing to be sure to insert everything in the right place.
+      return Get();
     }
   }
 }

@@ -2,11 +2,13 @@
     "use strict";
 
     var TagController = function (serverApi, tagHelper) {
+
         var c = this;
+        var changedTagsHash;
 
-        var changedTagsHash = {};
-
-        c.numberOfChangedTags = 0;
+        c.loadTags = function () {
+            serverApi.loadTags(ensureTagTree);
+        };
 
         c.setChangedTags = function (tag) {
             c.tagTree.tagHash[tag.id] = tag;
@@ -15,18 +17,22 @@
         };
 
         c.batchUpdateTags = function () {
-            serverApi.updateTags(tagHelper.transformToTagRows(changedTagsHash), function(updatedTags){
-               alert("You just updated " + updatedTags.length + " tag(s).");
-            });
+            serverApi.updateTags(tagHelper.transformToTagRows(changedTagsHash), ensureTagTree);
+        };
+
+        var ensureTagTree = function (tags) {
+            changedTagsHash = {};
+            c.numberOfChangedTags = 0;
+
+            c.tagTree = tagHelper.buildTree(tags);
         };
 
         var initialize = function () {
-            serverApi.loadTags(function (tags) {
-                c.tagTree = tagHelper.buildTree(tags);
-            });
+            c.loadTags();
         };
 
         initialize();
+
     };
 
     TagController.$inject = ["serverApi", "tagHelper"];

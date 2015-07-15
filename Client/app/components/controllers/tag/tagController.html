@@ -7,7 +7,14 @@
      data-tag-tree="c.tagTree.rootTag"></div>
 
 <!-- todo: use notification service for this? same could be done in linkController -->
-<div>You have changed {{c.numberOfChangedTags}} tags.</div>
+<div data-ng-if="c.numberOfChangedTags > 0">
+	You have changed {{c.numberOfChangedTags}} tags.
+</div>
 
-<!-- todo: add cancel button which ensure all changes are reverted -->
-<button data-ng-click="c.batchUpdateTags()">Update</button>
+<button data-ng-click="c.batchUpdateTags()">
+	Update
+</button>
+
+<button data-ng-click="c.loadTags()">
+	Cancel
+</button>

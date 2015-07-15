@@ -8,7 +8,7 @@
     var TagHelperService = function () {
 
         return {
-            toggleSelected: function(tagIds, tagId) {
+            toggleSelected: function (tagIds, tagId) {
 
                 if (!tagIds) {
                     tagIds = [];
@@ -24,6 +24,7 @@
                 return tagIds;
 
             },
+
             buildTree: function (tagRows, selectedTagIds) {
 
                 var tagHash = {};
@@ -33,36 +34,43 @@
 
                 angular.forEach(tagRows, function (tagRow) {
                     var tag = new Tag(tagRow);
-                    tag.isSelected = selectedTagIds && selectedTagIds.indexOf(tag.id) > -1;
-
-                    tagHash[tag.id] = tag;
 
                     if (tag.parentId > parentId) {
                         parentTag = tagHash[tag.parentId];
                         parentId = parentTag.id;
                     }
 
-                    parentTag.children.push(tag);
+                    tag.isSelected = selectedTagIds && selectedTagIds.indexOf(tag.id) > -1;
+
+                    tagHash[tag.id] = tag;
+                    parentTag.addChild(tag);
                 });
 
                 return {
                     rootTag: rootTag,
                     tagHash: tagHash
                 };
-            },
-            getHierarchyTopDown: function (tagHash, tagId) {
-                var tags = [];
 
+            },
+
+            getHierarchyTopDown: function (tagHash, tagId) {
+
+                var tags = [];
                 var tag = null;
+
                 do {
                     tag = tagHash[tag ? tag.parentId : tagId];
                     tags.push(tag);
                 } while (tag.parentId > 0);
 
                 return tags.reverse();
+
             },
+
             transformToTagRows: function (tagHash) {
+
                 var tagRows = [];
+
                 angular.forEach(Object.keys(tagHash), function (tagId) {
                     var tag = tagHash[tagId];
                     tagRows.push({
@@ -71,7 +79,9 @@
                         name: tag.name
                     });
                 });
+
                 return tagRows;
+
             }
         };
 
