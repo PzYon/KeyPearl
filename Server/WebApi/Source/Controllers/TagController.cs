@@ -11,7 +11,6 @@ namespace KeyPearl.WebApi.Controllers
     public Tag[] Get()
     {
       return DbContext.Tags
-                      .OrderBy(t => t.ParentId)
                       .ToArray();
     }
 
@@ -21,8 +20,6 @@ namespace KeyPearl.WebApi.Controllers
       DbContext.BatchUpdate(tags);
       DbContext.SaveChanges();
 
-      // we return all tags in order to be able to recreate the tag tree from scratch
-      // on the client without needing to be sure to insert everything in the right place.
       return Get();
     }
   }

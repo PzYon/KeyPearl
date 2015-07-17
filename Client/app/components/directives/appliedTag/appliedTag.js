@@ -1,7 +1,7 @@
 (function (app) {
     "use strict";
 
-    var AppliedTag = function () {
+    var AppliedTagDirective = function () {
 
         return {
             restrict: "A",
@@ -24,7 +24,7 @@
 
     };
 
-    AppliedTag.$inject = [];
-    app.directive("appliedTag", AppliedTag);
+    AppliedTagDirective.$inject = [];
+    app.directive("appliedTag", AppliedTagDirective);
 
 })(keyPearlApp);

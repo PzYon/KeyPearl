@@ -1,4 +1,4 @@
-function Tag(tagRow) {
+function Tag(tagRow, tagHash) {
     "use strict";
 
     Tag.prototype.toggleCollapsed = function () {
@@ -22,11 +22,23 @@ function Tag(tagRow) {
     };
 
     Tag.prototype.addChild = function (tag) {
-        if (!tag) {
-            tag = new Tag({parentId: this.id});
+        if (!tag && !(tag instanceof Tag)) {
+            tag = new Tag(tag, tagHash);
         }
 
+        tag.parentId = this.id;
         this.children.unshift(tag);
+    };
+
+    Tag.prototype.isDescendantOf = function (tag) {
+        var parent = tagHash[this.id];
+        while (parent && parent.id) {
+            if (parent.id === tag.id) {
+                return true;
+            }
+            parent = tagHash[parent.parentId];
+        }
+        return false;
     };
 
     Tag.prototype.canAddChildren = function () {

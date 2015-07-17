@@ -27,22 +27,18 @@
 
             buildTree: function (tagRows, selectedTagIds) {
 
-                var tagHash = {};
-                var parentId = 0;
                 var rootTag = new Tag();
-                var parentTag = rootTag;
+
+                var tagHash = {"0": rootTag};
+                tagRows.map(function (tagRow) {
+                    tagHash[tagRow.id] = new Tag(tagRow, tagHash);
+                });
 
                 angular.forEach(tagRows, function (tagRow) {
-                    var tag = new Tag(tagRow);
-
-                    if (tag.parentId > parentId) {
-                        parentTag = tagHash[tag.parentId];
-                        parentId = parentTag.id;
-                    }
-
+                    var tag = tagHash[tagRow.id];
                     tag.isSelected = selectedTagIds && selectedTagIds.indexOf(tag.id) > -1;
 
-                    tagHash[tag.id] = tag;
+                    var parentTag = tagRow.parentId ? tagHash[tagRow.parentId] : rootTag;
                     parentTag.addChild(tag);
                 });
 
