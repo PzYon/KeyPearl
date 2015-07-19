@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using KeyPearl.Library.Entities.Links;
 using KeyPearl.Library.Entities.Tags;
@@ -39,6 +40,30 @@ namespace KeyPearl.Library.Tests.UnitTests
           new Link {Id = 1, TagString = lv2TagString}
         }
       };
+    }
+
+    [TestMethod]
+    public void UpdateTags_TagStringIsUpdatedWhenTagHierarchyOfLeafChildChanges()
+    {
+      Tag tagToUpdate = GetLv2Tag();
+      tagToUpdate.ParentId = 4;
+
+      TagManager.UpdateTags(dbContext, new List<Tag> {tagToUpdate});
+
+      Link link = dbContext.Links.FirstOrDefault(l => l.Id == 1);
+      Assert.AreEqual("[/4/2/]", link.TagString);
+    }
+
+    [TestMethod]
+    public void UpdateTags_TagStringIsUpdatedWhenTagHierarchyOfNonLeafChildChanges()
+    {
+      Tag tagToUpdate = GetLv1Tag();
+      tagToUpdate.ParentId = 4;
+
+      TagManager.UpdateTags(dbContext, new List<Tag> { tagToUpdate });
+
+      Link link = dbContext.Links.FirstOrDefault(l => l.Id == 1);
+      Assert.AreEqual("[/4/1/2/]", link.TagString);
     }
 
     [TestMethod]

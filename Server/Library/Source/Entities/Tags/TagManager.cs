@@ -13,6 +13,29 @@ namespace KeyPearl.Library.Entities.Tags
     public const char PathStarter = '[';
     public const char PathEnder = ']';
 
+    public static void UpdateTags(IDbContext dbContext, List<Tag> changedTags)
+    {
+      dbContext.BatchUpdate(changedTags);
+
+      // todo: would be nice if logic is only done for tags which actually have changed hieararchy
+      // - do server side?
+      // - rely on flag from client?
+      UpdateTagStrings(dbContext, changedTags);
+    }
+
+    private static void UpdateTagStrings(IDbContext dbContext, List<Tag> changedTags)
+    {
+      string[] patterns = changedTags.Select(t => JoinTagPathElements(t.Id))
+                                     .ToArray();
+
+      // .ToList() is required in order to prevent entity framework exception
+      foreach (Link link in dbContext.Links.Where(l => patterns.Any(p => l.TagString.Contains(p)))
+                                     .ToList())
+      {
+        SyncTagStringWithTagIds(dbContext, link, true);
+      }
+    }
+
     public static int[] GetIdsFromTagString(string tagString)
     {
       if (String.IsNullOrEmpty(tagString))
@@ -30,15 +53,15 @@ namespace KeyPearl.Library.Entities.Tags
                       .ToArray();
     }
 
-    public static void SyncTagStringWithTagIds(IDbContext dbContext, Link link)
+    public static void SyncTagStringWithTagIds(IDbContext dbContext, Link link, bool force = false)
     {
       Link existingLink = dbContext.Links.FirstOrDefault(l => l.Id == link.Id);
-      if (existingLink != null && existingLink.TagIds.SequenceEqual(link.TagIds))
+      if (existingLink != null && !force && existingLink.TagIds.SequenceEqual(link.TagIds))
       {
         return;
       }
 
-      link.TagString = String.Empty;
+      link.ClearTagString();
 
       Tag[] allTags = dbContext.Tags.ToArray();
 
@@ -98,11 +121,14 @@ namespace KeyPearl.Library.Entities.Tags
 
       tagIds.Reverse();
 
-      return String.Concat(PathStarter,
-                           PathSeparator.ToString(),
+      return String.Concat(PathStarter, JoinTagPathElements(tagIds.ToArray()), PathEnder);
+    }
+
+    private static string JoinTagPathElements(params int[] tagIds)
+    {
+      return String.Concat(PathSeparator.ToString(),
                            String.Join(PathSeparator.ToString(), tagIds),
-                           PathSeparator.ToString(),
-                           PathEnder);
+                           PathSeparator.ToString());
     }
   }
 }

@@ -18,7 +18,7 @@
             "<span class='tag-collapsor' data-ng-if='tag.hasChildren()' data-ng-click='tag.toggleCollapsed()'>" +
               "{{tag.isCollapsed ? '+' : '-'}}" +
             "</span>" +
-            "<span class='tag-label' data-draggable-target data-on-drop='onDrop' data-can-drop='canDrop'>" +
+            "<span class='tag-label' title='id: {{tag.id}}' data-draggable-target data-on-drop='onDrop' data-can-drop='canDrop'>" +
               "<input type='text' data-ng-change='handleOnChange(tag)' data-ng-model='tag.name' />" +
             "</span>" +
             "<span class='draggable' data-draggable='tag' data-on-drag-start='onDragStart' data-on-drag-end='onDragEnd'>" +

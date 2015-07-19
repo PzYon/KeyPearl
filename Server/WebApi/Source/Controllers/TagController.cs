@@ -17,7 +17,7 @@ namespace KeyPearl.WebApi.Controllers
     [Route("api/tags/")]
     public Tag[] Post(List<Tag> tags)
     {
-      DbContext.BatchUpdate(tags);
+      TagManager.UpdateTags(DbContext, tags);
       DbContext.SaveChanges();
 
       return Get();

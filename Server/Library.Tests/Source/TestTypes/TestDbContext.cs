@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using KeyPearl.Library.Entities.Links;
 using KeyPearl.Library.Entities.Tags;
 using KeyPearl.Library.Persistance;
@@ -30,9 +31,18 @@ namespace KeyPearl.Library.Tests.TestTypes
       return entity;
     }
 
-    public List<T> BatchUpdate<T>(List<T> entities) where T : class, IEntity
+    // this is so f*cking ugly, but it works and for the moment,
+    // I don't know how to do it better.. :-S
+    public List<T> BatchUpdate<T>(List<T> updated) where T : class, IEntity
     {
-      throw new NotImplementedException();
+      return (updated.First() is Tag
+                ? BatchUpdateTags(updated.OfType<Tag>()
+                                         .ToList())
+                    .OfType<T>()
+                : BatchUpdateLinks(updated.OfType<Link>()
+                                          .ToList())
+                    .OfType<T>())
+        .ToList();
     }
 
     public int SaveChanges()
@@ -43,6 +53,38 @@ namespace KeyPearl.Library.Tests.TestTypes
     public void Dispose()
     {
       // not required for unit tests
+    }
+
+    private List<Tag> BatchUpdateTags(List<Tag> updatedTags)
+    {
+      List<Tag> tags = Tags.ToList();
+      foreach (Tag tag in tags)
+      {
+        Tag updatedTag = updatedTags.FirstOrDefault(e => e.Id == tag.Id);
+        if (updatedTag != null)
+        {
+          Tags.Remove(tag);
+          Tags.Add(updatedTag);
+        }
+      }
+
+      return Tags.ToList();
+    }
+
+    private List<Link> BatchUpdateLinks(List<Link> updatedLinks)
+    {
+      List<Link> links = Links.ToList();
+      foreach (Link link in links)
+      {
+        Link updatedLink = updatedLinks.FirstOrDefault(e => e.Id == link.Id);
+        if (updatedLink != null)
+        {
+          Links.Remove(link);
+          Links.Add(updatedLink);
+        }
+      }
+
+      return Links.ToList();
     }
   }
 }
