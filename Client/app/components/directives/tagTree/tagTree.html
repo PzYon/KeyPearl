@@ -1,6 +1,7 @@
 <ul>
 	<li class="tag-tree-node"
 	    data-ng-repeat="tag in tagTree.children"
+	    data-ng-if="!tag.isHidden"
 	    data-tag-tree-node="tag"
 	    data-parent-tag="tagTree"
 	    data-is-editable="isEditable"

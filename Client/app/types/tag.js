@@ -9,6 +9,14 @@ function Tag(tagRow, tagHash) {
         this.isSelected = !this.isSelected;
     };
 
+    Tag.prototype.toggleVisibility = function (show) {
+        if (angular.isUndefined(show)) {
+            this.isHidden = !this.isHidden;
+        } else {
+            this.isHidden = !show;
+        }
+    };
+
     Tag.prototype.hasChildren = function () {
         return this.children && this.children.length > 0;
     };
@@ -41,6 +49,16 @@ function Tag(tagRow, tagHash) {
         return false;
     };
 
+    Tag.prototype.isRelatedWith = function(tagId) {
+        if (!this.id || this.id === tagId) {
+            // root tag or self
+            return true;
+        }
+
+        var relatedTag = tagHash[tagId];
+        return this.isDescendantOf(relatedTag) || relatedTag.isDescendantOf(this);
+    };
+
     Tag.prototype.canAddChildren = function () {
 
         if (!this.isPersisted()) {
@@ -63,6 +81,7 @@ function Tag(tagRow, tagHash) {
         me.children = [];
         me.isCollapsed = false;
         me.isSelected = false;
+        me.isHidden = false;
 
         if (tagRow) {
             Object.keys(tagRow).map(function (key) {

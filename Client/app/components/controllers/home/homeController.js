@@ -2,16 +2,40 @@
     "use strict";
 
     var HomeController = function (serverApi, tagHelper, navigator) {
+
         var c = this;
 
         c.navigator = navigator;
+
+        var hideUnavailableTags = function () {
+
+            var distinctIds = [];
+            angular.forEach(c.links, function (link) {
+                angular.forEach(link.tagIds, function (tagId) {
+                    if (distinctIds.indexOf(tagId) === -1) {
+                        distinctIds.push(tagId);
+                    }
+                });
+            });
+
+            angular.forEach(c.tagHash, function (tag) {
+                tag.toggleVisibility(false);
+                for (var i = 0; i < distinctIds.length; i++) {
+                    if (tag.isRelatedWith(distinctIds[i])) {
+                        tag.toggleVisibility(true);
+                        break;
+                    }
+                }
+            });
+
+        };
 
         c.setSelectedTagIds = function (tagId) {
             c.selectedTagIds = tagHelper.toggleSelected(c.selectedTagIds, tagId);
             c.loadLinks();
         };
 
-        c.setSearchString = function(searchString){
+        c.setSearchString = function (searchString) {
             c.searchString = searchString;
             c.loadLinks();
         };
@@ -21,8 +45,8 @@
         };
 
         c.setLinks = function (links) {
-            // todo: do we need to ensure that only nodes which are actually available on the data are shown?
             c.links = links;
+            hideUnavailableTags();
         };
 
         c.loadTags = function () {
@@ -44,6 +68,7 @@
         };
 
         c.initialize();
+
     };
 
     HomeController.$inject = ["serverApi", "tagHelper", "navigator"];
