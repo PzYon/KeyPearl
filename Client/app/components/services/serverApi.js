@@ -46,25 +46,28 @@
                     : searchQuery;
         };
 
+        var linksUrl = config.serverApiBaseUrl + config.serverApiLinksUrl;
+        var tagsUrl = config.serverApiBaseUrl + config.serverApiTagsUrl;
+
         return {
             loadLink: function (id, onSuccess) {
-                get(config.serverApiBaseUrl + "links/getbyid/" + id, onSuccess);
+                get(linksUrl + "/getbyid/" + id, onSuccess);
             },
 
             loadLinks: function (searchString, tagIds, onSuccess) {
-                get(config.serverApiBaseUrl + "links/" + buildQuery(searchString, tagIds), onSuccess);
+                get(linksUrl + "/" + buildQuery(searchString, tagIds), onSuccess);
             },
 
             updateLink: function (link, onSuccess) {
-                post(config.serverApiBaseUrl + "links/", link, onSuccess);
+                post(linksUrl, link, onSuccess);
             },
 
             loadTags: function (onSuccess) {
-                get(config.serverApiBaseUrl + "tags/", onSuccess);
+                get(tagsUrl, onSuccess);
             },
 
             updateTags: function (tags, onSuccess) {
-                post(config.serverApiBaseUrl + "tags/", tags, onSuccess);
+                post(tagsUrl, tags, onSuccess);
             }
         };
     };

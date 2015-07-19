@@ -29,7 +29,8 @@ namespace KeyPearl.Library.Entities.Tags
                                      .ToArray();
 
       // .ToList() is required in order to prevent entity framework exception
-      foreach (Link link in dbContext.Links.Where(l => patterns.Any(p => l.TagString.Contains(p)))
+      foreach (Link link in dbContext.Links
+                                     .Where(l => patterns.Any(p => l.TagString.Contains(p)))
                                      .ToList())
       {
         SyncTagStringWithTagIds(dbContext, link, true);

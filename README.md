@@ -1,6 +1,6 @@
-# KeyPearl (a.k.a. Keep Örl a.k.a. KeepUrl)
+# KeyPearl (a.k.a. Keep Örl a.k.a. Keep Url)
 
-Tag based bookmarking application, split into two projects:
+Keyword-based bookmarking application, split into two projects:
 
-- Server-side: WebAPI 2.2
-- Client-side: Angular 1.4, SCSS, etc.
+- Server-side: WebAPI 2.2, Entity Framework
+- Client-side: HTML, Angular 1.4, SCSS/CSS

@@ -13,20 +13,26 @@
             };
 
             var dropHandler = function (event) {
-                var tag = draggableHelper.getData(event);
-                if (!tag) {
+
+                // required for everything to work fine in FF
+                event.preventDefault();
+
+                var entry = draggableHelper.getEntry(event);
+                if (!entry || !entry.data) {
                     return;
                 }
 
                 var isSuccess = false;
+                var object = entry.data;
 
-                if (scope.canDrop()(tag)) {
-                    scope.onDrop()(tag);
+                if (scope.canDrop()(object)) {
+                    scope.onDrop()(object);
                     scope.$apply();
                     isSuccess = true;
                 }
 
-                draggableHelper.callOnDragEnd(tag.id, isSuccess);
+                draggableHelper.callOnDragEnd(entry.key, isSuccess);
+
             };
 
             element.on("dragover", dragOverHandler);

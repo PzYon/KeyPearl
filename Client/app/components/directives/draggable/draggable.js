@@ -20,6 +20,7 @@
             scope.$on("$destroy", function () {
                 element.off("dragstart", dragStartHandler);
             });
+
         };
 
         return {

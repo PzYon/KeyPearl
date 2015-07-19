@@ -8,17 +8,18 @@
 
         var add = function (event, key, object, onDragEnd) {
             items[key] = {
+                key: key,
                 data: object,
                 onDragEnd: onDragEnd
             };
 
-            event.dataTransfer.setData(eventId, key);
+            // key must be a string in order to work in IE
+            event.dataTransfer.setData(eventId, key.toString());
         };
 
-        var getData = function (event) {
+        var getEntry = function (event) {
             var key = event.dataTransfer.getData(eventId);
-            var entry = items[key];
-            return entry ? entry.data : null;
+            return items[key];
         };
 
         var callOnDragEnd = function (key, isSuccess) {
@@ -31,7 +32,7 @@
 
         return {
             add: add,
-            getData: getData,
+            getEntry: getEntry,
             callOnDragEnd: callOnDragEnd
         };
 
