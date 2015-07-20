@@ -13,28 +13,37 @@ namespace KeyPearl.Library.Entities.Tags
     public const char PathStarter = '[';
     public const char PathEnder = ']';
 
-    public static void UpdateTags(IDbContext dbContext, List<Tag> changedTags)
+    public static UpdateTagsResult UpdateTags(IDbContext dbContext, List<Tag> changedTags)
     {
       dbContext.BatchUpdate(changedTags);
 
       // todo: would be nice if logic is only done for tags which actually have changed hieararchy
-      // - do server side?
-      // - rely on flag from client?
-      UpdateTagStrings(dbContext, changedTags);
+      // how? do server side? rely on flag from client?
+      int numberOfUpdatedLinks = UpdateLinkTagStrings(dbContext, changedTags);
+
+      return new UpdateTagsResult
+        {
+          NumberOfUpdatedLinks = numberOfUpdatedLinks,
+          NumberOfUpdatedTags = changedTags.Count
+        };
     }
 
-    private static void UpdateTagStrings(IDbContext dbContext, List<Tag> changedTags)
+    private static int UpdateLinkTagStrings(IDbContext dbContext, List<Tag> changedTags)
     {
       string[] patterns = changedTags.Select(t => JoinTagPathElements(t.Id))
                                      .ToArray();
 
       // .ToList() is required in order to prevent entity framework exception
-      foreach (Link link in dbContext.Links
-                                     .Where(l => patterns.Any(p => l.TagString.Contains(p)))
-                                     .ToList())
+      List<Link> linksToUpdate = dbContext.Links
+                                          .Where(l => patterns.Any(p => l.TagString.Contains(p)))
+                                          .ToList();
+
+      foreach (Link link in linksToUpdate)
       {
         SyncTagStringWithTagIds(dbContext, link, true);
       }
+
+      return linksToUpdate.Count;
     }
 
     public static int[] GetIdsFromTagString(string tagString)

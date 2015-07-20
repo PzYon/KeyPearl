@@ -59,6 +59,10 @@ function Tag(tagRow, tagHash) {
         return this.isDescendantOf(relatedTag) || relatedTag.isDescendantOf(this);
     };
 
+    Tag.prototype.getDisplayName = function () {
+        return !this.id ? "root" : this.name;
+    };
+
     Tag.prototype.canAddChildren = function () {
 
         if (!this.isPersisted()) {
@@ -72,6 +76,10 @@ function Tag(tagRow, tagHash) {
         }
 
         return true;
+    };
+
+    Tag.prototype.getParent = function () {
+        return tagHash[this.parentId];
     };
 
     var me = this;

@@ -6,11 +6,6 @@
      data-on-change-function="c.setChangedTags"
      data-tag-tree="c.tagTree.rootTag"></div>
 
-<!-- todo: use notification service for this? same could be done in linkController -->
-<div data-ng-if="c.numberOfChangedTags > 0">
-	You have changed {{c.numberOfChangedTags}} tags.
-</div>
-
 <button data-ng-click="c.batchUpdateTags()">
 	Update
 </button>

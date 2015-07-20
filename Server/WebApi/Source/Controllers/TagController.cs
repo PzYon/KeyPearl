@@ -15,12 +15,14 @@ namespace KeyPearl.WebApi.Controllers
     }
 
     [Route("api/tags/")]
-    public Tag[] Post(List<Tag> tags)
+    public UpdateTagsResult Post(List<Tag> tags)
     {
-      TagManager.UpdateTags(DbContext, tags);
+      UpdateTagsResult result = TagManager.UpdateTags(DbContext, tags);
       DbContext.SaveChanges();
 
-      return Get();
+      result.Tags = Get();
+
+      return result;
     }
   }
 }

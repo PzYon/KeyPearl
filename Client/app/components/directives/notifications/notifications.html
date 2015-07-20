@@ -1,7 +1,9 @@
 <div class="notifications">
 	<ul>
 		<li data-ng-repeat="notification in notifier.notifications track by $index"
-		    class="notification" data-ng-class="{'error': notification.isError}">
+		    data-ng-class="{'error': notification.isError}"
+		    data-ng-click="notifier.remove(notification)"
+		    class="notification">
 			{{notification.message}}
 		</li>
 	</ul>

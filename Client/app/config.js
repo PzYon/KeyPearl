@@ -6,7 +6,6 @@
         serverApiLinksUrl: "links",
         serverApiTagsUrl: "tags",
         executeQueryAfter: 400,
-        removeNotificationsAfter: 15000,
         showPendingRequestsAfter: 500
     });
 

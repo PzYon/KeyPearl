@@ -1,7 +1,7 @@
 (function (app) {
     "use strict";
 
-    var TagController = function (serverApi, tagHelper) {
+    var TagController = function (serverApi, tagHelper, notifier) {
 
         var c = this;
         var changedTagsHash;
@@ -11,19 +11,35 @@
         };
 
         c.setChangedTags = function (tag) {
-            c.tagTree.tagHash[tag.id] = tag;
-            changedTagsHash[tag.id] = tag;
-            c.numberOfChangedTags = Object.keys(changedTagsHash).length;
+            if (tag) {
+                c.tagTree.tagHash[tag.id] = tag;
+                changedTagsHash[tag.id] = tag;
+            } else {
+                changedTagsHash = {};
+            }
+
+            var numberOfChangedTags = Object.keys(changedTagsHash).length;
+            var notificationKey = "numberOfChangedTags";
+            if (numberOfChangedTags > 0) {
+                notifier.addSuccess("you have changed " + numberOfChangedTags + " tag(s)", notificationKey);
+            } else {
+                notifier.remove(notificationKey);
+            }
         };
 
         c.batchUpdateTags = function () {
-            serverApi.updateTags(tagHelper.transformToTagRows(changedTagsHash), ensureTagTree);
+            serverApi.updateTags(tagHelper.transformToTagRows(changedTagsHash), handleUpdatedTags);
+        };
+
+        var handleUpdatedTags = function (result) {
+            var message = "updated " + result.numberOfUpdatedTags + " tags and adjusted " + result.numberOfUpdatedLinks + " link(s)";
+            notifier.addSuccess(message, "updateTagsInformation");
+
+            ensureTagTree(result.tags);
         };
 
         var ensureTagTree = function (tags) {
-            changedTagsHash = {};
-            c.numberOfChangedTags = 0;
-
+            c.setChangedTags();
             c.tagTree = tagHelper.buildTree(tags);
         };
 
@@ -35,7 +51,7 @@
 
     };
 
-    TagController.$inject = ["serverApi", "tagHelper"];
+    TagController.$inject = ["serverApi", "tagHelper", "notifier"];
     app.controller("tagController", TagController);
 
 })(keyPearlApp);

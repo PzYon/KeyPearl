@@ -1,7 +1,7 @@
 (function (app) {
     "use strict";
 
-    var TagTreeNodeDirective = function ($compile, tagTreeNodeTemplates) {
+    var TagTreeNodeDirective = function ($compile, tagTreeNodeTemplates, notifier) {
 
         var link = function (scope, element) {
 
@@ -38,7 +38,7 @@
                 scope.tag.addChild(draggedTag);
             };
 
-            scope.onDragEnd = function (isSuccess) {
+            scope.onDragEnd = function (draggedTag, isSuccess) {
                 if (!isSuccess) {
                     return;
                 }
@@ -49,6 +49,9 @@
                 if (index > -1) {
                     scope.parentTag.children.splice(index, 1);
                 }
+
+                notifier.addSuccess("moved '" + draggedTag.getDisplayName() +
+                                    "' to '" + draggedTag.getParent().getDisplayName() + "'");
 
                 scope.$apply();
             };
@@ -70,7 +73,7 @@
         };
     };
 
-    TagTreeNodeDirective.$inject = ["$compile", "tagTreeNodeTemplates"];
+    TagTreeNodeDirective.$inject = ["$compile", "tagTreeNodeTemplates", "notifier"];
     app.directive("tagTreeNode", TagTreeNodeDirective);
 
 })(keyPearlApp);

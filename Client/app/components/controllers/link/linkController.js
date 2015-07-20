@@ -1,7 +1,7 @@
 (function (app) {
     "use strict";
 
-    var LinkController = function ($routeParams, $interval, serverApi, tagHelper, navigator) {
+    var LinkController = function ($routeParams, $interval, serverApi, tagHelper, navigator, notifier) {
 
         // todo: add some validation (required: yes/no, format: regex, etc.)
 
@@ -36,7 +36,9 @@
         };
 
         c.updateLink = function () {
-            serverApi.updateLink(c.link, function(link){
+            var isCreate = !c.link.id;
+            serverApi.updateLink(c.link, function (link) {
+                notifier.addSuccess((isCreate ? "Created" : "Updated") + " link '" + link.name + "'");
                 navigator.goToLink(link.id);
             });
         };
@@ -44,7 +46,7 @@
         initialize();
     };
 
-    LinkController.$inject = ["$routeParams", "$interval", "serverApi", "tagHelper", "navigator"];
+    LinkController.$inject = ["$routeParams", "$interval", "serverApi", "tagHelper", "navigator", "notifier"];
     app.controller("linkController", LinkController);
 
 })(keyPearlApp);

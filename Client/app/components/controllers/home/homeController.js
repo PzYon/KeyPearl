@@ -1,13 +1,13 @@
 (function (app) {
     "use strict";
 
-    var HomeController = function (serverApi, tagHelper, navigator) {
+    var HomeController = function (serverApi, tagHelper, navigator, notifier) {
 
         var c = this;
 
         c.navigator = navigator;
 
-        var hideUnavailableTags = function () {
+        var showAvailableTags = function () {
 
             var distinctIds = [];
             angular.forEach(c.links, function (link) {
@@ -28,6 +28,7 @@
                 }
             });
 
+            return distinctIds.length;
         };
 
         c.setSelectedTagIds = function (tagId) {
@@ -46,7 +47,10 @@
 
         c.setLinks = function (links) {
             c.links = links;
-            hideUnavailableTags();
+            var distinctIdsCount =  showAvailableTags();
+
+            var message = "found " + links.length + " links with " + distinctIdsCount + " different tags applied.";
+            notifier.addSuccess(message, "searchResultInformation");
         };
 
         c.loadTags = function () {
@@ -71,7 +75,7 @@
 
     };
 
-    HomeController.$inject = ["serverApi", "tagHelper", "navigator"];
+    HomeController.$inject = ["serverApi", "tagHelper", "navigator", "notifier"];
     app.controller("homeController", HomeController);
 
 })(keyPearlApp);

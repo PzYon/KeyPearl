@@ -22,11 +22,10 @@
             return items[key];
         };
 
-        var callOnDragEnd = function (key, isSuccess) {
-            var entry = items[key];
-            delete items[key];
+        var callOnDragEnd = function (entry, isSuccess) {
+            delete items[entry.key];
             if (angular.isFunction(entry.onDragEnd)) {
-                entry.onDragEnd(isSuccess);
+                entry.onDragEnd(entry.data, isSuccess);
             }
         };
 

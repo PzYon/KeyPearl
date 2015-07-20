@@ -31,7 +31,7 @@
                     isSuccess = true;
                 }
 
-                draggableHelper.callOnDragEnd(entry.key, isSuccess);
+                draggableHelper.callOnDragEnd(entry, isSuccess);
 
             };
 

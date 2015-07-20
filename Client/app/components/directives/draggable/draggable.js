@@ -5,8 +5,8 @@
 
         var link = function (scope, element) {
 
-            var onDragEnd = function (isSuccess) {
-                scope.onDragEnd()(isSuccess);
+            var onDragEnd = function (object, isSuccess) {
+                scope.onDragEnd()(object, isSuccess);
             };
 
             var dragStartHandler = function (event) {

@@ -1,9 +1,10 @@
 (function (app) {
     "use strict";
 
-    var NavigatorService = function ($window) {
+    var NavigatorService = function ($window, notifier) {
 
         var goTo = function (url) {
+            notifier.clear();
             $window.location.hash = "#" + url;
         };
 
@@ -36,7 +37,7 @@
 
     };
 
-    NavigatorService.$inject = ["$window"];
+    NavigatorService.$inject = ["$window", "notifier"];
     app.service("navigator", NavigatorService);
 
 })(keyPearlApp);
