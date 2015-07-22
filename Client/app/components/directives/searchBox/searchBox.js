@@ -12,6 +12,11 @@
                 scope.onTagChange({tags: scope.searchHelper.selectedTags});
             };
 
+            scope.resetSelectedTags = function () {
+                scope.searchHelper.resetSelectedTags();
+                scope.onTagChange({tags: []});
+            };
+
             // todo: we need some kind of dropdown here
             // todo: also consider renaming "matchingTags"
             scope.showMatchingTags = function (tagSearchString) {

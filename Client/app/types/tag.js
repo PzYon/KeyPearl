@@ -5,8 +5,11 @@ function Tag(tagRow, tagHash) {
         this.isCollapsed = !this.isCollapsed;
     };
 
-    Tag.prototype.toggleSelected = function () {
-        this.isSelected = !this.isSelected;
+    Tag.prototype.toggleSelected = function (isSelected) {
+        this.isSelected = angular.isDefined(isSelected)
+            ? isSelected
+            : !this.isSelected;
+
         return this.isSelected;
     };
 
@@ -87,6 +90,7 @@ function Tag(tagRow, tagHash) {
 
     var constructor = function () {
 
+        me.id = 0;
         me.children = [];
         me.isCollapsed = false;
         me.isSelected = false;

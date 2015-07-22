@@ -18,6 +18,21 @@
             c.loadLinks();
         };
 
+        c.setLinks = function (links) {
+            c.links = links;
+
+            notifier.clear();
+
+            if (!links.length) {
+                notifier.addError("no links found matching your criteria, please reset and try again...");
+                return;
+            }
+
+            var availableTagsCount = searchHelper.showAvailableTags(links);
+            var message = "found " + links.length + " links with " + availableTagsCount + " different tags applied.";
+            notifier.addSuccess(message, "searchResultInformation");
+        };
+
         c.loadLinks = function () {
             var tagIds = [];
             angular.forEach(c.selectedTags, function (tag) {
@@ -25,14 +40,6 @@
             });
 
             serverApi.loadLinks(c.searchString, tagIds.join(";"), c.setLinks);
-        };
-
-        c.setLinks = function (links) {
-            c.links = links;
-            var availableTagsCount = searchHelper.showAvailableTags(links);
-
-            var message = "found " + links.length + " links with " + availableTagsCount + " different tags applied.";
-            notifier.addSuccess(message, "searchResultInformation");
         };
 
         c.initialize = function () {

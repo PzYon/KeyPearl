@@ -11,14 +11,21 @@
             });
         };
 
-        var toggleSelectedTag = function (tag) {
-            var isSelected = instance.tagHash[tag.id].toggleSelected();
+        var toggleSelectedTag = function (tag, isSelected) {
+            isSelected = instance.tagHash[tag.id].toggleSelected(isSelected);
+
             var index = instance.selectedTags.indexOf(tag);
             if (isSelected && index === -1) {
                 instance.selectedTags.push(tag);
             } else if (!isSelected && index > -1) {
                 instance.selectedTags.splice(index, 1);
             }
+        };
+
+        var resetSelectedTags = function () {
+            angular.forEach(instance.tagHash, function (tag) {
+                toggleSelectedTag(tag, false);
+            });
         };
 
         var toggleSelectedTags = function (tags) {
@@ -38,7 +45,8 @@
         var instance = {
             selectedTags: [],
             toggleSelectedTags: toggleSelectedTags,
-            showAvailableTags: showAvailableTags
+            showAvailableTags: showAvailableTags,
+            resetSelectedTags: resetSelectedTags
         };
 
         return instance;
