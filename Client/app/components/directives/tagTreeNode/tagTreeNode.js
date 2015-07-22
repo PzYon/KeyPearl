@@ -16,8 +16,7 @@
             $compile(element.contents())(scope);
 
             scope.handleOnSelect = function (tag) {
-                tag.toggleSelected();
-                scope.onSelect({tagId: tag.id});
+                scope.onSelect({tag: tag});
             };
 
             scope.handleOnChange = function (tag) {

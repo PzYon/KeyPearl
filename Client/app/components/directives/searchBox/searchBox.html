@@ -1,0 +1,41 @@
+<div>
+	Free text:
+	<div>
+		<input type='text'
+		       data-ng-model='searchString'
+		       data-ng-change='searchByStringDelayed()'/>
+	</div>
+</div>
+
+<div>
+	Tags:
+	<div>
+		<div data-ng-if="!showTree">
+			<input type="text"
+			       data-ng-model="tagSearchString"
+			       data-ng-change="showMatchingTags(tagSearchString)"/>
+
+			<div tag-tree-search
+			     data-ng-if="searchHelper.tagHash"
+			     data-on-select="toggleSelectedTags(tags)"
+			     data-tag-hash="searchHelper.tagHash"></div>
+			<div>
+			<span style="margin: 3px; font-size: 0.8rem; cursor: pointer;"
+			      data-ng-repeat="tag in matchingTags"
+			      data-ng-click="toggleSelectedTags(tag)">{{tag.name}}</span>
+			</div>
+		</div>
+
+		<div class="tag-tree"
+		     data-ng-if="showTree"
+		     data-on-select="toggleSelectedTags(tags)"
+		     data-on-select-function="toggleSelectedTags"
+		     data-tag-tree="searchHelper.rootTag"></div>
+
+		<span class="action-link">
+		     <a href="javascript: void(0);" data-ng-click="showTree = !showTree">
+			     {{showTree ? "show search" : "show tree"}}
+		     </a>
+		</span>
+	</div>
+</div>

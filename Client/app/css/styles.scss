@@ -68,7 +68,7 @@ ul {
 }
 
 .tag-tree,
-.search-box {
+input {
   font-size: 0.9rem;
 }
 
@@ -93,18 +93,6 @@ ul {
     .tag-adder {
       cursor: pointer;
     }
-
-    .tag-label {
-      cursor: pointer;
-
-      &.selected {
-        font-weight: bold;
-      }
-
-      input {
-        margin: 2px;
-      }
-    }
   }
 }
 
@@ -117,8 +105,19 @@ ul {
   }
 }
 
-.link-list {
+.tag-label {
+  cursor: pointer;
 
+  &.selected {
+    font-weight: bold;
+  }
+
+  input {
+    margin: 2px;
+  }
+}
+
+.link-list {
   .link {
     padding: 5px 0;
 
@@ -156,12 +155,12 @@ ul {
         }
       }
     }
-
-    .action-link {
-      font-size: 0.8rem;
-      cursor: pointer;
-    }
   }
+}
+
+.action-link {
+  font-size: 0.8rem;
+  cursor: pointer;
 }
 
 .draggable {

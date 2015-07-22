@@ -1,15 +1,9 @@
-<h2>Tag Tree</h2>
-<div class="tag-tree"
-     data-on-select="c.setSelectedTagIds(tagId)"
-     data-on-select-function="c.setSelectedTagIds"
-     data-tag-tree="c.rootTag"></div>
-
 <h2>Search</h2>
 <div class="search-box"
      data-search-box
-     data-on-change="c.setSearchString(searchString)"></div>
+     data-on-change="c.setSearchString(searchString)"
+     data-on-tag-change="c.setSelectedTags(tags)"></div>
 
-<h2>Links</h2>
 <ul class="link-list">
 	<li class="link" data-ng-repeat="link in c.links">
 		<a class="title" data-ng-href="{{link.url}}" title="{{link.url}}" target="_blank">
@@ -20,8 +14,8 @@
 		</div>
 		<div class="tags"
 		     data-applied-tags
-		     data-tag-hash="c.tagHash"
-		     data-ng-if="c.tagHash"
+		     data-tag-hash="c.searchHelper.tagHash"
+		     data-ng-if="c.searchHelper.tagHash"
 		     data-tag-ids="link.tagIds"></div>
 		<span class="action-link">
 			<a href="javascript: void(0);" data-ng-click="c.navigator.goToLink(link.id)">

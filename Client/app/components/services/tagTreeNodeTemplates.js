@@ -11,7 +11,7 @@
             "<span class='tag-label' data-ng-click='handleOnSelect(tag)' data-ng-class='{selected: tag.isSelected}'>" +
                 "{{tag.name}}" +
             "</span>" +
-            "<span data-tag-tree='tag' data-on-select='onSelectFunction(tag.id)' " +
+            "<span data-tag-tree='tag' data-on-select='onSelectFunction(tag)' " +
                   "data-on-select-function='onSelectFunction' data-ng-if='!tag.isCollapsed'></span>";
 
         // todo: add possibility to delete tags

@@ -7,6 +7,7 @@ function Tag(tagRow, tagHash) {
 
     Tag.prototype.toggleSelected = function () {
         this.isSelected = !this.isSelected;
+        return this.isSelected;
     };
 
     Tag.prototype.toggleVisibility = function (show) {

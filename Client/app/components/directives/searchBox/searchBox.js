@@ -1,13 +1,38 @@
 (function (app) {
     "use strict";
 
-    var SearchBoxDirective = function ($timeout, config) {
+    var SearchBoxDirective = function ($timeout, searchHelper, config) {
 
         var link = function (scope) {
 
-            var delay = null;
+            scope.searchHelper = searchHelper;
 
-            scope.fireChange = function () {
+            scope.toggleSelectedTags = function (tags) {
+                scope.searchHelper.toggleSelectedTags(tags);
+                scope.onTagChange({tags: scope.searchHelper.selectedTags});
+            };
+
+            // todo: we need some kind of dropdown here
+            // todo: also consider renaming "matchingTags"
+            scope.showMatchingTags = function (tagSearchString) {
+                scope.matchingTags = [];
+
+                if (!tagSearchString) {
+                    return;
+                }
+
+                tagSearchString = tagSearchString.toLowerCase();
+
+                angular.forEach(scope.searchHelper.tagHash, function (tag) {
+                    var isMatch = tag.name && tag.name.toLowerCase().indexOf(tagSearchString) > -1;
+                    if (isMatch) {
+                        scope.matchingTags.push(tag);
+                    }
+                });
+            };
+
+            var delay = null;
+            scope.searchByStringDelayed = function () {
                 if (delay) {
                     $timeout.cancel(delay);
                 }
@@ -23,15 +48,16 @@
         return {
             restrict: "A",
             scope: {
-                onChange: "&"
+                onChange: "&",
+                onTagChange: "&"
             },
-            template: "SearchString: <input type='text' data-ng-model='searchString' data-ng-change='fireChange()' />",
+            templateUrl: "components/directives/searchBox/searchBox.html",
             link: link
         };
 
     };
 
-    SearchBoxDirective.$inject = ["$timeout", "config"];
+    SearchBoxDirective.$inject = ["$timeout", "searchHelper", "config"];
     app.directive("searchBox", SearchBoxDirective);
 
 })(keyPearlApp);

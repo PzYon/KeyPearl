@@ -8,21 +8,41 @@
     var TagHelperService = function () {
 
         return {
-            toggleSelected: function (tagIds, tagId) {
-
-                if (!tagIds) {
-                    tagIds = [];
+            toggleApplied: function (link, tagId) {
+                if (!link.tagIds) {
+                    link.tagIds = [];
                 }
 
-                var index = tagIds.indexOf(tagId);
+                var index = link.tagIds.indexOf(tagId);
                 if (index > -1) {
-                    tagIds.splice(index, 1);
+                    link.tagIds.splice(index, 1);
                 } else {
-                    tagIds.push(tagId);
+                    link.tagIds.push(tagId);
                 }
+            },
 
-                return tagIds;
+            showAvailableTags: function (links, tagHash) {
 
+                var distinctIds = [];
+                angular.forEach(links, function (link) {
+                    angular.forEach(link.tagIds, function (tagId) {
+                        if (distinctIds.indexOf(tagId) === -1) {
+                            distinctIds.push(tagId);
+                        }
+                    });
+                });
+
+                angular.forEach(tagHash, function (tag) {
+                    tag.toggleVisibility(false);
+                    for (var i = 0; i < distinctIds.length; i++) {
+                        if (tag.isRelatedWith(distinctIds[i])) {
+                            tag.toggleVisibility(true);
+                            break;
+                        }
+                    }
+                });
+
+                return distinctIds.length;
             },
 
             buildTree: function (tagRows, selectedTagIds) {

@@ -18,8 +18,8 @@
                 changedTagsHash = {};
             }
 
-            var numberOfChangedTags = Object.keys(changedTagsHash).length;
             var notificationKey = "numberOfChangedTags";
+            var numberOfChangedTags = Object.keys(changedTagsHash).length;
             if (numberOfChangedTags > 0) {
                 notifier.addSuccess("you have changed " + numberOfChangedTags + " tag(s)", notificationKey);
             } else {
@@ -32,7 +32,8 @@
         };
 
         var handleUpdatedTags = function (result) {
-            var message = "updated " + result.numberOfUpdatedTags + " tags and adjusted " + result.numberOfUpdatedLinks + " link(s)";
+            var message = "updated " + result.numberOfUpdatedTags + " tag(s) and adjusted " +
+                          result.numberOfUpdatedLinks + " link(s)";
             notifier.addSuccess(message, "updateTagsInformation");
 
             ensureTagTree(result.tags);

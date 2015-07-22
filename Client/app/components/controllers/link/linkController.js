@@ -31,15 +31,16 @@
             });
         };
 
-        c.setSelectedTagIds = function (tagId) {
-            c.link.tagIds = tagHelper.toggleSelected(c.link.tagIds, tagId);
+        c.toggleAppliedTag = function (tag) {
+            tag.toggleSelected();
+            tagHelper.toggleApplied(c.link, tag.id);
         };
 
         c.updateLink = function () {
             var isCreate = !c.link.id;
             serverApi.updateLink(c.link, function (link) {
-                notifier.addSuccess((isCreate ? "Created" : "Updated") + " link '" + link.name + "'");
                 navigator.goToLink(link.id);
+                notifier.addSuccess((isCreate ? "Created" : "Updated") + " link '" + link.name + "'");
             });
         };
 
