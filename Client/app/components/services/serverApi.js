@@ -5,8 +5,8 @@
 
         var errorHandler = function (data, status, headers, config) {
             var message = status
-                    ? config.url + ": " + data.exceptionMessage
-                    : "Cannot connect to server.. Maybe it's down?";
+                ? config.url + ": " + data.exceptionMessage
+                : "Cannot connect to server.. Maybe it's down?";
             notifier.addError(message);
         };
 
@@ -42,8 +42,8 @@
             }
 
             return searchQuery.length
-                    ? "?queryString=" + searchQuery
-                    : searchQuery;
+                ? "?queryString=" + searchQuery
+                : searchQuery;
         };
 
         var linksUrl = config.serverApiBaseUrl + config.serverApiLinksUrl;

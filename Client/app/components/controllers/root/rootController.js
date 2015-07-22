@@ -1,4 +1,4 @@
-(function(app){
+(function (app) {
     "use strict";
 
     var RootController = function (navigator, notifier) {

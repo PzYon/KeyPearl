@@ -9,8 +9,8 @@
             // e.g. isEditable && onChangeFunction == 'undefined'
 
             var template = scope.isEditable
-                    ? tagTreeNodeTemplates.editableTemplate
-                    : tagTreeNodeTemplates.defaultTemplate;
+                ? tagTreeNodeTemplates.editableTemplate
+                : tagTreeNodeTemplates.defaultTemplate;
 
             element.append(template);
             $compile(element.contents())(scope);

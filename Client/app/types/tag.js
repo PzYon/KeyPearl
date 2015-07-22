@@ -50,7 +50,7 @@ function Tag(tagRow, tagHash) {
         return false;
     };
 
-    Tag.prototype.isRelatedWith = function(tagId) {
+    Tag.prototype.isRelatedWith = function (tagId) {
         if (!this.id || this.id === tagId) {
             // root tag or self
             return true;

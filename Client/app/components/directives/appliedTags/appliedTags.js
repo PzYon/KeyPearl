@@ -13,7 +13,7 @@
             link: function (scope) {
                 scope.tagHierarchies = [];
 
-                angular.forEach(scope.tagIds, function(tagId){
+                angular.forEach(scope.tagIds, function (tagId) {
                     scope.tagHierarchies.push(tagHelper.getHierarchyTopDown(scope.tagHash, tagId));
                 });
             }
