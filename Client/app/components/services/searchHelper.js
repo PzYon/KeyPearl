@@ -29,6 +29,7 @@
         };
 
         var toggleSelectedTags = function (tags) {
+            instance.tagSearchString = null;
             if (angular.isArray(tags)) {
                 angular.forEach(tags, toggleSelectedTag);
             } else {

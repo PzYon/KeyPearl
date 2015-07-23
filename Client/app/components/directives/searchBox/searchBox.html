@@ -1,28 +1,34 @@
 <div>
-	Free text:
 	<div>
-		<input type='text'
-		       data-ng-model='searchString'
-		       data-ng-change='searchByStringDelayed()'/>
+		<input type="text"
+		       placeholder="free text..."
+		       data-ng-model="searchHelper.searchString"
+		       data-ng-change="searchByStringDelayed()"/>
 	</div>
 </div>
 
 <div>
-	Tags:
 	<div>
-		<div data-ng-if="!showTree">
+		<span data-action-link="resetSelectedTags">
+			reset tags
+		</span>
+		<span data-action-link="toggleTree">
+			{{showTree ? "show search" : "show tree"}}
+		</span>
+		<div class="tag-search" data-ng-if="!showTree">
 			<input type="text"
-			       data-ng-model="tagSearchString"
-			       data-ng-change="showMatchingTags(tagSearchString)"/>
-
-			<div tag-tree-search
-			     data-ng-if="searchHelper.tagHash"
-			     data-on-select="toggleSelectedTags(tags)"
-			     data-tag-hash="searchHelper.tagHash"></div>
+			       placeholder="tags..."
+			       data-ng-model="searchHelper.tagSearchString"
+			       data-ng-change="setMatchingTags()"/>
+			<div data-ng-if="searchHelper.tagSearchString"
+				 data-dropdown="matchingTags"
+			     data-on-select="toggleSelectedTags"></div>
 			<div>
-			<span style="margin: 3px; font-size: 0.8rem; cursor: pointer;"
-			      data-ng-repeat="tag in matchingTags"
-			      data-ng-click="toggleSelectedTags(tag)">{{tag.name}}</span>
+				<span class="selected-tag"
+				      data-ng-repeat="tag in searchHelper.selectedTags"
+				      data-ng-click="toggleSelectedTags(tag)">
+					{{tag.name}}
+				</span>
 			</div>
 		</div>
 
@@ -31,13 +37,5 @@
 		     data-on-select="toggleSelectedTags(tags)"
 		     data-on-select-function="toggleSelectedTags"
 		     data-tag-tree="searchHelper.rootTag"></div>
-
-		<span data-action-link="resetSelectedTags">
-			reset tags
-		</span>
-		<span data-action-link="toggleTree">
-			{{showTree ? "show search" : "show tree"}}
-		</span>
-
 	</div>
 </div>

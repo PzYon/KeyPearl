@@ -15,6 +15,18 @@
             });
         };
 
+        var addError = function addError(message) {
+            add(message, true);
+        };
+
+        var addSuccess = function addSuccess(message, key) {
+            add(message, false, key);
+        };
+
+        var clear = function () {
+            instance.notifications = [];
+        };
+
         var remove = function (notificationOrKey) {
             if (angular.isObject(notificationOrKey)) {
                 var index = instance.notifications.indexOf(notificationOrKey);
@@ -32,19 +44,11 @@
             }
         };
 
-        var clear = function () {
-            instance.notifications = [];
-        };
-
         var instance = {
             pendingRequests: 0,
             notifications: [],
-            addError: function addError(message) {
-                add(message, true);
-            },
-            addSuccess: function addSuccess(message, key) {
-                add(message, false, key);
-            },
+            addError: addError,
+            addSuccess: addSuccess,
             remove: remove,
             clear: clear
         };

@@ -2,7 +2,8 @@ $page-background-color: #FFF;
 $notification-background-color: #EEE;
 $main-font-color: #555;
 $error-font-color: #990000;
-$highlight-font-color: #006699;
+$action-font-color: #006699;
+$action-hover-font-color: #2288BB;
 $tooltip-background-color: #EEE;
 $tooltip-border-color: #CCC;
 
@@ -20,8 +21,12 @@ body {
 }
 
 a {
-  color: $highlight-font-color;
+  color: $action-font-color;
   text-decoration: none;
+
+  &:hover {
+    color: $action-hover-font-color;
+  }
 }
 
 ul {
@@ -166,4 +171,39 @@ input {
 
 .draggable {
   cursor: move;
+}
+
+.dropdown {
+  position: relative;
+  z-index: 10;
+
+  .list {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 0;
+    background-color: $tooltip-background-color;
+    border: 1px solid $tooltip-border-color;
+
+    .item {
+      margin: 3px;
+      font-size: 0.8rem;
+      cursor: pointer;
+
+      &:hover,
+      &.active {
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+.tag-search {
+  .selected-tag {
+    border: 1px solid $tooltip-border-color;
+    background-color: $tooltip-background-color;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-right: 5px;
+  }
 }

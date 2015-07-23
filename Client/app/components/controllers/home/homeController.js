@@ -8,17 +8,7 @@
         c.navigator = navigator;
         c.searchHelper = searchHelper;
 
-        c.setSelectedTags = function (tags) {
-            c.selectedTags = tags;
-            c.loadLinks();
-        };
-
-        c.setSearchString = function (searchString) {
-            c.searchString = searchString;
-            c.loadLinks();
-        };
-
-        c.setLinks = function (links) {
+        var setLinks = function (links) {
             c.links = links;
 
             notifier.clear();
@@ -35,21 +25,14 @@
 
         c.loadLinks = function () {
             var tagIds = [];
-            angular.forEach(c.selectedTags, function (tag) {
+            angular.forEach(c.searchHelper.selectedTags, function (tag) {
                 tagIds.push(tag.id);
             });
 
-            serverApi.loadLinks(c.searchString, tagIds.join(";"), c.setLinks);
+            serverApi.loadLinks(c.searchHelper.searchString, tagIds.join(";"), setLinks);
         };
 
-        c.initialize = function () {
-            c.selectedTags = [];
-            c.searchString = "";
-
-            c.loadLinks();
-        };
-
-        c.initialize();
+        c.loadLinks();
 
     };
 

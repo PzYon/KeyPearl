@@ -1,0 +1,10 @@
+<div class="dropdown" data-ng-if="items.length">
+	<ul class="list">
+		<li class="item"
+		    data-ng-repeat="item in items"
+		    data-ng-click="onSelect()(item)"
+		    data-ng-class="{'active': $index == activeItemIndex}">
+			{{item.name}}
+		</li>
+	</ul>
+</div>

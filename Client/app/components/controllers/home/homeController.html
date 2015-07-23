@@ -1,26 +1,22 @@
-<h2>Search</h2>
 <div class="search-box"
      data-search-box
-     data-on-change="c.setSearchString(searchString)"
-     data-on-tag-change="c.setSelectedTags(tags)"></div>
+     data-on-change="c.loadLinks()"></div>
 
 <ul class="link-list">
 	<li class="link" data-ng-repeat="link in c.links">
 		<a class="title" data-ng-href="{{link.url}}" title="{{link.url}}" target="_blank">
 			{{link.name}}
 		</a>
+		<span class="tags"
+		      data-ng-if="c.searchHelper.tagHash"
+		      data-applied-tags
+		      data-tag-hash="c.searchHelper.tagHash"
+		      data-tag-ids="link.tagIds"></span>
 		<div class="details">
 			{{link.description}}
 		</div>
-		<div class="tags"
-		     data-applied-tags
-		     data-tag-hash="c.searchHelper.tagHash"
-		     data-ng-if="c.searchHelper.tagHash"
-		     data-tag-ids="link.tagIds"></div>
-		<ul>
 		<span data-action-link="c.navigator.goToLink(link.id)">
 			edit
 		</span>
-		</ul>
 	</li>
 </ul>

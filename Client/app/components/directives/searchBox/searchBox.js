@@ -8,57 +8,50 @@
             scope.searchHelper = searchHelper;
 
             scope.toggleSelectedTags = function (tags) {
-                scope.searchHelper.toggleSelectedTags(tags);
-                scope.onTagChange({tags: scope.searchHelper.selectedTags});
+                searchHelper.toggleSelectedTags(tags);
+                scope.onChange();
             };
 
             scope.resetSelectedTags = function () {
-                scope.searchHelper.resetSelectedTags();
-                scope.onTagChange({tags: []});
+                searchHelper.resetSelectedTags();
+                scope.onChange();
             };
 
             scope.toggleTree = function () {
                 scope.showTree = !scope.showTree;
             };
 
-            // todo: we need some kind of dropdown here
-            // todo: also consider renaming "matchingTags"
-            scope.showMatchingTags = function (tagSearchString) {
+            scope.setMatchingTags = function () {
                 scope.matchingTags = [];
 
-                if (!tagSearchString) {
+                if (!searchHelper.tagSearchString) {
                     return;
                 }
 
-                tagSearchString = tagSearchString.toLowerCase();
+                searchHelper.tagSearchString = searchHelper.tagSearchString.toLowerCase();
 
                 angular.forEach(scope.searchHelper.tagHash, function (tag) {
-                    var isMatch = tag.name && tag.name.toLowerCase().indexOf(tagSearchString) > -1;
+                    var isMatch = tag.name && tag.name.toLowerCase().indexOf(searchHelper.tagSearchString) > -1;
                     if (isMatch) {
                         scope.matchingTags.push(tag);
                     }
                 });
             };
 
-            var delay = null;
+            var delayed = null;
             scope.searchByStringDelayed = function () {
-                if (delay) {
-                    $timeout.cancel(delay);
+                if (delayed) {
+                    $timeout.cancel(delayed);
                 }
 
-                delay = $timeout(function () {
-                    scope.onChange({
-                        searchString: scope.searchString
-                    });
-                }, config.executeQueryAfter);
+                delayed = $timeout(scope.onChange, config.executeQueryAfter);
             };
         };
 
         return {
             restrict: "A",
             scope: {
-                onChange: "&",
-                onTagChange: "&"
+                onChange: "&"
             },
             templateUrl: "components/directives/searchBox/searchBox.html",
             link: link

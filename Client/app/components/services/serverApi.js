@@ -6,7 +6,7 @@
         var errorHandler = function (data, status, headers, config) {
             var message = status
                 ? config.url + ": " + data.exceptionMessage
-                : "Cannot connect to server.. Maybe it's down?";
+                : "cannot connect to server.. maybe it's down?";
             notifier.addError(message);
         };
 
