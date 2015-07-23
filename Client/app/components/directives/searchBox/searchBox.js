@@ -17,6 +17,10 @@
                 scope.onTagChange({tags: []});
             };
 
+            scope.toggleTree = function () {
+                scope.showTree = !scope.showTree;
+            };
+
             // todo: we need some kind of dropdown here
             // todo: also consider renaming "matchingTags"
             scope.showMatchingTags = function (tagSearchString) {

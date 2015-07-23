@@ -32,16 +32,12 @@
 		     data-on-select-function="toggleSelectedTags"
 		     data-tag-tree="searchHelper.rootTag"></div>
 
-		<!-- todo: add action-link directive -->
-		<span class="action-link">
-			<a href="javascript: void(0);" data-ng-click="showTree = !showTree">
-				{{showTree ? "show search" : "show tree"}}
-			</a>
+		<span data-action-link="resetSelectedTags">
+			reset tags
 		</span>
-		<span class="action-link">
-			<a href="javascript: void(0);" data-ng-click="resetSelectedTags()">
-				reset tags
-			</a>
+		<span data-action-link="toggleTree">
+			{{showTree ? "show search" : "show tree"}}
 		</span>
+
 	</div>
 </div>
