@@ -67,6 +67,22 @@ function Tag(tagRow, tagHash) {
         return !this.id ? "root" : this.name;
     };
 
+    Tag.prototype.getHierarchyTopDown = function () {
+
+        var tags = [];
+        var tag = this;
+
+        do {
+            tags.push(tag);
+            tag = tag.getParent();
+        } while (tag.id);
+
+        // todo: add function isRoot()
+
+        return tags.reverse();
+
+    };
+
     Tag.prototype.canAddChildren = function () {
 
         if (!this.isPersisted()) {

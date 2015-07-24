@@ -24,12 +24,12 @@
 				 data-dropdown="matchingTags"
 			     data-on-select="toggleSelectedTags"></div>
 			<div>
-				<span class="selected-tag"
-				      data-ng-repeat="tag in searchHelper.selectedTags"
-				      data-ng-click="toggleSelectedTags(tag)">
-					{{tag.name}}
-				</span>
+				<span class="tags"
+				      data-ng-if="searchHelper.tagHash"
+				      data-tags="searchHelper.selectedTags"
+				      data-tag-hash="searchHelper.tagHash"></span>
 			</div>
+			<!-- data-ng-click="toggleSelectedTags(tag)" for tags directive -->
 		</div>
 
 		<div class="tag-tree"

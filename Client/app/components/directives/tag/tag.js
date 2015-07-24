@@ -1,16 +1,17 @@
 (function (app) {
     "use strict";
 
-    var AppliedTagDirective = function () {
+    var TagDirective = function () {
 
         return {
             restrict: "A",
             scope: {
-                tagHierarchy: "=appliedTag"
+                tag: "="
             },
-            templateUrl: "components/directives/appliedTag/appliedTag.html",
+            templateUrl: "components/directives/tag/tag.html",
             link: function (scope) {
-                scope.tag = scope.tagHierarchy[scope.tagHierarchy.length - 1];
+
+                scope.tagHierarchy = scope.tag.getHierarchyTopDown();
 
                 scope.onMouseOver = function () {
                     scope.isHover = true;
@@ -19,12 +20,13 @@
                 scope.onMouseLeave = function () {
                     scope.isHover = false;
                 };
+
             }
         };
 
     };
 
-    AppliedTagDirective.$inject = [];
-    app.directive("appliedTag", AppliedTagDirective);
+    TagDirective.$inject = [];
+    app.directive("tag", TagDirective);
 
 })(keyPearlApp);

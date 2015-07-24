@@ -98,6 +98,18 @@ input {
     .tag-adder {
       cursor: pointer;
     }
+
+    .tag-label {
+      cursor: pointer;
+
+      &.selected {
+        font-weight: bold;
+      }
+
+      input {
+        margin: 2px;
+      }
+    }
   }
 }
 
@@ -110,55 +122,56 @@ input {
   }
 }
 
-.tag-label {
-  cursor: pointer;
-
-  &.selected {
-    font-weight: bold;
-  }
-
-  input {
-    margin: 2px;
-  }
-}
-
 .link-list {
   .link {
     padding: 5px 0;
 
     .title {
-      font-weight: bold;
+      font-size: 1.2rem;
     }
 
     .details {
       font-size: 0.9rem;
     }
+  }
+}
 
-    .tags {
-      font-size: 0.9rem;
+.tags {
+  display: inline-block;
+  position: relative;
+  vertical-align: top;
+  margin-right: 20px;
 
-      .tag-hierarchy {
-        display: inline-block;
-        position: relative;
-        vertical-align: top;
-        margin-right: 20px;
+  .tag {
+    font-size: 0.8rem;
 
-        .applied-tag {
-          .tag-label {
-            padding: 0 10px;
-            display: inline-block;
-          }
+    .label {
+      display: inline-block;
+      white-space: nowrap;
+      padding: 2px;
+      background-color: $tooltip-background-color;
+      border: 1px solid $tooltip-border-color;
+    }
 
-          .tooltip {
-            z-index: 1;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            white-space: nowrap;
-            background-color: $tooltip-background-color;
-            border: 1px solid $tooltip-border-color;
-          }
-        }
+    .tooltip {
+      z-index: 1;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      margin: 0;
+    }
+
+    &:hover {
+      border: 0;
+
+      .label {
+        background-color: $tooltip-background-color;
+        border-color: $tooltip-background-color;
+      }
+
+      .tooltip {
+        background-color: $tooltip-background-color;
+        border: 1px solid $tooltip-border-color;
       }
     }
   }
@@ -195,15 +208,5 @@ input {
         font-weight: bold;
       }
     }
-  }
-}
-
-.tag-search {
-  .selected-tag {
-    border: 1px solid $tooltip-border-color;
-    background-color: $tooltip-background-color;
-    font-size: 0.9rem;
-    cursor: pointer;
-    margin-right: 5px;
   }
 }

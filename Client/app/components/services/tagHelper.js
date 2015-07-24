@@ -69,20 +69,6 @@
 
             },
 
-            getHierarchyTopDown: function (tagHash, tagId) {
-
-                var tags = [];
-                var tag = null;
-
-                do {
-                    tag = tagHash[tag ? tag.parentId : tagId];
-                    tags.push(tag);
-                } while (tag.parentId > 0);
-
-                return tags.reverse();
-
-            },
-
             transformToTagRows: function (tagHash) {
 
                 var tagRows = [];
