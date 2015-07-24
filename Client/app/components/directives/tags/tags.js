@@ -25,9 +25,11 @@
             restrict: "A",
             scope: {
                 tagHash: "=",
-                tags: "="
+                tags: "=",
+                onClick: "="
             },
-            template: "<div class='tags' data-ng-repeat='tag in tags' data-tag='tag'></div>",
+            template: "<span class='tags' data-ng-repeat='tag in tags' " +
+                            "data-on-click='onClick' data-tag='tag'></span>",
             link: link
         };
 

@@ -25,11 +25,16 @@
 
         c.loadLinks = function () {
             var tagIds = [];
-            angular.forEach(c.searchHelper.selectedTags, function (tag) {
+            angular.forEach(searchHelper.selectedTags, function (tag) {
                 tagIds.push(tag.id);
             });
 
-            serverApi.loadLinks(c.searchHelper.searchString, tagIds.join(";"), setLinks);
+            serverApi.loadLinks(searchHelper.searchString, tagIds.join(";"), setLinks);
+        };
+
+        c.onToggleSelectedTags = function (tag) {
+            searchHelper.toggleSelectedTags(tag);
+            c.loadLinks();
         };
 
         c.loadLinks();

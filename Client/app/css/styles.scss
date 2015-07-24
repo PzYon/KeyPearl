@@ -32,6 +32,7 @@ a {
 ul {
   list-style-type: none;
   padding: 0;
+  margin: 0;
 }
 
 .notifications {
@@ -46,18 +47,18 @@ ul {
 
   ul {
     margin: 5px 0;
+  }
 
-    .notification {
-      border: 1px solid $main-font-color;
-      margin: 3px 0;
-      padding: 3px;
-      cursor: pointer;
-      background-color: $notification-background-color;
+  .notification {
+    border: 1px solid $main-font-color;
+    margin: 3px 0;
+    padding: 3px;
+    cursor: pointer;
+    background-color: $notification-background-color;
 
-      &.error {
-        border: 1px solid $error-font-color;
-        color: $error-font-color;
-      }
+    &.error {
+      border: 1px solid $error-font-color;
+      color: $error-font-color;
     }
   }
 }
@@ -69,6 +70,10 @@ ul {
     display: inline-block;
     cursor: pointer;
     padding: 5px 15px 5px 0;
+
+    .action-link {
+      font-size: 1rem;
+    }
   }
 }
 
@@ -136,42 +141,28 @@ input {
   }
 }
 
-.tags {
+.tag {
   display: inline-block;
   position: relative;
-  vertical-align: top;
-  margin-right: 20px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  margin-right: 10px;
+  white-space: nowrap;
 
-  .tag {
-    font-size: 0.8rem;
+  .container {
+    padding: 0 5px;
+    background-color: $tooltip-background-color;
+  }
 
-    .label {
-      display: inline-block;
-      white-space: nowrap;
-      padding: 2px;
-      background-color: $tooltip-background-color;
-      border: 1px solid $tooltip-border-color;
-    }
-
-    .tooltip {
-      z-index: 1;
+  &.is-hover {
+    .container.popup {
       position: absolute;
+      z-index: 1;
       bottom: 0;
       left: 0;
-      margin: 0;
-    }
 
-    &:hover {
-      border: 0;
-
-      .label {
-        background-color: $tooltip-background-color;
-        border-color: $tooltip-background-color;
-      }
-
-      .tooltip {
-        background-color: $tooltip-background-color;
-        border: 1px solid $tooltip-border-color;
+      .label:hover {
+        font-weight: bold;
       }
     }
   }
@@ -196,7 +187,6 @@ input {
     left: 0;
     margin: 0;
     background-color: $tooltip-background-color;
-    border: 1px solid $tooltip-border-color;
 
     .item {
       margin: 3px;

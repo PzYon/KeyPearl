@@ -6,12 +6,12 @@
         var link = function (scope, element) {
 
             var onDragEnd = function (object, isSuccess) {
-                scope.onDragEnd()(object, isSuccess);
+                scope.onDragEnd(object, isSuccess);
             };
 
             var dragStartHandler = function (event) {
                 draggableHelper.add(event, scope.draggable.id, scope.draggable, onDragEnd);
-                scope.onDragStart()({event: event});
+                scope.onDragStart({event: event});
             };
 
             element.attr("draggable", true);
@@ -26,8 +26,8 @@
         return {
             restrict: "A",
             scope: {
-                onDragStart: "&",
-                onDragEnd: "&",
+                onDragStart: "=",
+                onDragEnd: "=",
                 draggable: "="
             },
             templateUrl: "",

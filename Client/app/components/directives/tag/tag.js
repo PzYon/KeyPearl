@@ -6,7 +6,8 @@
         return {
             restrict: "A",
             scope: {
-                tag: "="
+                tag: "=",
+                onClick: "="
             },
             templateUrl: "components/directives/tag/tag.html",
             link: function (scope) {

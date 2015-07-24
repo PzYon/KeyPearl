@@ -10,12 +10,13 @@
 		<span class="tags"
 		      data-ng-if="c.searchHelper.tagHash"
 		      data-tag-hash="c.searchHelper.tagHash"
-		      data-tags="link.tagIds"></span>
-		<div class="details">
-			{{link.description}}
-		</div>
+		      data-tags="link.tagIds"
+		      data-on-click="c.onToggleSelectedTags"></span>
 		<span data-action-link="c.navigator.goToLink(link.id)">
 			edit
 		</span>
+		<div class="details">
+			{{link.description}}
+		</div>
 	</li>
 </ul>

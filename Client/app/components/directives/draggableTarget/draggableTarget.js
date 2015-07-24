@@ -25,8 +25,8 @@
                 var isSuccess = false;
                 var object = entry.data;
 
-                if (scope.canDrop()(object)) {
-                    scope.onDrop()(object);
+                if (scope.canDrop(object)) {
+                    scope.onDrop(object);
                     scope.$apply();
                     isSuccess = true;
                 }
@@ -47,8 +47,8 @@
         return {
             restrict: "A",
             scope: {
-                onDrop: "&",
-                canDrop: "&"
+                onDrop: "=",
+                canDrop: "="
             },
             templateUrl: "",
             link: link
