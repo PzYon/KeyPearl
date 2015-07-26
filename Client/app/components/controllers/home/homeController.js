@@ -8,18 +8,26 @@
         c.navigator = navigator;
         c.searchHelper = searchHelper;
 
-        var setLinks = function (links) {
-            c.links = links;
+        var setLinks = function (result) {
+
+            c.links = result.links;
 
             notifier.clear();
 
-            if (!links.length) {
+            if (!c.links.length) {
                 notifier.addError("no links found matching your criteria, please reset and try again...");
                 return;
             }
 
-            var availableTagsCount = searchHelper.showAvailableTags(links);
-            var message = "found " + links.length + " links with " + availableTagsCount + " different tags applied.";
+            var availableTagsCount = searchHelper.showAvailableTags(c.links);
+
+            var message = "found " + c.links.length + " links with " + availableTagsCount + " different tags applied.";
+
+            if (result.totalLinksCount) {
+                message += " results are truncated, in total there are " + result.totalLinksCount + " links." +
+                           " you might need to search more precisely in order to find what you are looking for.";
+            }
+
             notifier.addSuccess(message, "searchResultInformation");
         };
 

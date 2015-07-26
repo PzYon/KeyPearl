@@ -2,7 +2,7 @@
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
-using KeyPearl.Library.Persistance;
+using KeyPearl.Library.Persistance.Initialization;
 using Newtonsoft.Json.Serialization;
 
 namespace KeyPearl.WebApi
@@ -13,7 +13,8 @@ namespace KeyPearl.WebApi
     {
       GlobalConfiguration.Configure(RegisterWebApiRoutes);
 
-      Database.SetInitializer(new KeyPearlDbContextInitializer());
+      Database.SetInitializer(new KeyPearlDbContextLoadInitializer());
+      //Database.SetInitializer(new KeyPearlDbContextInitializer());
     }
 
     private static void RegisterWebApiRoutes(HttpConfiguration config)
