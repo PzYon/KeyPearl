@@ -17,6 +17,10 @@
                 scope.onChange();
             };
 
+            scope.clearTagSearchString = function () {
+                searchHelper.clearTagSearchString();
+            };
+
             scope.toggleTree = function () {
                 scope.showTree = !scope.showTree;
             };

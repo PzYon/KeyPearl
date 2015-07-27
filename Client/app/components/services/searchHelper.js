@@ -22,6 +22,10 @@
             }
         };
 
+        var clearTagSearchString = function () {
+            instance.tagSearchString = null;
+        };
+
         var resetSelectedTags = function () {
             angular.forEach(instance.tagHash, function (tag) {
                 toggleSelectedTag(tag, false);
@@ -29,7 +33,7 @@
         };
 
         var toggleSelectedTags = function (tags) {
-            instance.tagSearchString = null;
+            instance.clearTagSearchString();
             if (angular.isArray(tags)) {
                 angular.forEach(tags, toggleSelectedTag);
             } else {
@@ -47,7 +51,8 @@
             selectedTags: [],
             toggleSelectedTags: toggleSelectedTags,
             showAvailableTags: showAvailableTags,
-            resetSelectedTags: resetSelectedTags
+            resetSelectedTags: resetSelectedTags,
+            clearTagSearchString: clearTagSearchString
         };
 
         return instance;

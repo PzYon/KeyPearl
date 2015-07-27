@@ -5,10 +5,10 @@
 
         var keyCodes = {
             tab: 9,
-            up: 38,
             enter: 13,
-            down: 40,
-            esc: 27
+            esc: 27,
+            up: 38,
+            down: 40
         };
 
         var link = function (scope) {
@@ -28,7 +28,8 @@
                     }
                     break;
                 case keyCodes.esc:
-                    // close dropdown
+                    scope.onExit();
+                    scope.$apply();
                     break;
                 }
             };
@@ -59,7 +60,8 @@
             restrict: "A",
             scope: {
                 items: "=dropdown",
-                onSelect: "&"
+                onSelect: "&",
+                onExit: "="
             },
             templateUrl: "components/directives/dropdown/dropdown.html",
             link: link

@@ -21,8 +21,9 @@
 			       data-ng-model="searchHelper.tagSearchString"
 			       data-ng-change="setMatchingTags()"/>
 			<div data-ng-if="searchHelper.tagSearchString"
-				 data-dropdown="matchingTags"
-			     data-on-select="toggleSelectedTags"></div>
+			     data-dropdown="matchingTags"
+			     data-on-select="toggleSelectedTags"
+			     data-on-exit="clearTagSearchString"></div>
 			<div>
 				<span class="tags"
 				      data-ng-if="searchHelper.tagHash"
@@ -30,7 +31,6 @@
 				      data-on-click="toggleSelectedTags"
 				      data-tag-hash="searchHelper.tagHash"></span>
 			</div>
-			<!-- data-ng-click="toggleSelectedTags(tag)" for tags directive -->
 		</div>
 
 		<div class="tag-tree"
