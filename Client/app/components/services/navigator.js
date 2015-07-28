@@ -1,43 +1,47 @@
 (function (app) {
     "use strict";
 
-    var NavigatorService = function ($window, notifier) {
+    var NavigatorService = function ($window, $location, notifier) {
 
-        var goTo = function (url) {
+        var goTo = function (key, url) {
+            instance.activeKey = key;
+
             notifier.clear();
-            $window.location.hash = "#" + url;
+            $location.path(url);
         };
 
         var instance = {
+            activeKey: "home",
+
             goToHome: function () {
-                goTo("/");
+                goTo("home", "/");
             },
 
             goToNewLink: function () {
-                goTo("/link/");
+                goTo("link", "/link");
             },
 
             goToLink: function (id) {
-                goTo("/link/" + id);
+                goTo("link", "/link/" + id);
             },
 
             goToTags: function () {
-                goTo("/tags/");
+                goTo("manageTags", "/tags");
             }
         };
 
-        // specified here in order to be able to access "instance"
+        // specified separately in order to be able to access "instance"
         instance.navigationNodes = [
-            {label: "home", action: instance.goToHome},
-            {label: "new link", action: instance.goToNewLink},
-            {label: "tags", action: instance.goToTags}
+            {key: "home", label: "home", action: instance.goToHome},
+            {key: "link", label: "add link", action: instance.goToNewLink},
+            {key: "manageTags", label: "manage tags", action: instance.goToTags}
         ];
 
         return instance;
 
     };
 
-    NavigatorService.$inject = ["$window", "notifier"];
+    NavigatorService.$inject = ["$window", "$location", "notifier"];
     app.service("navigator", NavigatorService);
 
 })(keyPearlApp);

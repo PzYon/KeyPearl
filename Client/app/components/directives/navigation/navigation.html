@@ -1,6 +1,7 @@
 <ul class="main-navigation">
 	<li class="navigation-node"
 	    data-ng-repeat="node in navigator.navigationNodes"
+	    data-ng-class="{'is-active': navigator.activeKey === node.key}"
 	    data-action-link="node.action">
 		{{node.label}}
 	</li>

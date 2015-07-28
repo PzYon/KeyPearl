@@ -21,6 +21,10 @@ function Tag(tagRow, tagHash) {
         }
     };
 
+    Tag.prototype.isRoot = function () {
+      return !this.id;
+    };
+
     Tag.prototype.hasChildren = function () {
         return this.children && this.children.length > 0;
     };
@@ -54,8 +58,7 @@ function Tag(tagRow, tagHash) {
     };
 
     Tag.prototype.isRelatedWith = function (tagId) {
-        if (!this.id || this.id === tagId) {
-            // root tag or self
+        if (this.isRoot() || this.id === tagId) {
             return true;
         }
 
@@ -64,7 +67,7 @@ function Tag(tagRow, tagHash) {
     };
 
     Tag.prototype.getDisplayName = function () {
-        return !this.id ? "root" : this.name;
+        return this.isRoot() ? "root" : this.name;
     };
 
     Tag.prototype.getHierarchyTopDown = function () {
@@ -75,9 +78,7 @@ function Tag(tagRow, tagHash) {
         do {
             tags.push(tag);
             tag = tag.getParent();
-        } while (tag.id);
-
-        // todo: add function isRoot()
+        } while (!tag.isRoot());
 
         return tags.reverse();
 
@@ -108,7 +109,7 @@ function Tag(tagRow, tagHash) {
 
         me.id = 0;
         me.children = [];
-        me.isCollapsed = false;
+        me.isCollapsed = true;
         me.isSelected = false;
         me.isHidden = false;
 
