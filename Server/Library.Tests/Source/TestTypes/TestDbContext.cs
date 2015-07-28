@@ -19,11 +19,11 @@ namespace KeyPearl.Library.Tests.TestTypes
     public TestDbContext()
     {
       Links = new TestDbSet<Link>
-      {
-        new Link {TagString = "/1/2/3/"},
-        new Link {TagString = "/1/2/"},
-        new Link {TagString = "/1/"}
-      };
+        {
+          new Link {TagString = "/1/2/3/"},
+          new Link {TagString = "/1/2/"},
+          new Link {TagString = "/1/"}
+        };
     }
 
     public T Update<T>(T entity) where T : class, IEntity

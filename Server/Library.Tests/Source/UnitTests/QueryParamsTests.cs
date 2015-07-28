@@ -1,5 +1,4 @@
-﻿using System;
-using KeyPearl.Library.Queries;
+﻿using KeyPearl.Library.Queries;
 using KeyPearl.Library.Queries.Exceptions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -12,7 +11,7 @@ namespace KeyPearl.Library.Tests.UnitTests
     [ExpectedException(typeof (InvalidQueryException))]
     public void Parse_ThrowsWhenEmptyQueryString()
     {
-      QueryParams.Parse(String.Empty);
+      QueryParams.Parse(string.Empty);
     }
 
     [TestMethod]

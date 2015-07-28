@@ -1,42 +1,42 @@
 <div>
-	<div>
-		<input type="text"
-		       placeholder="free text..."
-		       data-ng-model="searchHelper.searchString"
-		       data-ng-change="searchByStringDelayed()"/>
-	</div>
+    <div>
+        <input type="text"
+               placeholder="free text..."
+               data-ng-model="searchHelper.searchString"
+               data-ng-change="searchByStringDelayed()"/>
+    </div>
 </div>
 
 <div>
-	<div>
-		<span data-action-link="resetSelectedTags">
-			reset tags
-		</span>
-		<span data-action-link="toggleTree">
-			{{showTree ? "show search" : "show tree"}}
-		</span>
-		<div class="tag-search" data-ng-if="!showTree">
-			<input type="text"
-			       placeholder="tags..."
-			       data-ng-model="searchHelper.tagSearchString"
-			       data-ng-change="setMatchingTags()"/>
-			<div data-ng-if="searchHelper.tagSearchString"
-			     data-dropdown="matchingTags"
-			     data-on-select="toggleSelectedTags"
-			     data-on-exit="clearTagSearchString"></div>
-			<div>
-				<span class="tags"
-				      data-ng-if="searchHelper.tagHash"
-				      data-tags="searchHelper.selectedTags"
-				      data-on-click="toggleSelectedTags"
-				      data-tag-hash="searchHelper.tagHash"></span>
-			</div>
-		</div>
+    <div>
+        <span data-action-link="resetSelectedTags">
+            reset tags
+        </span>
+        <span data-action-link="toggleTree">
+            {{showTree ? "show search" : "show tree"}}
+        </span>
+        <div class="tag-search" data-ng-if="!showTree">
+            <input type="text"
+                   placeholder="tags..."
+                   data-ng-model="searchHelper.tagSearchString"
+                   data-ng-change="setMatchingTags()"/>
+            <div data-ng-if="searchHelper.tagSearchString"
+                 data-dropdown="matchingTags"
+                 data-on-select="toggleSelectedTags"
+                 data-on-exit="clearTagSearchString"></div>
+            <div>
+                <span class="tags"
+                      data-ng-if="searchHelper.tagHash"
+                      data-tags="searchHelper.selectedTags"
+                      data-on-click="toggleSelectedTags"
+                      data-tag-hash="searchHelper.tagHash"></span>
+            </div>
+        </div>
 
-		<div class="tag-tree"
-		     data-ng-if="showTree"
-		     data-on-select="toggleSelectedTags(tags)"
-		     data-on-select-function="toggleSelectedTags"
-		     data-tag-tree="searchHelper.rootTag"></div>
-	</div>
+        <div class="tag-tree"
+             data-ng-if="showTree"
+             data-on-select="toggleSelectedTags(tags)"
+             data-on-select-function="toggleSelectedTags"
+             data-tag-tree="searchHelper.rootTag"></div>
+    </div>
 </div>

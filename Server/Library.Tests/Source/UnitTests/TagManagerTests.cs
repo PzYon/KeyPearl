@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using KeyPearl.Library.Entities.Links;
 using KeyPearl.Library.Entities.Tags;
@@ -26,20 +25,20 @@ namespace KeyPearl.Library.Tests.UnitTests
     public void Setup()
     {
       dbContext = new TestDbContext
-      {
-        Tags = new TestDbSet<Tag>
         {
-          GetLv1Tag(),
-          GetLv2Tag(),
-          GetLv3Tag(),
-          GetOtherLv1Tag(),
-          GetOtherLv2Tag()
-        },
-        Links = new TestDbSet<Link>
-        {
-          new Link {Id = 1, TagString = lv2TagString}
-        }
-      };
+          Tags = new TestDbSet<Tag>
+            {
+              GetLv1Tag(),
+              GetLv2Tag(),
+              GetLv3Tag(),
+              GetOtherLv1Tag(),
+              GetOtherLv2Tag()
+            },
+          Links = new TestDbSet<Link>
+            {
+              new Link {Id = 1, TagString = lv2TagString}
+            }
+        };
     }
 
     [TestMethod]
@@ -60,7 +59,7 @@ namespace KeyPearl.Library.Tests.UnitTests
       Tag tagToUpdate = GetLv1Tag();
       tagToUpdate.ParentId = 4;
 
-      TagManager.UpdateTags(dbContext, new List<Tag> { tagToUpdate });
+      TagManager.UpdateTags(dbContext, new List<Tag> {tagToUpdate});
 
       Link link = dbContext.Links.FirstOrDefault(l => l.Id == 1);
       Assert.AreEqual("[/4/1/2/]", link.TagString);
@@ -70,7 +69,7 @@ namespace KeyPearl.Library.Tests.UnitTests
     public void GetIdsFromTagString_ReturnsEmptyWhenEmpty()
     {
       Assert.AreEqual(0,
-                      TagManager.GetIdsFromTagString(String.Empty)
+                      TagManager.GetIdsFromTagString(string.Empty)
                                 .Length);
     }
 
@@ -140,7 +139,7 @@ namespace KeyPearl.Library.Tests.UnitTests
     [TestMethod]
     public void SyncTagStringWithTagIds_PreviousTagsAreRemovedIfNotInTagIds()
     {
-      var updatedTaggable = new Link { Id = 1, TagString = lv2TagString, TagIds = new []{1}};
+      var updatedTaggable = new Link {Id = 1, TagString = lv2TagString, TagIds = new[] {1}};
       TagManager.SyncTagStringWithTagIds(dbContext, updatedTaggable);
 
       string[] tagPaths = updatedTaggable.TagString.Split(TagManager.Separator);

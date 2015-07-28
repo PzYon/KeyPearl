@@ -13,7 +13,7 @@ namespace KeyPearl.Library.Persistance
     public DbSet<Tag> Tags { get; set; }
     public DbSet<Link> Links { get; set; }
 
-    public T Update<T>(T entity) where T: class, IEntity
+    public T Update<T>(T entity) where T : class, IEntity
     {
       DbSet<T> dbSet = Set<T>();
 

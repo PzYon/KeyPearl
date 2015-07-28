@@ -22,7 +22,7 @@ function Tag(tagRow, tagHash) {
     };
 
     Tag.prototype.isRoot = function () {
-      return !this.id;
+        return !this.id;
     };
 
     Tag.prototype.hasChildren = function () {

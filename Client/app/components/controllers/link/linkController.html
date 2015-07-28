@@ -1,18 +1,18 @@
 <h2>{{c.actionName}} Link</h2>
 <form>
-	<div data-form-element data-label="'Name'" data-type="'text'" data-model="c.link.name"></div>
-	<div data-form-element data-label="'Description'" data-type="'text'" data-model="c.link.description"></div>
-	<div data-form-element data-label="'Url'" data-type="'text'" data-model="c.link.url"></div>
-	<div class="form-row">
-		<div class="form-cell label">
-			Tags
-		</div>
-		<div class="form-cell control">
-			<div class="tag-tree"
-			     data-on-select="c.toggleAppliedTag(tag)"
-			     data-on-select-function="c.toggleAppliedTag"
-			     data-tag-tree="c.rootTag"></div>
-		</div>
-	</div>
-	<button data-ng-click="c.updateLink()">{{c.actionName}}</button>
+    <div data-form-element data-label="'Name'" data-type="'text'" data-model="c.link.name"></div>
+    <div data-form-element data-label="'Description'" data-type="'text'" data-model="c.link.description"></div>
+    <div data-form-element data-label="'Url'" data-type="'text'" data-model="c.link.url"></div>
+    <div class="form-row">
+        <div class="form-cell label">
+            Tags
+        </div>
+        <div class="form-cell control">
+            <div class="tag-tree"
+                 data-on-select="c.toggleAppliedTag(tag)"
+                 data-on-select-function="c.toggleAppliedTag"
+                 data-tag-tree="c.rootTag"></div>
+        </div>
+    </div>
+    <button data-ng-click="c.updateLink()">{{c.actionName}}</button>
 </form>

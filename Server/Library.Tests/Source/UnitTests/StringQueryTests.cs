@@ -1,5 +1,4 @@
-﻿using System;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
 using KeyPearl.Library.Entities.Links;
 using KeyPearl.Library.Queries;
@@ -29,7 +28,7 @@ namespace KeyPearl.Library.Tests.UnitTests
       DbSet<Link> testDbSet = new TestDbSet<Link>();
       testDbSet.Add(new Link());
 
-      IQueryable<Link> results = StringQuery.Execute(testDbSet, new[] {String.Empty});
+      IQueryable<Link> results = StringQuery.Execute(testDbSet, new[] {string.Empty});
 
       Assert.IsNotNull(results);
       Assert.AreEqual(0, results.Count());
@@ -87,13 +86,13 @@ namespace KeyPearl.Library.Tests.UnitTests
     public void Execute_ConsidersMultipleSearchTerms()
     {
       DbSet<Link> testDbSet = new TestDbSet<Link>();
-      var firstLinkToFind = new Link { Url = "http://bar.foo" };
+      var firstLinkToFind = new Link {Url = "http://bar.foo"};
       testDbSet.Add(firstLinkToFind);
 
-      var secondLinkToFind = new Link { Name = "bar" };
+      var secondLinkToFind = new Link {Name = "bar"};
       testDbSet.Add(secondLinkToFind);
 
-      IQueryable<Link> results = StringQuery.Execute(testDbSet, new[] { "bar" });
+      IQueryable<Link> results = StringQuery.Execute(testDbSet, new[] {"bar"});
 
       Assert.AreEqual(2, results.Count());
     }
@@ -108,13 +107,13 @@ namespace KeyPearl.Library.Tests.UnitTests
     public void Execute_IgnoresCase()
     {
       DbSet<Link> testDbSet = new TestDbSet<Link>();
-      var linkToFind = new Link { Name = "FOO" };
+      var linkToFind = new Link {Name = "FOO"};
       testDbSet.Add(linkToFind);
 
-      var otherLink = new Link { Name = "BAR" };
+      var otherLink = new Link {Name = "BAR"};
       testDbSet.Add(otherLink);
 
-      IQueryable<Link> results = StringQuery.Execute(testDbSet, new[] { "foo" });
+      IQueryable<Link> results = StringQuery.Execute(testDbSet, new[] {"foo"});
 
       Assert.AreEqual(1, results.Count());
       Assert.AreEqual(linkToFind, results.First());

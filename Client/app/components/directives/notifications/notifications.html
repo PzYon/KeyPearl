@@ -1,13 +1,13 @@
 <div class="notifications">
-	<ul>
-		<li data-ng-repeat="notification in notifier.notifications track by $index"
-		    data-ng-class="{'error': notification.isError}"
-		    data-ng-click="notifier.remove(notification)"
-		    class="notification">
-			{{notification.message}}
-		</li>
-	</ul>
-	<div data-ng-if="!hidePendingRequests && notifier.pendingRequests > 0" class="notification">
-		please hang on, i'm waiting for {{notifier.pendingRequests}} server request(s)..
-	</div>
+    <ul>
+        <li data-ng-repeat="notification in notifier.notifications track by $index"
+            data-ng-class="{'error': notification.isError}"
+            data-ng-click="notifier.remove(notification)"
+            class="notification">
+            {{notification.message}}
+        </li>
+    </ul>
+    <div data-ng-if="!hidePendingRequests && notifier.pendingRequests > 0" class="notification">
+        please hang on, i'm waiting for {{notifier.pendingRequests}} server request(s)..
+    </div>
 </div>

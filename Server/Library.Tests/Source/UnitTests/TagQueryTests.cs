@@ -21,28 +21,28 @@ namespace KeyPearl.Library.Tests.UnitTests
     private const string tagString11 = "[/11/]";
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidTagQueryException))]
+    [ExpectedException(typeof (InvalidTagQueryException))]
     public void Execute_TagQueryContainingLettersThrowsException()
     {
-      TagQuery.Execute(GetTaggableDbSet(tagString3, tagString2), "3;a"); 
+      TagQuery.Execute(GetTaggableDbSet(tagString3, tagString2), "3;a");
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidTagQueryException))]
+    [ExpectedException(typeof (InvalidTagQueryException))]
     public void Execute_TagQueryContainingSpacesThrowsException()
     {
       TagQuery.Execute(GetTaggableDbSet(tagString3, tagString2), "1; 2");
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidTagQueryException))]
+    [ExpectedException(typeof (InvalidTagQueryException))]
     public void Execute_EmptyTagQueryThrowsException()
     {
       TagQuery.Execute(GetTaggableDbSet(tagString3, tagString2), "");
     }
 
     [TestMethod]
-    [ExpectedException(typeof(InvalidTagQueryException))]
+    [ExpectedException(typeof (InvalidTagQueryException))]
     public void Execute_NullTagQueryThrowsException()
     {
       TagQuery.Execute(GetTaggableDbSet(tagString3, tagString2), null);
@@ -116,7 +116,7 @@ namespace KeyPearl.Library.Tests.UnitTests
       DbSet<Link> testDbSet = new TestDbSet<Link>();
       foreach (string tagString in tagStrings)
       {
-        testDbSet.Add(new Link { TagString = tagString });
+        testDbSet.Add(new Link {TagString = tagString});
       }
       return testDbSet;
     }

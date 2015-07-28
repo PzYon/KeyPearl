@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Text.RegularExpressions;
 using KeyPearl.Library.Entities.Tags;
 using KeyPearl.Library.Queries.Exceptions;
@@ -22,7 +21,7 @@ namespace KeyPearl.Library.Queries
       string pathSeparator = TagManager.PathSeparator.ToString();
 
       return taggables.Where(l => tagIds.Distinct()
-                                        .All(tagId => !String.IsNullOrEmpty(l.TagString)
+                                        .All(tagId => !string.IsNullOrEmpty(l.TagString)
                                                       && l.TagString.Contains(pathSeparator + tagId + pathSeparator)))
                       .OfType<T>();
     }

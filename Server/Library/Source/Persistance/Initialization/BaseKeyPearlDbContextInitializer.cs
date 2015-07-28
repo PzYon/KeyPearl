@@ -9,10 +9,10 @@ namespace KeyPearl.Library.Persistance.Initialization
     protected static Tag AddTag(KeyPearlDbContext dbContext, string name, int parentId = 0)
     {
       var tag = new Tag
-      {
-        Name = name,
-        ParentId = parentId
-      };
+        {
+          Name = name,
+          ParentId = parentId
+        };
 
       dbContext.Tags.Add(tag);
 
@@ -22,17 +22,17 @@ namespace KeyPearl.Library.Persistance.Initialization
     }
 
     protected static void AddLink(KeyPearlDbContext dbContext,
-                                string name,
-                                string url,
-                                string description = null,
-                                params Tag[] tags)
+                                  string name,
+                                  string url,
+                                  string description = null,
+                                  params Tag[] tags)
     {
       var link = new Link
-      {
-        Name = name,
-        Url = url,
-        Description = description
-      };
+        {
+          Name = name,
+          Url = url,
+          Description = description
+        };
 
       TagManager.EnsureTags(dbContext, link, tags);
 

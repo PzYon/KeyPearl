@@ -2,16 +2,16 @@
       data-ng-class="{'is-hover': isHover}"
       data-ng-mouseover="onMouseOver()"
       data-ng-mouseleave="onMouseLeave()">
-	<span class="container">
-		{{tag.name}}
-	</span>
-	<ul class="container popup">
-		<li data-ng-repeat="tag in tagHierarchy"
-		    data-ng-click="onClick(tag)"
-		    data-ng-if="isHover">
-			<span class="label">
-				{{tag.name}}
-			</span>
-		</li>
-	</ul>
+    <span class="container">
+        {{tag.name}}
+    </span>
+    <ul class="container popup">
+        <li data-ng-repeat="tag in tagHierarchy"
+            data-ng-click="onClick(tag)"
+            data-ng-if="isHover">
+            <span class="label">
+               {{tag.name}}
+            </span>
+        </li>
+    </ul>
 </span>

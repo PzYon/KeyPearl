@@ -71,7 +71,7 @@ namespace KeyPearl.Library.Persistance.Initialization
       {
         randomWords.Add(words[random.Next(words.Length)]);
       }
-      return String.Join(" ", randomWords);
+      return string.Join(" ", randomWords);
     }
 
     // added at the bottom of the file to increase readability

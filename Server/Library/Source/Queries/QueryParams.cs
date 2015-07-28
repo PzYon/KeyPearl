@@ -1,5 +1,4 @@
-﻿using System;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using KeyPearl.Library.Queries.Exceptions;
 
 namespace KeyPearl.Library.Queries
@@ -10,7 +9,7 @@ namespace KeyPearl.Library.Queries
     public string[] SearchStrings { get; private set; }
 
     private QueryParams()
-    { 
+    {
     }
 
     // format: $tagIds(1;2;3)$searchString(foo)
@@ -21,7 +20,7 @@ namespace KeyPearl.Library.Queries
 
     public static QueryParams Parse(string queryString)
     {
-      if (String.IsNullOrEmpty(queryString))
+      if (string.IsNullOrEmpty(queryString))
       {
         throw new InvalidQueryException(queryString);
       }
@@ -32,7 +31,7 @@ namespace KeyPearl.Library.Queries
         throw new InvalidQueryException(queryString);
       }
 
-      QueryParams queryParams = new QueryParams();
+      var queryParams = new QueryParams();
 
       foreach (Match match in matches)
       {
@@ -40,8 +39,8 @@ namespace KeyPearl.Library.Queries
 
         // value is never null due to RegEx
         string value = Trim(match.Groups[2].Value);
-        
-        switch(key)
+
+        switch (key)
         {
           case "tagIds":
             queryParams.TagIds = value;
@@ -60,7 +59,7 @@ namespace KeyPearl.Library.Queries
 
     private static string Trim(string value)
     {
-      return String.IsNullOrEmpty(value)
+      return string.IsNullOrEmpty(value)
                ? value
                : value.Trim('(', ')');
     }

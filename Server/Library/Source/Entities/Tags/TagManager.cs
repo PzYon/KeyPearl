@@ -48,16 +48,16 @@ namespace KeyPearl.Library.Entities.Tags
 
     public static int[] GetIdsFromTagString(string tagString)
     {
-      if (String.IsNullOrEmpty(tagString))
+      if (string.IsNullOrEmpty(tagString))
       {
         return new int[0];
       }
 
       return tagString.Split(Separator)
-                      .Select(p => Int32.Parse(p.Trim(PathStarter, PathEnder)
-                                                .Split(new[] {PathSeparator},
-                                                       StringSplitOptions.RemoveEmptyEntries)
-                                                .Last()))
+                      .Select(p => int.Parse(p.Trim(PathStarter, PathEnder)
+                                              .Split(new[] {PathSeparator},
+                                                     StringSplitOptions.RemoveEmptyEntries)
+                                              .Last()))
                       .Distinct()
                       .OrderBy(i => i)
                       .ToArray();
@@ -103,8 +103,8 @@ namespace KeyPearl.Library.Entities.Tags
 
     public static void EnsureTag(Tag[] allTags, ITaggable taggable, Tag tag)
     {
-      string currentTagString = taggable.TagString ?? String.Empty;
-      bool hasTags = !String.IsNullOrEmpty(currentTagString);
+      string currentTagString = taggable.TagString ?? string.Empty;
+      bool hasTags = !string.IsNullOrEmpty(currentTagString);
 
       string tagPath = GetTagPath(allTags, tag);
 
@@ -114,7 +114,7 @@ namespace KeyPearl.Library.Entities.Tags
       }
 
       taggable.TagString = hasTags
-                             ? String.Concat(currentTagString, Separator, tagPath)
+                             ? string.Concat(currentTagString, Separator, tagPath)
                              : tagPath;
     }
 
@@ -131,13 +131,13 @@ namespace KeyPearl.Library.Entities.Tags
 
       tagIds.Reverse();
 
-      return String.Concat(PathStarter, JoinTagPathElements(tagIds.ToArray()), PathEnder);
+      return string.Concat(PathStarter, JoinTagPathElements(tagIds.ToArray()), PathEnder);
     }
 
     private static string JoinTagPathElements(params int[] tagIds)
     {
-      return String.Concat(PathSeparator.ToString(),
-                           String.Join(PathSeparator.ToString(), tagIds),
+      return string.Concat(PathSeparator.ToString(),
+                           string.Join(PathSeparator.ToString(), tagIds),
                            PathSeparator.ToString());
     }
   }

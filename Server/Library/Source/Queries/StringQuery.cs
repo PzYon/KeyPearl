@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using KeyPearl.Library.Entities.Links;
 
 namespace KeyPearl.Library.Queries
@@ -8,7 +7,7 @@ namespace KeyPearl.Library.Queries
   {
     public static IQueryable<Link> Execute(IQueryable<Link> links, string[] terms)
     {
-      string[] cleanedSearchTerms = terms.Where(s => !String.IsNullOrEmpty(s)).ToArray();
+      string[] cleanedSearchTerms = terms.Where(s => !string.IsNullOrEmpty(s)).ToArray();
       if (!cleanedSearchTerms.Any())
       {
         return Enumerable.Empty<Link>()
@@ -25,9 +24,9 @@ namespace KeyPearl.Library.Queries
 
     private static IQueryable<Link> FilterBySearchTerm(IQueryable<Link> stringSearchables, string term)
     {
-      return stringSearchables.Where(s => !String.IsNullOrEmpty(s.Name) && s.Name.Contains(term)
-                                          || !String.IsNullOrEmpty(s.Description) && s.Description.Contains(term)
-                                          || !String.IsNullOrEmpty(s.Url) && s.Url.Contains(term));
+      return stringSearchables.Where(s => !string.IsNullOrEmpty(s.Name) && s.Name.Contains(term)
+                                          || !string.IsNullOrEmpty(s.Description) && s.Description.Contains(term)
+                                          || !string.IsNullOrEmpty(s.Url) && s.Url.Contains(term));
     }
   }
 }

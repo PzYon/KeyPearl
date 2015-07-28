@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
@@ -57,7 +56,7 @@ namespace KeyPearl.Library.Tests.UnitTests
 
     private static IEnumerable<Link> GetFilteredData(string tagIds, string searchString)
     {
-      DbSet<Link> links = GetTestData("foo X", String.Empty, null, "/1/2/3/;/1/2/4/");
+      DbSet<Link> links = GetTestData("foo X", string.Empty, null, "/1/2/3/;/1/2/4/");
       return QueryExecutor.Execute(links, GetQueryString(tagIds, searchString));
     }
 
@@ -66,23 +65,23 @@ namespace KeyPearl.Library.Tests.UnitTests
       DbSet<Link> testDbSet = new TestDbSet<Link>();
 
       testDbSet.Add(new Link
-      {
-        TagString = tagString,
-        Description = description,
-        Url = url,
-        Name = name
-      });
+        {
+          TagString = tagString,
+          Description = description,
+          Url = url,
+          Name = name
+        });
 
       // add some dummy links
-      for (int i = 0; i < 5; i++)
+      for (var i = 0; i < 5; i++)
       {
         string test = "test link " + i;
-        testDbSet.Add(new Link()
-        {
-          Description = test,
-          Name = test,
-          TagString = "/5/6/7/"
-        });
+        testDbSet.Add(new Link
+          {
+            Description = test,
+            Name = test,
+            TagString = "/5/6/7/"
+          });
       }
 
       return testDbSet;
@@ -92,12 +91,12 @@ namespace KeyPearl.Library.Tests.UnitTests
     {
       var query = new StringBuilder();
 
-      if (!String.IsNullOrEmpty(tagIds))
+      if (!string.IsNullOrEmpty(tagIds))
       {
         query.AppendFormat("$tagIds({0})", tagIds);
       }
 
-      if (!String.IsNullOrEmpty(searchString))
+      if (!string.IsNullOrEmpty(searchString))
       {
         query.AppendFormat("$searchString({0})", searchString);
       }

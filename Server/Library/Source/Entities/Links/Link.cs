@@ -1,5 +1,4 @@
-﻿using System;
-using KeyPearl.Library.Entities.Tags;
+﻿using KeyPearl.Library.Entities.Tags;
 using KeyPearl.Library.Persistance;
 
 namespace KeyPearl.Library.Entities.Links
@@ -21,6 +20,7 @@ namespace KeyPearl.Library.Entities.Links
       get { return _tagIds ?? (_tagIds = TagManager.GetIdsFromTagString(TagString)); }
       set { _tagIds = value; }
     }
+
     private int[] _tagIds;
 
     public void ClearTagString()
@@ -28,7 +28,7 @@ namespace KeyPearl.Library.Entities.Links
       // clear tag string but remember tag ids
       // -> load TagIds to be sure they are initialized
       int[] tagIds = TagIds;
-      TagString = String.Empty;
+      TagString = string.Empty;
       TagIds = tagIds;
     }
   }
