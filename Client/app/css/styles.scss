@@ -1,11 +1,24 @@
+/* general */
 $page-background-color: #FFF;
-$notification-background-color: #EEE;
-$main-font-color: #555;
+$main-font-color: #4E9231;
+$input-placeholder-font-color: #A6ED88;
+$light-border-color: #A6ED88;
+$dark-border-color: #4E9231;
 $error-font-color: #990000;
-$action-font-color: #006699;
-$action-hover-font-color: #2288BB;
-$tooltip-background-color: #EEE;
-$tooltip-border-color: #CCC;
+
+/* navigation */
+$navigation-background-color: #A6ED88;
+
+/* actions */
+$action-font-color: #295B13;
+$action-hover-font-color: #4E9231;
+
+/* hoverables */
+$hoverable-background-color: #295B13;
+$hoverable-color: #A6ED88;
+
+/* links */
+$link-hover-background-color: #A6ED88;
 
 html,
 body,
@@ -14,6 +27,31 @@ button, {
   color: $main-font-color;
   font-size: 16px;
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+}
+
+input[type=text] {
+  border: 1px solid $light-border-color;
+}
+
+input::-webkit-input-placeholder {
+  color: $input-placeholder-font-color;
+}
+
+input:-moz-placeholder {
+  color: $input-placeholder-font-color;
+}
+
+input:-moz-placeholder {
+  color: $input-placeholder-font-color;
+}
+
+input:-ms-input-placeholder {
+  color: $input-placeholder-font-color;
+}
+
+input:focus{
+  outline: 0;
+  border: 1px solid $dark-border-color;
 }
 
 body {
@@ -39,9 +77,10 @@ ul {
   font-size: 0.9rem;
   font-weight: bold;
   position: fixed;
-  bottom: 5px;
+  bottom: 0;
   left: 10px;
   right: 10px;
+  padding-bottom: 5px;
   background-color: $page-background-color;
   opacity: 0.9;
 
@@ -54,7 +93,6 @@ ul {
     margin: 3px 0;
     padding: 3px;
     cursor: pointer;
-    background-color: $notification-background-color;
 
     &.error {
       border: 1px solid $error-font-color;
@@ -65,14 +103,23 @@ ul {
 
 .main-navigation {
   list-style-type: none;
+  text-align: center;
+  background-color: $navigation-background-color;
+  margin: -10px;
 
   .navigation-node {
     display: inline-block;
     cursor: pointer;
     padding: 5px 15px 5px 0;
 
+    &.is-active {
+      .action-link {
+        background-color: $page-background-color;
+      }
+    }
+
     .action-link {
-      font-size: 1rem;
+      font-size: 1.3rem;
     }
   }
 }
@@ -127,16 +174,47 @@ input {
   }
 }
 
-.link-list {
-  .link {
-    padding: 5px 0;
+.search-box {
+  margin: 20px auto 20px auto;
+  width: 70%;
 
-    .title {
-      font-size: 1.2rem;
-    }
+  input {
+    width: 100%;
+  }
+}
 
-    .details {
-      font-size: 0.9rem;
+.links {
+  margin-top: 15px;
+
+  .link-list {
+    .link {
+      padding: 7px;
+      border-top: 1px solid $light-border-color;
+
+      &:last-of-type {
+        border-bottom: 1px solid $light-border-color;
+      }
+
+      .action-links {
+        display: none;
+      }
+
+      .title {
+        font-size: 1.2rem;
+        cursor: pointer;
+      }
+
+      .details {
+        font-size: 0.9rem;
+      }
+
+      &:hover {
+        background-color: $link-hover-background-color;
+
+        .action-links {
+          display: inline !important;
+        }
+      }
     }
   }
 }
@@ -151,7 +229,8 @@ input {
 
   .container {
     padding: 0 5px;
-    background-color: $tooltip-background-color;
+    background-color: $hoverable-background-color;
+    color: $hoverable-color;
   }
 
   &.is-hover {
@@ -162,7 +241,7 @@ input {
       left: 0;
 
       .label:hover {
-        font-weight: bold;
+        color: $page-background-color;
       }
     }
   }
@@ -186,7 +265,8 @@ input {
     top: 0;
     left: 0;
     margin: 0;
-    background-color: $tooltip-background-color;
+    background-color: $hoverable-background-color;
+    color: $hoverable-color;
 
     .item {
       margin: 3px;
@@ -195,7 +275,7 @@ input {
 
       &:hover,
       &.active {
-        font-weight: bold;
+        color: $page-background-color;
       }
     }
   }
