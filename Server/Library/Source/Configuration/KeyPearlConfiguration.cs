@@ -8,7 +8,7 @@ namespace KeyPearl.Library.Configuration
 
     public static bool LogSqlQueries = true;
 
-    public static int MaxResultSize = 100;
+    public static int MaxResultSize = 50;
 
     public static IDbContext GetDbContext()
     {

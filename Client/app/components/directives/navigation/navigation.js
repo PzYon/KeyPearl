@@ -8,6 +8,10 @@
             templateUrl: "components/directives/navigation/navigation.html",
             link: function (scope) {
                 scope.navigator = navigator;
+
+                scope.goTo = function (node) {
+                    navigator.goTo(node.url);
+                };
             }
         };
     };

@@ -1,24 +1,31 @@
+/* <colors> */
+
 /* general */
 $page-background-color: #FFF;
-$main-font-color: #4E9231;
-$input-placeholder-font-color: #A6ED88;
-$light-border-color: #A6ED88;
-$dark-border-color: #4E9231;
-$error-font-color: #990000;
+$main-font-color: #333333;
+$error-font-color: #BD2C00;
+$success-font-color: #6CC644;
 
 /* navigation */
-$navigation-background-color: #A6ED88;
+$navigation-background-color: #999999;
+
+/* search box */
+$searchbox-background-color: #CCCCCC;
 
 /* actions */
-$action-font-color: #295B13;
-$action-hover-font-color: #4E9231;
+$action-color: #808080;
+$action-active-color: #FF9900;
 
 /* hoverables */
-$hoverable-background-color: #295B13;
-$hoverable-color: #A6ED88;
+$hoverable-background-color: #E6E6E6;
 
-/* links */
-$link-hover-background-color: #A6ED88;
+/*</colors> */
+
+/* <sizes> */
+
+$border-radius: 6px;
+
+/* </sizes> */
 
 html,
 body,
@@ -29,41 +36,51 @@ button, {
   font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 
-input[type=text] {
-  border: 1px solid $light-border-color;
-}
-
 input::-webkit-input-placeholder {
-  color: $input-placeholder-font-color;
+  color: $action-color;
 }
 
 input:-moz-placeholder {
-  color: $input-placeholder-font-color;
+  color: $action-color;
 }
 
 input:-moz-placeholder {
-  color: $input-placeholder-font-color;
+  color: $action-color;
 }
 
 input:-ms-input-placeholder {
-  color: $input-placeholder-font-color;
+  color: $action-color;
 }
 
-input:focus {
+input[type=text],
+button {
+  border: 1px solid $action-color;
+  border-radius: $border-radius;
+  padding: 4px;
+}
+
+input:focus,
+button:hover {
   outline: 0;
-  border: 1px solid $dark-border-color;
+  border: 1px solid $action-active-color;
+}
+
+button {
+  cursor: pointer;
 }
 
 body {
-  margin: 10px;
+  /* always show scroll-bar in order to prevent flickering */
+  overflow-y: scroll;
+  margin: 0;
 }
 
 a {
-  color: $action-font-color;
+  color: $action-color;
   text-decoration: none;
 
   &:hover {
-    color: $action-hover-font-color;
+    color: $action-active-color;
   }
 }
 
@@ -71,6 +88,10 @@ ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
+}
+
+.main-content {
+  margin: 10px;
 }
 
 .notifications {
@@ -90,6 +111,7 @@ ul {
 
   .notification {
     border: 1px solid $main-font-color;
+    border-radius: $border-radius;
     margin: 3px 0;
     padding: 3px;
     cursor: pointer;
@@ -105,21 +127,32 @@ ul {
   list-style-type: none;
   text-align: center;
   background-color: $navigation-background-color;
-  margin: -10px;
+  padding: 4px;
 
   .navigation-node {
     display: inline-block;
     cursor: pointer;
     padding: 5px 15px 5px 0;
 
+    &:hover,
     &.is-active {
       .action-link {
         background-color: $page-background-color;
+
+        a {
+          color: $action-active-color;
+        }
       }
     }
 
     .action-link {
-      font-size: 1.3rem;
+      border-radius: $border-radius;
+      font-size: 1.2rem;
+      padding: 0 10px;
+
+      a {
+        color: $page-background-color;
+      }
     }
   }
 }
@@ -143,8 +176,13 @@ input {
 
     .tag-collapsor {
       position: absolute;
-      left: -10px;
+      height: 100%;
+      left: -12px;
       cursor: pointer;
+
+      .container {
+        vertical-align: middle;
+      }
     }
 
     .tag-adder {
@@ -175,25 +213,34 @@ input {
 }
 
 .search-box {
-  margin: 20px auto 20px auto;
-  width: 70%;
+  width: 100%;
+  background-color: $searchbox-background-color;
+  padding: 5px 0;
 
-  input {
-    width: 100%;
+  > .container {
+    width: 50%;
+    margin: auto auto;
+
+    .actions {
+      text-align: center;
+    }
+
+    .sub-container {
+      margin: 5px 0;
+
+      input {
+        width: 100%;
+      }
+    }
   }
 }
 
 .links {
-  margin-top: 15px;
-
   .link-list {
     .link {
       padding: 7px;
-      border-top: 1px solid $light-border-color;
-
-      &:last-of-type {
-        border-bottom: 1px solid $light-border-color;
-      }
+      border-radius: $border-radius;
+      border: 1px solid $page-background-color;
 
       .action-links {
         display: none;
@@ -209,7 +256,7 @@ input {
       }
 
       &:hover {
-        background-color: $link-hover-background-color;
+        border-color: $action-active-color;
 
         .action-links {
           display: inline !important;
@@ -230,7 +277,7 @@ input {
   .container {
     padding: 0 5px;
     background-color: $hoverable-background-color;
-    color: $hoverable-color;
+    color: $action-color;
   }
 
   &.is-hover {
@@ -241,14 +288,14 @@ input {
       left: 0;
 
       .label:hover {
-        color: $page-background-color;
+        color: $action-active-color;
       }
     }
   }
 }
 
 .action-link {
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   cursor: pointer;
 }
 
@@ -266,16 +313,16 @@ input {
     left: 0;
     margin: 0;
     background-color: $hoverable-background-color;
-    color: $hoverable-color;
+    color: $action-color;
 
     .item {
       margin: 3px;
-      font-size: 0.8rem;
+      font-size: 0.9rem;
       cursor: pointer;
 
       &:hover,
       &.active {
-        color: $page-background-color;
+        color: $action-active-color;
       }
     }
   }

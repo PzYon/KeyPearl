@@ -1,7 +1,7 @@
 (function (app) {
     "use strict";
 
-    var HomeController = function (serverApi, searchHelper, navigator, notifier) {
+    var SearchController = function (serverApi, searchHelper, navigator, notifier) {
 
         var c = this;
 
@@ -49,7 +49,7 @@
 
     };
 
-    HomeController.$inject = ["serverApi", "searchHelper", "navigator", "notifier"];
-    app.controller("homeController", HomeController);
+    SearchController.$inject = ["serverApi", "searchHelper", "navigator", "notifier"];
+    app.controller("searchController", SearchController);
 
 })(keyPearlApp);

@@ -6,7 +6,7 @@
 
         var defaultTemplate = "" +
             "<span class='tag-collapsor' data-ng-if='tag.hasChildren()' data-ng-click='tag.toggleCollapsed()'>" +
-                "{{tag.isCollapsed ? '+' : '-'}}" +
+                "<span class='container'>{{tag.isCollapsed ? '+' : '-'}}</span>" +
             "</span>" +
             "<span class='tag-label' data-ng-click='handleOnSelect(tag)' data-ng-class='{selected: tag.isSelected}'>" +
                 "{{tag.name}}" +
@@ -23,7 +23,7 @@
 
         var editableTemplate = "" +
             "<span class='tag-collapsor' data-ng-if='tag.hasChildren()' data-ng-click='tag.toggleCollapsed()'>" +
-              "{{tag.isCollapsed ? '+' : '-'}}" +
+                "<span class='container'>{{tag.isCollapsed ? '+' : '-'}}</span>" +
             "</span>" +
             "<span class='tag-label' title='id: {{tag.id}}' " +
                   "data-draggable-target data-on-drop='onDrop' data-can-drop='canDrop'>" +
@@ -33,7 +33,7 @@
                   "data-draggable='tag' data-on-drag-start='onDragStart' data-on-drag-end='onDragEnd'>" +
                 "DnD " +
             "</span>" +
-            "<span class='tag-adder' data-ng-if='tag.canAddChildren()' data-ng-click='tag.addChild()'>+</span>" +
+            "<span class='tag-adder' data-ng-if='tag.canAddChildren()' data-ng-click='tag.addChild(null, true)'>+</span>" +
             "<span data-tag-tree='tag' data-is-editable='isEditable' data-on-change='onChangeFunction(tag)' " +
                   "data-on-change-function='onChangeFunction' data-ng-if='!tag.isCollapsed'></span>";
 

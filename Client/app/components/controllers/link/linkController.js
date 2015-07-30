@@ -15,7 +15,7 @@
         var initialize = function () {
             var id = $routeParams.id;
             if (id) {
-                c.actionName = "Update";
+                c.actionName = "Change";
                 serverApi.loadLink(id, setLink);
             } else {
                 c.actionName = "Create";
@@ -40,7 +40,7 @@
             var isCreate = !c.link.id;
             serverApi.updateLink(c.link, function (link) {
                 navigator.goToLink(link.id);
-                notifier.addSuccess((isCreate ? "Created" : "Updated") + " link '" + link.name + "'");
+                notifier.addSuccess((isCreate ? "Added" : "Changed") + " link '" + link.name + "'");
             });
         };
 

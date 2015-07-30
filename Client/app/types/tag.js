@@ -37,12 +37,17 @@ function Tag(tagRow, tagHash) {
         return this.id && this.id > 0;
     };
 
-    Tag.prototype.addChild = function (tag) {
+    Tag.prototype.addChild = function (tag, showExpanded) {
         if (!tag && !(tag instanceof Tag)) {
             tag = new Tag(tag, tagHash);
         }
 
         tag.parentId = this.id;
+
+        if (showExpanded) {
+            this.toggleCollapsed();
+        }
+
         this.children.unshift(tag);
     };
 

@@ -12,6 +12,12 @@
                 scope.onChange();
             };
 
+            scope.resetAll = function () {
+                searchHelper.searchString = "";
+                scope.resetSelectedTags();
+                // no need to call scope.onChange() as resetSelectedTags() already does this
+            };
+
             scope.resetSelectedTags = function () {
                 searchHelper.resetSelectedTags();
                 scope.onChange();
@@ -35,8 +41,11 @@
                 searchHelper.tagSearchString = searchHelper.tagSearchString.toLowerCase();
 
                 angular.forEach(scope.searchHelper.tagHash, function (tag) {
-                    var isMatch = tag.name && tag.name.toLowerCase().indexOf(searchHelper.tagSearchString) > -1;
-                    if (isMatch) {
+                    var isMatchAndVisible = tag.name
+                                            && tag.name.toLowerCase().indexOf(searchHelper.tagSearchString) > -1
+                                            && !tag.isHidden;
+
+                    if (isMatchAndVisible) {
                         scope.matchingTags.push(tag);
                     }
                 });

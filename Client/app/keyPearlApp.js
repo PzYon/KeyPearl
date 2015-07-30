@@ -3,9 +3,9 @@ var keyPearlApp = (function () {
 
     var routing = function ($routeProvider) {
         $routeProvider.when("/", {
-            controller: "homeController",
+            controller: "searchController",
             controllerAs: "c",
-            templateUrl: "components/controllers/home/homeController.html"
+            templateUrl: "components/controllers/search/searchController.html"
         }).when("/link/:id?", {
             controller: "linkController",
             controllerAs: "c",

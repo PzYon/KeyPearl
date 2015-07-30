@@ -2,7 +2,7 @@
          data-search-box
          data-on-change="c.loadLinks()"></section>
 
-<section class="links">
+<section class="main-content links">
     <ul class="link-list">
         <li class="link" data-ng-repeat="link in c.links">
             <a class="title" data-ng-href="{{link.url}}" title="{{link.url}}" target="_blank">
@@ -13,14 +13,14 @@
                     edit
                 </span>
             </span>
-            <div class="details">
+            <div class="details" data-ng-if="link.description">
                 {{link.description}}
             </div>
-            <span class="tags"
-                  data-ng-if="c.searchHelper.tagHash"
-                  data-tag-hash="c.searchHelper.tagHash"
-                  data-tags="link.tagIds"
-                  data-on-click="c.onToggleSelectedTags"></span>
+            <div class="tags"
+                 data-ng-if="c.searchHelper.tagHash"
+                 data-tag-hash="c.searchHelper.tagHash"
+                 data-tags="link.tagIds"
+                 data-on-click="c.onToggleSelectedTags"></div>
         </li>
     </ul>
 </section>

@@ -1,8 +1,8 @@
 <ul class="main-navigation">
     <li class="navigation-node"
         data-ng-repeat="node in navigator.navigationNodes"
-        data-ng-class="{'is-active': navigator.activeKey === node.key}"
-        data-action-link="node.action">
+        data-ng-class="{'is-active': navigator.getCurrentPath() === node.url}"
+        data-action-link="goTo(node)">
         {{node.label}}
     </li>
 </ul>

@@ -3,39 +3,26 @@
 
     var NavigatorService = function ($window, $location, notifier) {
 
-        var goTo = function (key, url) {
-            instance.activeKey = key;
-
-            notifier.clear();
-            $location.path(url);
-        };
-
         var instance = {
-            activeKey: "home",
+            navigationNodes: [
+                {url: "/", label: "search"},
+                {url: "/link/", label: "add link"},
+                {url: "/tags/", label: "manage tags"}
+            ],
 
-            goToHome: function () {
-                goTo("home", "/");
-            },
-
-            goToNewLink: function () {
-                goTo("link", "/link");
+            goTo: function (url) {
+                notifier.clear();
+                $location.path(url);
             },
 
             goToLink: function (id) {
-                goTo("link", "/link/" + id);
+                instance.goTo("/link/" + id);
             },
 
-            goToTags: function () {
-                goTo("manageTags", "/tags");
+            getCurrentPath: function () {
+                return $location.path();
             }
         };
-
-        // specified separately in order to be able to access "instance"
-        instance.navigationNodes = [
-            {key: "home", label: "home", action: instance.goToHome},
-            {key: "link", label: "add link", action: instance.goToNewLink},
-            {key: "manageTags", label: "manage tags", action: instance.goToTags}
-        ];
 
         return instance;
 
