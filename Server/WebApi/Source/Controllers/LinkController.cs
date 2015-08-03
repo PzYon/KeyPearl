@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
-using KeyPearl.Library.Configuration;
 using KeyPearl.Library.Entities.Links;
 using KeyPearl.Library.Entities.Tags;
 using KeyPearl.Library.Queries;
@@ -17,14 +16,16 @@ namespace KeyPearl.WebApi.Controllers
                                   ? DbContext.Links
                                   : QueryExecutor.Execute(DbContext.Links, queryString);
 
+      var maxResultSize = WebConfigReader.Get<int>("MaxResultSize");
+
       // todo: do we need a specific order here?
-      Link[] loadedLinks = links.Take(KeyPearlConfiguration.MaxResultSize + 1)
+      Link[] loadedLinks = links.Take(maxResultSize + 1)
                                 .ToArray();
 
       return new LinkQueryResult
         {
-          Links = loadedLinks.Take(KeyPearlConfiguration.MaxResultSize).ToArray(),
-          TotalLinksCount = loadedLinks.Length > KeyPearlConfiguration.MaxResultSize
+          Links = loadedLinks.Take(maxResultSize).ToArray(),
+          TotalLinksCount = loadedLinks.Length > maxResultSize
                               ? DbContext.Links.Count()
                               : 0
         };

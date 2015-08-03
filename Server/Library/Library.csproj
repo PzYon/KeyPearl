@@ -45,7 +45,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Source\Configuration\KeyPearlConfiguration.cs" />
     <Compile Include="Source\Entities\Links\LinkQueryResult.cs" />
     <Compile Include="Source\Entities\Tags\UpdateTagsResult.cs" />
     <Compile Include="Source\Persistance\Initialization\BaseKeyPearlDbContextInitializer.cs" />

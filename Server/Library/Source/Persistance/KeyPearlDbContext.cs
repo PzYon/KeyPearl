@@ -2,7 +2,6 @@
 using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
-using KeyPearl.Library.Configuration;
 using KeyPearl.Library.Entities.Links;
 using KeyPearl.Library.Entities.Tags;
 
@@ -40,9 +39,9 @@ namespace KeyPearl.Library.Persistance
       return entities;
     }
 
-    public KeyPearlDbContext() : base(KeyPearlConfiguration.ConnectionString)
+    public KeyPearlDbContext(string connectionString, bool logSqlQueries) : base(connectionString)
     {
-      if (KeyPearlConfiguration.LogSqlQueries)
+      if (logSqlQueries)
       {
         Database.Log = s => Debug.WriteLine(s);
       }

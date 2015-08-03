@@ -1,5 +1,4 @@
 ﻿using System.Web.Http;
-using KeyPearl.Library.Configuration;
 using KeyPearl.Library.Persistance;
 
 namespace KeyPearl.WebApi.Controllers
@@ -10,7 +9,8 @@ namespace KeyPearl.WebApi.Controllers
 
     protected BaseDbContextApiController()
     {
-      DbContext = KeyPearlConfiguration.GetDbContext();
+      DbContext = new KeyPearlDbContext(WebConfigReader.GetConnectionString("KeyPearl"),
+                                        WebConfigReader.Get<bool>("LogSqlQueries"));
     }
 
     protected override void Dispose(bool disposing)
