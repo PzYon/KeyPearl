@@ -1,0 +1,26 @@
+{
+  "name": "KeyPearl",
+  "version": "1.0.0",
+  "description": "",
+  "main": "gulpfile.js",
+  "devDependencies": {
+    "del": "^1.2.0",
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-sass": "^2.0.4",
+    "gulp-watch": "^4.3.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:PzYon/KeyPearl.git"
+  },
+  "author": "PzYon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PzYon/KeyPearl/issues"
+  },
+  "homepage": "https://github.com/PzYon/KeyPearl"
+}

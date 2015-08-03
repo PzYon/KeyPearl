@@ -1,4 +1,6 @@
+/bundled
 /bower_components
+/node_modules
 *.css
 *.css.map
 .idea
