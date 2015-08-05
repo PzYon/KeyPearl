@@ -1,7 +1,9 @@
 var keyPearlApp = (function () {
     "use strict";
 
-    var routing = function ($routeProvider) {
+    var app = angular.module("keyPearl", ["ngRoute"]);
+
+    var config = function ($routeProvider) {
         $routeProvider.when("/", {
             controller: "searchController",
             controllerAs: "c",
@@ -19,8 +21,9 @@ var keyPearlApp = (function () {
         });
     };
 
-    var app = angular.module("keyPearl", ["ngRoute"]);
-    app.config(routing);
+    config.$inject = ["$routeProvider"];
+
+    app.config(config);
 
     return app;
 

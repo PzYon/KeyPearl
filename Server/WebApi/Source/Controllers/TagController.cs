@@ -7,14 +7,16 @@ namespace KeyPearl.WebApi.Controllers
 {
   public class TagController : BaseDbContextApiController
   {
-    [Route("api/tags")]
+    private const string controllerUrl = "tags";
+
+    [Route(controllerUrl)]
     public Tag[] Get()
     {
       return DbContext.Tags
                       .ToArray();
     }
 
-    [Route("api/tags/")]
+    [Route(controllerUrl)]
     public UpdateTagsResult Post(List<Tag> tags)
     {
       UpdateTagsResult result = TagManager.UpdateTags(DbContext, tags);

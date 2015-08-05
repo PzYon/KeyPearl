@@ -9,7 +9,9 @@ namespace KeyPearl.WebApi.Controllers
 {
   public class LinkController : BaseDbContextApiController
   {
-    [Route("api/links/")]
+    private const string controllerUrl = "links";
+
+    [Route(controllerUrl)]
     public LinkQueryResult Get(string queryString = null)
     {
       IEnumerable<Link> links = queryString == null
@@ -31,13 +33,13 @@ namespace KeyPearl.WebApi.Controllers
         };
     }
 
-    [Route("api/links/getbyid/{id}")]
+    [Route(controllerUrl + "/getbyid/{id}")]
     public Link GetById(int id)
     {
       return DbContext.Links.FirstOrDefault(l => l.Id == id);
     }
 
-    [Route("api/links/")]
+    [Route(controllerUrl)]
     public Link Post(Link link)
     {
       TagManager.SyncTagStringWithTagIds(DbContext, link);
