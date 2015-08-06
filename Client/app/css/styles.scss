@@ -229,7 +229,7 @@ input {
       margin: 5px 0;
 
       input {
-        width: 100%;
+        width: calc(100% - 10px);
       }
     }
   }
@@ -325,5 +325,18 @@ input {
         color: $action-active-color;
       }
     }
+  }
+}
+
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+  html,
+  body,
+  input,
+  button {
+    font-size: 14px;
+  }
+
+  .search-box > .container {
+    width: 80%;
   }
 }

@@ -1,7 +1,7 @@
 var keyPearlApp = (function () {
     "use strict";
 
-    var app = angular.module("keyPearl", ["ngRoute"]);
+    var app = angular.module("keyPearl", ["ngRoute", "ngTouch"]);
 
     var config = function ($routeProvider) {
         $routeProvider.when("/", {

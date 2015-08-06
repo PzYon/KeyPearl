@@ -1,7 +1,7 @@
 (function (app) {
     "use strict";
 
-    var TagDirective = function () {
+    var TagDirective = function (mobile) {
 
         return {
             restrict: "A",
@@ -10,24 +10,31 @@
                 onClick: "="
             },
             templateUrl: "components/directives/tag/tag.html",
-            link: function (scope) {
+            link: function (scope, element) {
 
                 scope.tagHierarchy = scope.tag.getHierarchyTopDown();
 
                 scope.onMouseOver = function () {
-                    scope.isHover = true;
+                    scope.isHover = !mobile.isTouch();
                 };
 
                 scope.onMouseLeave = function () {
                     scope.isHover = false;
                 };
 
+                if (mobile.isTouch()) {
+                    element.on("click", function () {
+                        scope.isHover = true;
+                        scope.$apply();
+                    });
+                }
+
             }
         };
 
     };
 
-    TagDirective.$inject = [];
+    TagDirective.$inject = ["mobile"];
     app.directive("tag", TagDirective);
 
 })(keyPearlApp);

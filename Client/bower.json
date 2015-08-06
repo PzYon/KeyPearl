@@ -14,5 +14,8 @@
   ],
   "dependencies": {
     "angular-route": "~1.4.0"
+  },
+  "devDependencies": {
+    "angular-touch": "~1.4.3"
   }
 }

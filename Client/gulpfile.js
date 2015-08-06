@@ -18,7 +18,8 @@
     var paths = {
         app: "./app/",
         appAllRecursive: "./app/**/*",
-        target: "./bundled/"
+        target: "./bundled/",
+        targetAllRecursive: "./bundled/**/*"
     };
 
     var appDefinition = {
@@ -40,7 +41,8 @@
     var libDefinition = {
         srcs: [
             "./bower_components/angular/angular.js",
-            "./bower_components/angular-route/angular-route.js"
+            "./bower_components/angular-route/angular-route.js",
+            "./bower_components/angular-touch/angular-touch.js"
         ],
         targetFile: "libs.js"
     };
@@ -56,7 +58,7 @@
     };
 
     gulp.task("clean", function () {
-        del.sync(paths.target);
+        del(paths.targetAllRecursive);
     });
 
     gulp.task("scripts", function () {
