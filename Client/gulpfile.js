@@ -8,8 +8,8 @@
     var watch = require("gulp-watch");
     var gulpif = require("gulp-if");
     var uglify = require("gulp-uglify");
+    var sourcemaps = require("gulp-sourcemaps");
     var del = require("del");
-    var sourcemaps = require('gulp-sourcemaps');
     var runSequence = require("run-sequence");
     var args = require("yargs").argv;
 
@@ -21,17 +21,23 @@
         target: "./bundled/"
     };
 
-    var appConfig = {
+    var appDefinition = {
         srcs: [
             paths.app + "keyPearlApp.js",
-            paths.app + "config.js",
             paths.app + "components/**/*.js",
             paths.app + "types/*.js"
         ],
         targetFile: "app.js"
     };
 
-    var libConfig = {
+    var configDefinition = {
+        srcs: [
+            paths.app + "config.js"
+        ],
+        targetFile: "config.js"
+    };
+
+    var libDefinition = {
         srcs: [
             "./bower_components/angular/angular.js",
             "./bower_components/angular-route/angular-route.js"
@@ -39,38 +45,13 @@
         targetFile: "libs.js"
     };
 
-    var concatAndCopyAppScripts = function (config, targetFolder) {
-        if (isProduction) {
-            console.log("running for production, will uglify.");
-        }
-
-        gulp.src(config.srcs)
+    var concatAndCopyScripts = function (definition, targetFolder) {
+        gulp.src(definition.srcs)
             .pipe(print())
+            .pipe(sourcemaps.init())
             .pipe(gulpif(isProduction, uglify()))
-            .pipe(concat(config.targetFile))
-            .pipe(gulp.dest(targetFolder));
-    };
-
-    var concatAndCopyLibScripts = function (config, targetFolder) {
-        if (isProduction) {
-            console.log("running for production, will use minified libraries.");
-        }
-
-        if (isProduction) {
-            for (var i = 0; i < config.srcs.length; i++) {
-                var src = config.srcs[i];
-                var index = src.lastIndexOf(".");
-                if (index > -1) {
-                    config.srcs[i] = src.substring(0, index) + ".min" + src.substring(index);
-                }
-            }
-        }
-
-        gulp.src(config.srcs)
-            .pipe(gulpif(isProduction, sourcemaps.init()))
-            .pipe(print())
-            .pipe(gulpif(isProduction, sourcemaps.write()))
-            .pipe(concat(config.targetFile))
+            .pipe(concat(definition.targetFile))
+            .pipe(sourcemaps.write("./"))
             .pipe(gulp.dest(targetFolder));
     };
 
@@ -79,8 +60,9 @@
     });
 
     gulp.task("scripts", function () {
-        concatAndCopyAppScripts(appConfig, paths.target);
-        concatAndCopyLibScripts(libConfig, paths.target);
+        concatAndCopyScripts(configDefinition, paths.target);
+        concatAndCopyScripts(appDefinition, paths.target);
+        concatAndCopyScripts(libDefinition, paths.target);
     });
 
     gulp.task("scss", function () {
