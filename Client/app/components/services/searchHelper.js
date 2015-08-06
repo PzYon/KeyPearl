@@ -1,4 +1,4 @@
-(function (app) {
+(function (app, angular) {
     "use strict";
 
     var SearchHelper = function (serverApi, tagHelper) {
@@ -45,10 +45,15 @@
             return tagHelper.showAvailableTags(links, instance.tagHash);
         };
 
+        var hasQuery = function () {
+            return !!instance.tagSearchString || (instance.selectedTags && instance.selectedTags.length);
+        }
+
         loadTags();
 
         var instance = {
             selectedTags: [],
+            hasQuery: hasQuery,
             toggleSelectedTags: toggleSelectedTags,
             showAvailableTags: showAvailableTags,
             resetSelectedTags: resetSelectedTags,
@@ -62,4 +67,4 @@
     SearchHelper.$inject = ["serverApi", "tagHelper"];
     app.service("searchHelper", SearchHelper);
 
-})(keyPearlApp);
+})(keyPearlApp, angular);

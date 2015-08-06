@@ -1,4 +1,4 @@
-(function (app) {
+(function (app, angular) {
     "use strict";
 
     // todo: consider handling loadTags/updateTags via tagHelper and caching the tags here, e.g.
@@ -92,4 +92,4 @@
     TagHelperService.$inject = [];
     app.service("tagHelper", TagHelperService);
 
-})(keyPearlApp);
+})(keyPearlApp, angular);

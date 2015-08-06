@@ -1,4 +1,4 @@
-(function (app) {
+(function (app, angular) {
     "use strict";
 
     var DraggableHelper = function () {
@@ -40,4 +40,4 @@
     DraggableHelper.$inject = [];
     app.service("draggableHelper", DraggableHelper);
 
-})(keyPearlApp);
+})(keyPearlApp, angular);

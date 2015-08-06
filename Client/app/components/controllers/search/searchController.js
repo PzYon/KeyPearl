@@ -1,4 +1,4 @@
-(function (app) {
+(function (app, angular) {
     "use strict";
 
     var SearchController = function (serverApi, searchHelper, navigator, notifier) {
@@ -15,7 +15,11 @@
             notifier.clear();
 
             if (!c.links.length) {
-                notifier.addError("no links found matching your criteria, please reset and try again...");
+                var message = !searchHelper.hasQuery()
+                    ? "nothing found - maybe you haven't added any links yet?"
+                    : "no links found matching your criteria, please reset and try again...";
+                notifier.addError(message);
+
                 return;
             }
 
@@ -25,7 +29,7 @@
 
             if (result.totalLinksCount) {
                 message += " results are truncated, in total there are " + result.totalLinksCount + " links." +
-                           " you might need to search more precisely in order to find what you are looking for.";
+                           " you might need to be more precise in order to find what you are actually looking for.";
             }
 
             notifier.addSuccess(message, "searchResultInformation");
@@ -52,4 +56,4 @@
     SearchController.$inject = ["serverApi", "searchHelper", "navigator", "notifier"];
     app.controller("searchController", SearchController);
 
-})(keyPearlApp);
+})(keyPearlApp, angular);

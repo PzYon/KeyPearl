@@ -1,4 +1,4 @@
-(function (app) {
+(function (app, angular) {
     "use strict";
 
     var MobileService = function ($window) {
@@ -6,12 +6,13 @@
         var isTouchDevice;
 
         function isTouch() {
-            if (angular.isUndefined(isTouch)) {
+            if (angular.isUndefined(isTouchDevice)) {
                 isTouchDevice = (("ontouchstart" in $window)
                                  || (navigator.MaxTouchPoints > 0)
                                  || (navigator.msMaxTouchPoints > 0));
             }
-            return isTouch;
+
+            return isTouchDevice;
         }
 
         return {
@@ -23,4 +24,4 @@
     MobileService.$inject = ["$window"];
     app.service("mobile", MobileService);
 
-})(keyPearlApp);
+})(keyPearlApp, angular);

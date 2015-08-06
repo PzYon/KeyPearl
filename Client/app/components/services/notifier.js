@@ -1,4 +1,4 @@
-(function (app) {
+(function (app, angular) {
     "use strict";
 
     var NotifierService = function () {
@@ -59,4 +59,4 @@
     NotifierService.$inject = [];
     app.service("notifier", NotifierService);
 
-})(keyPearlApp);
+})(keyPearlApp, angular);

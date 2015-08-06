@@ -1,4 +1,4 @@
-(function (app) {
+(function (app, angular) {
     "use strict";
 
     var DropdownDirective = function ($document) {
@@ -72,4 +72,4 @@
     DropdownDirective.$inject = ["$document"];
     app.directive("dropdown", DropdownDirective);
 
-})(keyPearlApp);
+})(keyPearlApp, angular);

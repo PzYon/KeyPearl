@@ -1,4 +1,4 @@
-(function (app) {
+(function (app, angular) {
     "use strict";
 
     var TagsDirective = function () {
@@ -38,4 +38,4 @@
     TagsDirective.$inject = [];
     app.directive("tags", TagsDirective);
 
-})(keyPearlApp);
+})(keyPearlApp, angular);

@@ -328,12 +328,24 @@ input {
   }
 }
 
+.buttons {
+  margin-top: 10px;
+}
+
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
   html,
   body,
   input,
   button {
     font-size: 14px;
+  }
+
+  .tag .container {
+    margin: 3px;
+
+    .label {
+      line-height: 1.5rem;
+    }
   }
 
   .search-box > .container {

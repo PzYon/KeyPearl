@@ -3,7 +3,9 @@
       data-ng-mouseover="onMouseOver()"
       data-ng-mouseleave="onMouseLeave()">
     <span class="container">
-        {{tag.name}}
+        <span class="label">
+            {{tag.name}}
+        </span>
     </span>
     <ul class="container popup">
         <li data-ng-repeat="tag in tagHierarchy"

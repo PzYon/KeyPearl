@@ -1,4 +1,4 @@
-var keyPearlApp = (function () {
+var keyPearlApp = (function (angular) {
     "use strict";
 
     var app = angular.module("keyPearl", ["ngRoute", "ngTouch"]);
@@ -27,4 +27,4 @@ var keyPearlApp = (function () {
 
     return app;
 
-})();
+})(angular);

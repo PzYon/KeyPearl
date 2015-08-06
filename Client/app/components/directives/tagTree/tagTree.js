@@ -14,7 +14,12 @@
                 onChangeFunction: "=",
                 isEditable: "="
             },
-            templateUrl: "components/directives/tagTree/tagTree.html"
+            templateUrl: "components/directives/tagTree/tagTree.html",
+            link: function (scope) {
+                scope.addTopLevelTag = function () {
+                    scope.tagTree.addChild(null, true);
+                };
+            }
         };
 
     };

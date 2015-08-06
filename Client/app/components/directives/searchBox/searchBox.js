@@ -1,4 +1,4 @@
-(function (app) {
+(function (app, angular) {
     "use strict";
 
     var SearchBoxDirective = function ($timeout, searchHelper, config) {
@@ -75,4 +75,4 @@
     SearchBoxDirective.$inject = ["$timeout", "searchHelper", "config"];
     app.directive("searchBox", SearchBoxDirective);
 
-})(keyPearlApp);
+})(keyPearlApp, angular);

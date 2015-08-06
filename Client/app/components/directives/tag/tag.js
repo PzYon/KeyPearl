@@ -24,6 +24,7 @@
 
                 if (mobile.isTouch()) {
                     element.on("click", function () {
+                        // todo: DEREGISTER!!
                         scope.isHover = true;
                         scope.$apply();
                     });

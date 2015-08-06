@@ -1,3 +1,8 @@
+<span data-action-link="addTopLevelTag()"
+      data-ng-if="tagTree.isTopLevel() && isEditable">
+    + new top level tag
+</span>
+
 <ul>
     <li class="tag-tree-node"
         data-ng-repeat="tag in tagTree.children"
