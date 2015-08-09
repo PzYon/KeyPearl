@@ -9,7 +9,11 @@
             scope: {
                 action: "&actionLink"
             },
-            templateUrl: "components/directives/actionLink/actionLink.html"
+            templateUrl: "components/directives/actionLink/actionLink.html",
+            link: function (scope) {
+                scope.noAction = function(){
+                };
+            }
         };
 
     };

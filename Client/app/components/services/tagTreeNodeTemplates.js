@@ -22,20 +22,26 @@
         //     -> we would then also need to remove all changed to tags which are affected
 
         var editableTemplate = "" +
-            "<span class='tag-collapsor' data-ng-if='tag.hasChildren()' data-ng-click='tag.toggleCollapsed()'>" +
-                "<span class='container'>{{tag.isCollapsed ? '+' : '-'}}</span>" +
-            "</span>" +
-            "<span class='tag-label' title='id: {{tag.id}}' " +
-                  "data-draggable-target data-on-drop='onDrop' data-can-drop='canDrop'>" +
-              "<input type='text' data-ng-change='handleOnChange(tag)' data-ng-model='tag.name' />" +
-            "</span>" +
-            "<span class='draggable' " +
-                  "data-draggable='tag' data-on-drag-start='onDragStart' data-on-drag-end='onDragEnd'>" +
-                "DnD " +
-            "</span>" +
-            "<span class='tag-adder' data-ng-if='tag.canAddChildren()' data-ng-click='tag.addChild(null, true)'>+</span>" +
-            "<span data-tag-tree='tag' data-is-editable='isEditable' data-on-change='onChangeFunction(tag)' " +
-                  "data-on-change-function='onChangeFunction' data-ng-if='!tag.isCollapsed'></span>";
+            "<span data-ng-mouseover='isHover=true;' data-ng-mouseleave='isHover=false;'>" +
+                "<span class='tag-collapsor' data-ng-if='tag.hasChildren()' data-ng-click='tag.toggleCollapsed()'>" +
+                    "<span class='container'>{{tag.isCollapsed ? '+' : '-'}}</span>" +
+                "</span>" +
+                "<span class='tag-label' title='id: {{tag.id}}' " +
+                      "data-draggable-target data-on-drop='onDrop' data-can-drop='canDrop'>" +
+                  "<input type='text' data-ng-change='handleOnChange(tag)' data-ng-model='tag.name' />" +
+                "</span>" +
+                "<span data-ng-if='isHover'>" +
+                    "<span class='draggable' data-ng-if='!isTouch' " +
+                          "data-draggable='tag' data-on-drag-start='onDragStart' data-on-drag-end='onDragEnd'>" +
+                        "<span data-action-link>move</span>" +
+                    "</span> | " +
+                    "<span data-action-link='tag.addChild(null, true)' data-ng-if='tag.canAddChildren()'>" +
+                        "add child" +
+                    "</span>" +
+                "</span>" +
+                "<span data-tag-tree='tag' data-is-editable='isEditable' data-on-change='onChangeFunction(tag)' " +
+                      "data-on-change-function='onChangeFunction' data-ng-if='!tag.isCollapsed'></span>" +
+            "</span>";
 
         return {
             defaultTemplate: defaultTemplate,

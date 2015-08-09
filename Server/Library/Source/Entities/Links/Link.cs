@@ -1,4 +1,5 @@
-﻿using KeyPearl.Library.Entities.Tags;
+﻿using System;
+using KeyPearl.Library.Entities.Tags;
 using KeyPearl.Library.Persistance;
 
 namespace KeyPearl.Library.Entities.Links
@@ -6,6 +7,10 @@ namespace KeyPearl.Library.Entities.Links
   public class Link : IEntity, ITaggable
   {
     public int Id { get; set; }
+
+    public DateTime? Created { get; set; }
+
+    public DateTime? Modified { get; set; }
 
     public string Url { get; set; }
 

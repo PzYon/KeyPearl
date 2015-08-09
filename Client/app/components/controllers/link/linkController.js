@@ -1,11 +1,12 @@
 (function (app) {
     "use strict";
 
-    var LinkController = function ($routeParams, $interval, serverApi, tagHelper, navigator, notifier) {
+    var LinkController = function ($routeParams, $interval, serverApi, tagHelper, dateHelper, navigator, notifier) {
 
         // todo: add some validation (required: yes/no, format: regex, etc.)
 
         var c = this;
+        c.dateHelper = dateHelper;
         c.link = {};
 
         var setLink = function (link) {
@@ -37,17 +38,39 @@
         };
 
         c.updateLink = function () {
+
             var isCreate = !c.link.id;
+
             serverApi.updateLink(c.link, function (link) {
-                navigator.goToLink(link.id);
-                notifier.addSuccess((isCreate ? "Added" : "Changed") + " link '" + link.name + "'");
+                var executedAction;
+                if (isCreate) {
+                    // we need to navigate to correct url
+                    executedAction = "added";
+                    navigator.goToLink(link.id);
+                } else {
+                    // we simply need to update the link with new server value
+                    executedAction = "changed";
+                    c.link = link;
+                }
+
+                notifier.addSuccess(executedAction + " link '" + link.name + "'");
             });
+
         };
 
         initialize();
     };
 
-    LinkController.$inject = ["$routeParams", "$interval", "serverApi", "tagHelper", "navigator", "notifier"];
+    LinkController.$inject = [
+        "$routeParams",
+        "$interval",
+        "serverApi",
+        "tagHelper",
+        "dateHelper",
+        "navigator",
+        "notifier"
+    ];
+
     app.controller("linkController", LinkController);
 
 })(keyPearlApp);

@@ -2,7 +2,6 @@
     "use strict";
 
     var gulp = require("gulp");
-    var print = require("gulp-print");
     var concat = require("gulp-concat");
     var sass = require("gulp-sass");
     var watch = require("gulp-watch");
@@ -48,8 +47,7 @@
     };
 
     var concatAndCopyScripts = function (definition, targetFolder) {
-        gulp.src(definition.srcs)
-            .pipe(print())
+        return gulp.src(definition.srcs)
             .pipe(sourcemaps.init())
             .pipe(gulpif(isProduction, uglify()))
             .pipe(concat(definition.targetFile))
@@ -58,30 +56,29 @@
     };
 
     gulp.task("clean", function () {
-        del(paths.targetAllRecursive);
+        return del.sync(paths.targetAllRecursive);
     });
 
     gulp.task("scripts", function () {
         concatAndCopyScripts(configDefinition, paths.target);
         concatAndCopyScripts(appDefinition, paths.target);
-        concatAndCopyScripts(libDefinition, paths.target);
+        return concatAndCopyScripts(libDefinition, paths.target);
     });
 
     gulp.task("scss", function () {
-        gulp.src(paths.appAllRecursive + ".scss")
+        return gulp.src(paths.appAllRecursive + ".scss")
             .pipe(sass().on("error", sass.logError))
             .pipe(concat("styles.css"))
             .pipe(gulp.dest(paths.target));
     });
 
     gulp.task("html", function () {
-        gulp.src(paths.appAllRecursive + ".html")
-            .pipe(print())
+        return gulp.src(paths.appAllRecursive + ".html")
             .pipe(gulp.dest(paths.target));
     });
 
-    gulp.task("default", function () {
-        runSequence("clean", ["scss", "html", "scripts"]);
+    gulp.task("default", function (callback) {
+        return runSequence("clean", ["scss", "html", "scripts"], callback);
     });
 
     gulp.task("watch", function () {

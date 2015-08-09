@@ -14,6 +14,14 @@
                      data-tag-tree="c.rootTag"></div>
             </div>
         </div>
+        <div data-form-element data-label="'Added'"
+             data-disabled="true"
+             data-type="'text'"
+             data-model="c.dateHelper.formatDate(c.link.created)"></div>
+        <div data-form-element data-label="'Modified'"
+             data-disabled="true"
+             data-type="'text'"
+             data-model="c.dateHelper.formatDate(c.link.modified)"></div>
         <div class="buttons">
             <button data-ng-click="c.updateLink()">{{c.actionName}}</button>
         </div>

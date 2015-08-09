@@ -15,9 +15,6 @@ namespace KeyPearl.Library.Queries
     // format: $tagIds(1;2;3)$searchString(foo)
     private static readonly Regex queryRegex = new Regex(@"\$(searchString|tagIds)(\(.*?\))", RegexOptions.Compiled);
 
-    // todo: what about %20 and special chars [$, ;, (, )] - do we need to escape or remove them?
-    // --> %20 seems to work, other chars might need to be removed on client?
-
     public static QueryParams Parse(string queryString)
     {
       if (string.IsNullOrEmpty(queryString))

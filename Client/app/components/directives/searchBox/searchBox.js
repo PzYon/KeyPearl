@@ -5,11 +5,16 @@
 
         var link = function (scope) {
 
+            var onChangeWrapper = function () {
+                scope.setMatchingTags();
+                scope.onChange();
+            };
+
             scope.searchHelper = searchHelper;
 
             scope.toggleSelectedTags = function (tags) {
                 searchHelper.toggleSelectedTags(tags);
-                scope.onChange();
+                onChangeWrapper();
             };
 
             scope.resetAll = function () {
@@ -20,7 +25,7 @@
 
             scope.resetSelectedTags = function () {
                 searchHelper.resetSelectedTags();
-                scope.onChange();
+                onChangeWrapper();
             };
 
             scope.clearTagSearchString = function () {
@@ -33,10 +38,6 @@
 
             scope.setMatchingTags = function () {
                 scope.matchingTags = [];
-
-                if (!searchHelper.tagSearchString) {
-                    return;
-                }
 
                 searchHelper.tagSearchString = searchHelper.tagSearchString.toLowerCase();
 
@@ -57,8 +58,9 @@
                     $timeout.cancel(delayed);
                 }
 
-                delayed = $timeout(scope.onChange, config.executeQueryAfter);
+                delayed = $timeout(onChangeWrapper, config.executeQueryAfter);
             };
+
         };
 
         return {

@@ -3,8 +3,10 @@ var Tag = (function (angular) {
 
     return function (tagRow, tagHash) {
 
-        Tag.prototype.toggleCollapsed = function () {
-            this.isCollapsed = !this.isCollapsed;
+        Tag.prototype.toggleCollapsed = function (isExpanded) {
+            this.isCollapsed = angular.isDefined(isExpanded)
+                ? !isExpanded
+                : !this.isCollapsed;
         };
 
         Tag.prototype.toggleSelected = function (isSelected) {
@@ -15,20 +17,16 @@ var Tag = (function (angular) {
             return this.isSelected;
         };
 
-        Tag.prototype.toggleVisibility = function (show) {
-            if (angular.isUndefined(show)) {
+        Tag.prototype.toggleVisibility = function (isShown) {
+            if (angular.isUndefined(isShown)) {
                 this.isHidden = !this.isHidden;
             } else {
-                this.isHidden = !show;
+                this.isHidden = !isShown;
             }
         };
 
         Tag.prototype.isRoot = function () {
             return !this.id;
-        };
-
-        Tag.prototype.isTopLevel = function () {
-            return !this.parentId;
         };
 
         Tag.prototype.hasChildren = function () {

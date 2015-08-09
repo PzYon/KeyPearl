@@ -185,10 +185,6 @@ input {
       }
     }
 
-    .tag-adder {
-      cursor: pointer;
-    }
-
     .tag-label {
       cursor: pointer;
 
@@ -242,13 +238,14 @@ input {
       border-radius: $border-radius;
       border: 1px solid $page-background-color;
 
-      .action-links {
-        display: none;
-      }
-
       .title {
         font-size: 1.2rem;
         cursor: pointer;
+      }
+
+      .additional {
+        font-size: 0.9rem;
+        color: $action-color;
       }
 
       .details {
@@ -257,10 +254,6 @@ input {
 
       &:hover {
         border-color: $action-active-color;
-
-        .action-links {
-          display: inline !important;
-        }
       }
     }
   }
@@ -300,7 +293,9 @@ input {
 }
 
 .draggable {
-  cursor: move;
+  a {
+    cursor: move !important;
+  }
 }
 
 .dropdown {
@@ -332,7 +327,7 @@ input {
   margin-top: 10px;
 }
 
-@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
   html,
   body,
   input,

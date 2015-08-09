@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
@@ -15,15 +16,20 @@ namespace KeyPearl.Library.Persistance
     public T Update<T>(T entity) where T : class, IEntity
     {
       DbSet<T> dbSet = Set<T>();
-
       T existingEntity = dbSet.FirstOrDefault(s => s.Id == entity.Id);
+
+      DateTime currentDate = DateTime.Now;
 
       if (existingEntity == null)
       {
+        entity.Created = currentDate;
+        entity.Modified = currentDate;
+
         dbSet.Add(entity);
       }
       else
       {
+        entity.Modified = currentDate;
         Entry(existingEntity).CurrentValues.SetValues(entity);
       }
 

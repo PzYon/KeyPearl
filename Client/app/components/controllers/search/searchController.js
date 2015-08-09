@@ -15,21 +15,24 @@
             notifier.clear();
 
             if (!c.links.length) {
-                var message = !searchHelper.hasQuery()
+                var errorMessage = !searchHelper.hasQuery()
                     ? "nothing found - maybe you haven't added any links yet?"
                     : "no links found matching your criteria, please reset and try again...";
-                notifier.addError(message);
+                notifier.addError(errorMessage);
 
                 return;
             }
 
-            var availableTagsCount = searchHelper.showAvailableTags(c.links);
-
-            var message = "found " + c.links.length + " links with " + availableTagsCount + " different tags applied.";
+            var message;
 
             if (result.totalLinksCount) {
-                message += " results are truncated, in total there are " + result.totalLinksCount + " links." +
-                           " you might need to be more precise in order to find what you are actually looking for.";
+                searchHelper.showAllTags();
+                message = "loaded " + c.links.length + " links. results are truncated, in total there are " +
+                           result.totalLinksCount + " links. you might need to be more precise in order to find" +
+                           " what you are actually looking for.";
+            } else {
+                var availableTagsCount = searchHelper.showAvailableTags(c.links);
+                message = "found " + c.links.length + " links with " + availableTagsCount + " different tags applied.";
             }
 
             notifier.addSuccess(message, "searchResultInformation");

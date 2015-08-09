@@ -20,8 +20,8 @@ namespace KeyPearl.WebApi.Controllers
 
       var maxResultSize = WebConfigReader.Get<int>("MaxResultSize");
 
-      // todo: do we need a specific order here?
-      Link[] loadedLinks = links.Take(maxResultSize + 1)
+      Link[] loadedLinks = links.OrderByDescending(l => l.Modified)
+                                .Take(maxResultSize + 1)
                                 .ToArray();
 
       return new LinkQueryResult

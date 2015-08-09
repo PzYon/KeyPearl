@@ -35,7 +35,7 @@ namespace KeyPearl.Library.Persistance.Initialization
 
         TagManager.SyncTagStringWithTagIds(dbContext, link, true);
 
-        dbContext.Links.Add(link);
+        dbContext.Update(link);
       }
     }
 
@@ -43,14 +43,7 @@ namespace KeyPearl.Library.Persistance.Initialization
     {
       for (var i = 1; i <= numberOfTags; i++)
       {
-        var tag = new Tag
-          {
-            Id = i,
-            Name = "Random Tag " + i,
-            ParentId = random.Next(i)
-          };
-
-        dbContext.Tags.Add(tag);
+        AddTag(dbContext, "Random Tag " + i, random.Next(i));
       }
     }
 

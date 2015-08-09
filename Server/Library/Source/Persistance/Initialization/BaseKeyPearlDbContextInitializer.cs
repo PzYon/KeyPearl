@@ -6,22 +6,20 @@ namespace KeyPearl.Library.Persistance.Initialization
 {
   public class BaseKeyPearlDbContextInitializer : DropCreateDatabaseIfModelChanges<KeyPearlDbContext>
   {
-    protected static Tag AddTag(KeyPearlDbContext dbContext, string name, int parentId = 0)
+    protected static Tag AddTag(IDbContext dbContext, string name, int parentId = 0)
     {
-      var tag = new Tag
+      Tag tag = dbContext.Update(new Tag
         {
           Name = name,
           ParentId = parentId
-        };
-
-      dbContext.Tags.Add(tag);
+        });
 
       dbContext.SaveChanges();
 
       return tag;
     }
 
-    protected static void AddLink(KeyPearlDbContext dbContext,
+    protected static void AddLink(IDbContext dbContext,
                                   string name,
                                   string url,
                                   string description = null,
@@ -36,7 +34,7 @@ namespace KeyPearl.Library.Persistance.Initialization
 
       TagManager.EnsureTags(dbContext, link, tags);
 
-      dbContext.Links.Add(link);
+      dbContext.Update(link);
     }
   }
 }

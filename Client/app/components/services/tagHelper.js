@@ -21,6 +21,12 @@
                 }
             },
 
+            showAllTags: function (tagHash) {
+                angular.forEach(tagHash, function (tag) {
+                    tag.toggleVisibility(true);
+                });
+            },
+
             showAvailableTags: function (links, tagHash) {
 
                 var distinctIds = [];

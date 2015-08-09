@@ -1,12 +1,14 @@
 (function (app) {
     "use strict";
 
-    var TagTreeNodeDirective = function ($compile, tagTreeNodeTemplates, notifier) {
+    var TagTreeNodeDirective = function ($compile, tagTreeNodeTemplates, notifier, mobile) {
 
         var link = function (scope, element) {
 
             // todo: do we need to add some validation (i.e throw exceptions) here?
-            // e.g. isEditable && onChangeFunction == 'undefined'
+            // e.g. when isEditable && onChangeFunction == 'undefined'
+
+            scope.isTouch = mobile.isTouch();
 
             var template = scope.isEditable
                 ? tagTreeNodeTemplates.editableTemplate
@@ -35,6 +37,8 @@
 
             scope.onDrop = function (draggedTag) {
                 scope.tag.addChild(draggedTag);
+                scope.tag.toggleCollapsed(true);
+                scope.$apply();
             };
 
             scope.onDragEnd = function (draggedTag, isSuccess) {
@@ -72,7 +76,7 @@
         };
     };
 
-    TagTreeNodeDirective.$inject = ["$compile", "tagTreeNodeTemplates", "notifier"];
+    TagTreeNodeDirective.$inject = ["$compile", "tagTreeNodeTemplates", "notifier", "mobile"];
     app.directive("tagTreeNode", TagTreeNodeDirective);
 
 })(keyPearlApp);

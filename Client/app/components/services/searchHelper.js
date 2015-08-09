@@ -41,13 +41,17 @@
             }
         };
 
+        var showAllTags = function () {
+            tagHelper.showAllTags(instance.tagHash);
+        };
+
         var showAvailableTags = function (links) {
             return tagHelper.showAvailableTags(links, instance.tagHash);
         };
 
         var hasQuery = function () {
             return !!instance.tagSearchString || (instance.selectedTags && instance.selectedTags.length);
-        }
+        };
 
         loadTags();
 
@@ -55,6 +59,7 @@
             selectedTags: [],
             hasQuery: hasQuery,
             toggleSelectedTags: toggleSelectedTags,
+            showAllTags: showAllTags,
             showAvailableTags: showAvailableTags,
             resetSelectedTags: resetSelectedTags,
             clearTagSearchString: clearTagSearchString

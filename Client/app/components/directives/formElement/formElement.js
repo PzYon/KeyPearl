@@ -8,7 +8,8 @@
             scope: {
                 label: "=",
                 type: "=",
-                model: "="
+                model: "=",
+                disabled: "="
             },
             templateUrl: "components/directives/formElement/formElement.html",
         };
