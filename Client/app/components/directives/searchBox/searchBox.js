@@ -39,13 +39,12 @@
             scope.setMatchingTags = function () {
                 scope.matchingTags = [];
 
-                searchHelper.tagSearchString = searchHelper.tagSearchString.toLowerCase();
+                var tagSearchString = searchHelper.tagSearchString ? searchHelper.tagSearchString.toLowerCase() : "";
 
                 angular.forEach(scope.searchHelper.tagHash, function (tag) {
-                    var isMatchAndVisible = tag.name
-                                            && tag.name.toLowerCase().indexOf(searchHelper.tagSearchString) > -1
-                                            && !tag.isHidden;
-
+                    var isMatchAndVisible = !tag.isHidden
+                                            && tag.name
+                                            && tag.name.toLowerCase().indexOf(tagSearchString) > -1;
                     if (isMatchAndVisible) {
                         scope.matchingTags.push(tag);
                     }

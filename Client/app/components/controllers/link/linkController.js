@@ -41,19 +41,19 @@
 
             var isCreate = !c.link.id;
 
-            serverApi.updateLink(c.link, function (link) {
+            serverApi.updateLink(c.link, function (updatedLink) {
                 var executedAction;
                 if (isCreate) {
                     // we need to navigate to correct url
                     executedAction = "added";
-                    navigator.goToLink(link.id);
+                    navigator.goToLink(updatedLink.id);
                 } else {
                     // we simply need to update the link with new server value
                     executedAction = "changed";
-                    c.link = link;
+                    c.link = updatedLink;
                 }
 
-                notifier.addSuccess(executedAction + " link '" + link.name + "'");
+                notifier.addSuccess(executedAction + " link '" + updatedLink.name + "'");
             });
 
         };

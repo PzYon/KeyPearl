@@ -3,7 +3,7 @@
         {{label}}
     </div>
     <div class="form-cell control">
-        <input type='{{type}}' data-ng-if="!disabled" data-ng-model="model"/>
-        <input type='{{type}}' data-ng-if="disabled" disabled="disabled" value="{{model}}"/>
+        <input type="{{type}}" data-ng-hide="disabled" data-ng-model="model"/>
+        <input type="{{type}}" data-ng-show="disabled" disabled="disabled" value="{{model}}"/>
     </div>
 </div>
