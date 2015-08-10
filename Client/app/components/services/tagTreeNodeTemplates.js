@@ -23,14 +23,14 @@
 
         var editableTemplate = "" +
             "<span data-ng-mouseover='isHover=true;' data-ng-mouseleave='isHover=false;'>" +
-                "<span class='tag-collapsor' data-ng-if='tag.hasChildren()' data-ng-click='tag.toggleCollapsed()'>" +
-                    "<span class='container'>{{tag.isCollapsed ? '+' : '-'}}</span>" +
+                "<span class='tag-collapsor' data-ng-if='tag.hasChildren()' data-action-link='tag.toggleCollapsed()'>" +
+                    "{{tag.isCollapsed ? '+' : '-'}}" +
                 "</span>" +
                 "<span class='tag-label' title='id: {{tag.id}}' " +
                       "data-draggable-target data-on-drop='onDrop' data-can-drop='canDrop'>" +
                   "<input type='text' data-ng-change='handleOnChange(tag)' data-ng-model='tag.name' />" +
                 "</span>" +
-                "<span data-ng-if='isHover'>" +
+                "<span class='hide-animated-delayed-fast' data-ng-if='isHover'>" +
                     "<span class='draggable' data-ng-if='!isTouch' " +
                           "data-draggable='tag' data-on-drag-start='onDragStart' data-on-drag-end='onDragEnd'>" +
                         "<span data-action-link>move</span>" +
@@ -39,9 +39,9 @@
                         "add child" +
                     "</span>" +
                 "</span>" +
-                "<span data-tag-tree='tag' data-is-editable='isEditable' data-on-change='onChangeFunction(tag)' " +
-                      "data-on-change-function='onChangeFunction' data-ng-if='!tag.isCollapsed'></span>" +
-            "</span>";
+            "</span>" +
+            "<span data-tag-tree='tag' data-is-editable='isEditable' data-on-change='onChangeFunction(tag)' " +
+                  "data-on-change-function='onChangeFunction' data-ng-if='!tag.isCollapsed'></span>";
 
         return {
             defaultTemplate: defaultTemplate,

@@ -49,7 +49,7 @@ var Tag = (function (angular) {
             tag.parentId = this.id;
 
             if (showExpanded) {
-                this.toggleCollapsed();
+                this.toggleCollapsed(true);
             }
 
             this.children.unshift(tag);

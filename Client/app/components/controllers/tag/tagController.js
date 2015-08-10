@@ -7,6 +7,7 @@
         var changedTagsHash;
 
         c.loadTags = function () {
+            notifier.clear();
             serverApi.loadTags(ensureTagTree);
         };
 
