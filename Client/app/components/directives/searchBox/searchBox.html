@@ -1,13 +1,15 @@
 <div class="container">
     <div class="actions">
-        <span data-action-link="resetAll">
-            reset all
-        </span> |
-        <span data-action-link="resetSelectedTags">
-            reset tags
-        </span> |
-        <span data-action-link="toggleTree">
-            {{showTree ? "show tag search" : "show tag tree"}}
+        <span data-separated-elements>
+            <span data-action-link="resetAll">
+                reset all
+            </span>
+            <span data-action-link="resetSelectedTags">
+                reset tags
+            </span>
+            <span data-action-link="toggleTree">
+                {{showTree ? "show tag search" : "show tag tree"}}
+            </span>
         </span>
     </div>
 

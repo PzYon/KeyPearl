@@ -340,6 +340,10 @@ form {
   margin-top: 10px;
 }
 
+.separator-element {
+  padding: 0 5px;
+}
+
 /* touch/mobile */
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
   html,

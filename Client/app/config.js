@@ -6,7 +6,8 @@
         serverApiLinksUrl: "links",
         serverApiTagsUrl: "tags",
         executeQueryAfter: 400,
-        showPendingRequestsAfter: 500
+        showPendingRequestsAfter: 500,
+        defaultElementSeparator: "|"
     });
 
 })(keyPearlApp);

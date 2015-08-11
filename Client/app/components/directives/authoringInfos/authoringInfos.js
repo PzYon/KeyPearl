@@ -3,26 +3,16 @@
 
     var AuthoringInfosDirective = function (dateHelper) {
 
-        var link = function (scope) {
-            var modified = scope.entity.modified;
-            var created = scope.entity.created;
-
-            var text = "added: " + dateHelper.formatDate(created);
-
-            if (created !== modified) {
-                text += " | modified: " + dateHelper.formatDate(modified);
-            }
-
-            scope.infoText = text;
-        };
-
         return {
             restrict: "A",
             scope: {
                 entity: "=authoringInfos"
             },
-            template: "{{infoText}}",
-            link: link
+            templateUrl: "components/directives/authoringInfos/authoringInfos.html",
+            link: function (scope) {
+                scope.modified = dateHelper.formatDate(scope.entity.modified);
+                scope.added = dateHelper.formatDate(scope.entity.created);
+            }
         };
 
     };
