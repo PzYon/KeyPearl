@@ -19,6 +19,17 @@
                 scope.addTopLevelTag = function () {
                     scope.tagTree.addChild(null, true);
                 };
+
+                scope.canDropRoot = function () {
+                    return true;
+                };
+
+                scope.onDropRoot = function (tag) {
+                    scope.tagTree.addChild(tag);
+                    scope.$apply();
+                    // we don't need to remove tag from original parent is tag-object is
+                    // updated accordingly here and scope is applied (-> old tag is child scope)
+                };
             }
         };
 

@@ -368,7 +368,7 @@ form {
   .tag {
     .container {
       font-size: 0.9rem;
-      margin: 3px 3px 3px 0;
+      margin: 3px 3px 0 0;
 
       &.popup {
         .label {
@@ -378,8 +378,14 @@ form {
     }
   }
 
-  .search-box > .container {
-    width: 80%;
+  .search-box {
+    &>.container {
+      width: 80%;
+    }
+
+    .tag-tree {
+      margin-left: 15px;
+    }
   }
 }
 

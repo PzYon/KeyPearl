@@ -1,7 +1,7 @@
 (function (app) {
     "use strict";
 
-    var LinkController = function ($routeParams, $interval, serverApi, tagHelper, dateHelper, navigator, notifier) {
+    var LinkController = function ($scope, $routeParams, $interval, serverApi, tagHelper, dateHelper, navigator, notifier) {
 
         // todo: add some validation (required: yes/no, format: regex, etc.)
 
@@ -10,7 +10,11 @@
         c.link = {};
 
         var setLink = function (link) {
-            c.link = link;
+            if (link) {
+                c.link = link;
+            } else {
+                notifier.addError("cannot find link.. maybe it doesn't exist anymore?");
+            }
         };
 
         var initialize = function () {
@@ -23,12 +27,14 @@
             }
 
             serverApi.loadTags(function (tags) {
-                var waitUntilLinkIsLoaded = $interval(function () {
-                    if (c.link || !c.link.id) {
-                        $interval.cancel(waitUntilLinkIsLoaded);
+                var cancelWatch = $scope.$watch("link", function () {
+                    if (c && (c.link || !c.link.id)) {
                         c.rootTag = tagHelper.buildTree(tags, c.link.tagIds).rootTag;
+                        cancelWatch();
+                    } else {
+                        console.log("not ready yet");
                     }
-                }, 10);
+                });
             });
         };
 
@@ -62,6 +68,7 @@
     };
 
     LinkController.$inject = [
+        "$scope",
         "$routeParams",
         "$interval",
         "serverApi",

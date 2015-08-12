@@ -1,6 +1,9 @@
 <span data-action-link="addTopLevelTag()"
       data-ng-if="tagTree.isRoot() && isEditable">
-    add new top level tag
+    <span data-draggable-target data-on-drop='onDropRoot'
+          data-can-drop='canDropRoot'>
+        add new top level tag
+    </span>
 </span>
 
 <ul>
