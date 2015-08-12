@@ -1,101 +1,143 @@
 (function (app, angular) {
     "use strict";
 
-    // todo: consider handling loadTags/updateTags via tagHelper and caching the tags here, e.g.
-    // - rename buildTree to getTree
-    // - cache hierarchy here
-    // - add overload to force reload from service
-    var TagHelperService = function () {
+    var TagHelperService = function (serverApi, notifier) {
 
-        return {
-            toggleApplied: function (link, tagId) {
-                if (!link.tagIds) {
-                    link.tagIds = [];
-                }
+        var tagRowCache = null;
 
-                var index = link.tagIds.indexOf(tagId);
-                if (index > -1) {
-                    link.tagIds.splice(index, 1);
-                } else {
-                    link.tagIds.push(tagId);
-                }
-            },
-
-            showAllTags: function (tagHash) {
-                angular.forEach(tagHash, function (tag) {
-                    tag.toggleVisibility(true);
+        var getTags = function (onLoad, settings) {
+            if (!tagRowCache) {
+                serverApi.loadTags(function (loadedTags) {
+                    tagRowCache = loadedTags;
+                    onLoad(buildTree(tagRowCache, settings));
                 });
-            },
+            } else {
+                onLoad(buildTree(tagRowCache, settings));
+            }
+        };
 
-            showAvailableTags: function (links, tagHash) {
+        var toggleApplied = function (link, tagId) {
+            if (!link.tagIds) {
+                link.tagIds = [];
+            }
 
-                var distinctIds = [];
-                angular.forEach(links, function (link) {
-                    angular.forEach(link.tagIds, function (tagId) {
-                        if (distinctIds.indexOf(tagId) === -1) {
-                            distinctIds.push(tagId);
-                        }
-                    });
-                });
+            var index = link.tagIds.indexOf(tagId);
+            if (index > -1) {
+                link.tagIds.splice(index, 1);
+            } else {
+                link.tagIds.push(tagId);
+            }
+        };
 
-                angular.forEach(tagHash, function (tag) {
-                    tag.toggleVisibility(false);
-                    for (var i = 0; i < distinctIds.length; i++) {
-                        if (tag.isRelatedWith(distinctIds[i])) {
-                            tag.toggleVisibility(true);
-                            break;
-                        }
+        var showAllTags = function (tagHash) {
+            angular.forEach(tagHash, function (tag) {
+                tag.toggleVisibility(true);
+            });
+        };
+
+        var showAvailableTags = function (links, tagHash) {
+
+            var distinctIds = [];
+            angular.forEach(links, function (link) {
+                angular.forEach(link.tagIds, function (tagId) {
+                    if (distinctIds.indexOf(tagId) === -1) {
+                        distinctIds.push(tagId);
                     }
                 });
+            });
 
-                return distinctIds.length;
-            },
+            angular.forEach(tagHash, function (tag) {
+                tag.toggleVisibility(false);
+                for (var i = 0; i < distinctIds.length; i++) {
+                    if (tag.isRelatedWith(distinctIds[i])) {
+                        tag.toggleVisibility(true);
+                        break;
+                    }
+                }
+            });
 
-            buildTree: function (tagRows, selectedTagIds) {
+            return distinctIds.length;
+        };
 
-                var rootTag = new Tag();
+        var buildTree = function (tagRows) {
 
-                var tagHash = {"0": rootTag};
-                tagRows.map(function (tagRow) {
-                    tagHash[tagRow.id] = new Tag(tagRow, tagHash);
+            var rootTag = new Tag();
+
+            var tagHash = {"0": rootTag};
+            tagRows.map(function (tagRow) {
+                tagHash[tagRow.id] = new Tag(tagRow, tagHash);
+            });
+
+            angular.forEach(tagRows, function (tagRow) {
+                var tag = tagHash[tagRow.id];
+                var parentTag = tagRow.parentId ? tagHash[tagRow.parentId] : rootTag;
+                parentTag.addChild(tag);
+            });
+
+            return {
+                rootTag: rootTag,
+                tagHash: tagHash
+            };
+
+        };
+
+        var applySettings = function (tagHash, settings) {
+            angular.forEach(settings.selectedIds, function (tagId) {
+                tagHash[tagId].toggleSelected(true);
+            });
+
+            angular.forEach(settings.expandedIds, function (tagId) {
+                tagHash[tagId].toggleCollapsed(true);
+            });
+
+            angular.forEach(settings.hiddenIds, function (tagId) {
+                tagHash[tagId].toggleVisibility(false);
+            });
+        };
+
+        var transformToTagRows = function (tagHash) {
+
+            var tagRows = [];
+
+            angular.forEach(Object.keys(tagHash), function (tagId) {
+                var tag = tagHash[tagId];
+                tagRows.push({
+                    id: tag.id,
+                    parentId: tag.parentId,
+                    name: tag.name
                 });
+            });
 
-                angular.forEach(tagRows, function (tagRow) {
-                    var tag = tagHash[tagRow.id];
-                    tag.isSelected = selectedTagIds && selectedTagIds.indexOf(tag.id) > -1;
+            return tagRows;
 
-                    var parentTag = tagRow.parentId ? tagHash[tagRow.parentId] : rootTag;
-                    parentTag.addChild(tag);
-                });
+        };
 
-                return {
-                    rootTag: rootTag,
-                    tagHash: tagHash
-                };
+        var updateTags = function (changedTagsHash, onUpdated) {
 
-            },
+            serverApi.updateTags(transformToTagRows(changedTagsHash), function (result) {
+                var message = "updated " + result.numberOfUpdatedTags + " tag(s) and adjusted " +
+                              result.numberOfUpdatedLinks + " link(s)";
+                notifier.addSuccess(message, "updateTagsInformation");
 
-            transformToTagRows: function (tagHash) {
+                tagRowCache = result.tags;
 
-                var tagRows = [];
+                onUpdated(buildTree(tagRowCache));
+            });
 
-                angular.forEach(Object.keys(tagHash), function (tagId) {
-                    var tag = tagHash[tagId];
-                    tagRows.push({
-                        id: tag.id,
-                        parentId: tag.parentId,
-                        name: tag.name
-                    });
-                });
+        };
 
-                return tagRows;
-
-            }
+        return {
+            getTags: getTags,
+            updateTags: updateTags,
+            applySettings: applySettings,
+            toggleApplied: toggleApplied,
+            showAllTags: showAllTags,
+            showAvailableTags: showAvailableTags
         };
 
     };
 
-    TagHelperService.$inject = [];
+    TagHelperService.$inject = ["serverApi", "notifier"];
     app.service("tagHelper", TagHelperService);
 
 })(keyPearlApp, angular);

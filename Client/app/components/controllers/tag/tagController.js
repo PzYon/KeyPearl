@@ -4,11 +4,14 @@
     var TagController = function (serverApi, tagHelper, notifier) {
 
         var c = this;
-        var changedTagsHash;
+        var changedTagsHash = {};
 
-        c.loadTags = function () {
+        c.getTags = function () {
             notifier.clear();
-            serverApi.loadTags(ensureTagTree);
+
+            tagHelper.getTags(function (tagTree) {
+                c.tagTree = tagTree;
+            });
         };
 
         c.setChangedTags = function (tag) {
@@ -29,27 +32,12 @@
         };
 
         c.batchUpdateTags = function () {
-            serverApi.updateTags(tagHelper.transformToTagRows(changedTagsHash), handleUpdatedTags);
+            tagHelper.updateTags(changedTagsHash, function (tagTree) {
+                c.tagTree = tagTree;
+            });
         };
 
-        var handleUpdatedTags = function (result) {
-            var message = "updated " + result.numberOfUpdatedTags + " tag(s) and adjusted " +
-                          result.numberOfUpdatedLinks + " link(s)";
-            notifier.addSuccess(message, "updateTagsInformation");
-
-            ensureTagTree(result.tags);
-        };
-
-        var ensureTagTree = function (tags) {
-            c.setChangedTags();
-            c.tagTree = tagHelper.buildTree(tags);
-        };
-
-        var initialize = function () {
-            c.loadTags();
-        };
-
-        initialize();
+        c.getTags();
 
     };
 

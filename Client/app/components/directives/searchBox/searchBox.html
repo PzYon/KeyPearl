@@ -31,7 +31,7 @@
                        data-ng-change="setMatchingTags()"/>
                 <div data-ng-if="searchHelper.tagSearchString"
                      data-dropdown="matchingTags"
-                     data-on-select="toggleSelectedTags"
+                     data-on-select="toggleSelectedTag"
                      data-on-exit="clearTagSearchString"></div>
             </div>
         </div>
@@ -40,13 +40,13 @@
     <span class="tags"
           data-ng-if="searchHelper.tagHash"
           data-tags="searchHelper.selectedTags"
-          data-on-click="toggleSelectedTags"
+          data-on-click="toggleSelectedTag"
           data-tag-hash="searchHelper.tagHash"></span>
 
     <div class="tag-tree"
          data-ng-if="showTree"
-         data-on-select="toggleSelectedTags(tags)"
-         data-on-select-function="toggleSelectedTags"
+         data-on-select="toggleSelectedTag(tag)"
+         data-on-select-function="toggleSelectedTag"
          data-tag-tree="searchHelper.rootTag"></div>
 
 </div>

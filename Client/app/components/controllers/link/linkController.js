@@ -6,8 +6,13 @@
         // todo: add some validation (required: yes/no, format: regex, etc.)
 
         var c = this;
+
         c.dateHelper = dateHelper;
-        c.link = {};
+
+        // required for $watch to work correctly
+        c.link = {
+            id: 0
+        };
 
         var setLink = function (link) {
             if (link) {
@@ -15,6 +20,17 @@
             } else {
                 notifier.addError("cannot find link.. maybe it doesn't exist anymore?");
             }
+        };
+
+        var onTagsLoaded = function (tagTree) {
+            c.rootTag = tagTree.rootTag;
+
+            var deregisterWatch = $scope.$watch("c.link.id", function () {
+                if (c.link.id) {
+                    tagHelper.applySettings(tagTree.tagHash, {selectedIds: c.link.tagIds});
+                    deregisterWatch();
+                }
+            });
         };
 
         var initialize = function () {
@@ -26,16 +42,7 @@
                 c.actionName = "Create";
             }
 
-            serverApi.loadTags(function (tags) {
-                var cancelWatch = $scope.$watch("link", function () {
-                    if (c && (c.link || !c.link.id)) {
-                        c.rootTag = tagHelper.buildTree(tags, c.link.tagIds).rootTag;
-                        cancelWatch();
-                    } else {
-                        console.log("not ready yet");
-                    }
-                });
-            });
+            tagHelper.getTags(onTagsLoaded);
         };
 
         c.toggleAppliedTag = function (tag) {

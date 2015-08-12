@@ -28,8 +28,8 @@
             if (result.totalLinksCount) {
                 searchHelper.showAllTags();
                 message = "loaded " + c.links.length + " links. results are truncated, in total there are " +
-                           result.totalLinksCount + " links. you might need to be more precise in order to find" +
-                           " what you are actually looking for.";
+                          result.totalLinksCount + " links. you might need to be more precise in order to find" +
+                          " what you are actually looking for.";
             } else {
                 var availableTagsCount = searchHelper.showAvailableTags(c.links);
                 message = "found " + c.links.length + " links with " + availableTagsCount + " different tags applied.";
@@ -47,11 +47,12 @@
             serverApi.loadLinks(searchHelper.searchString, tagIds.join(";"), setLinks);
         };
 
-        c.onToggleSelectedTags = function (tag) {
-            searchHelper.toggleSelectedTags(tag);
+        c.toggleSelectedTag = function (tag) {
+            searchHelper.toggleSelectedTag(tag);
             c.loadLinks();
         };
 
+        c.searchHelper.ensureInitialized();
         c.loadLinks();
 
     };

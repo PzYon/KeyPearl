@@ -3,33 +3,19 @@
 
     var SearchHelper = function (serverApi, tagHelper) {
 
-        var loadTags = function () {
-            serverApi.loadTags(function (tags) {
-                var tree = tagHelper.buildTree(tags);
-                instance.rootTag = tree.rootTag;
-                instance.tagHash = tree.tagHash;
-            });
-        };
+        var selectedTagIds = [];
 
         var toggleSelectedTag = function (tag, isSelected) {
-            isSelected = instance.tagHash[tag.id].toggleSelected(isSelected);
+            isSelected = tag.toggleSelected(isSelected);
 
-            var index = instance.selectedTags.indexOf(tag);
+            var index = selectedTagIds.indexOf(tag.id);
             if (isSelected && index === -1) {
                 instance.selectedTags.push(tag);
+                selectedTagIds.push(tag.id);
             } else if (!isSelected && index > -1) {
                 instance.selectedTags.splice(index, 1);
+                selectedTagIds.splice(index, 1);
             }
-        };
-
-        var clearTagSearchString = function () {
-            instance.tagSearchString = null;
-        };
-
-        var resetSelectedTags = function () {
-            angular.forEach(instance.tagHash, function (tag) {
-                toggleSelectedTag(tag, false);
-            });
         };
 
         var toggleSelectedTags = function (tags) {
@@ -45,20 +31,45 @@
             tagHelper.showAllTags(instance.tagHash);
         };
 
+        var clearTagSearchString = function () {
+            instance.tagSearchString = null;
+        };
+
+        var resetSelectedTags = function () {
+            toggleSelectedTags(instance.selectedTags);
+        };
+
         var showAvailableTags = function (links) {
             return tagHelper.showAvailableTags(links, instance.tagHash);
         };
 
         var hasQuery = function () {
-            return !!instance.tagSearchString || (instance.selectedTags && instance.selectedTags.length);
+            return !!instance.tagSearchString || (selectedTagIds && selectedTagIds.length);
         };
 
-        loadTags();
+        var ensureSelectedTags = function () {
+            var tagIds = selectedTagIds.slice(0, selectedTagIds.length);
+            selectedTagIds = [];
+            instance.selectedTags = [];
+
+            angular.forEach(tagIds, function (tagId) {
+                toggleSelectedTag(instance.tagHash[tagId], true);
+            });
+        };
+
+        var ensureInitialized = function () {
+            tagHelper.getTags(function (tagTree) {
+                instance.rootTag = tagTree.rootTag;
+                instance.tagHash = tagTree.tagHash;
+                ensureSelectedTags();
+            });
+        };
 
         var instance = {
             selectedTags: [],
+            ensureInitialized: ensureInitialized,
             hasQuery: hasQuery,
-            toggleSelectedTags: toggleSelectedTags,
+            toggleSelectedTag: toggleSelectedTag,
             showAllTags: showAllTags,
             showAvailableTags: showAvailableTags,
             resetSelectedTags: resetSelectedTags,

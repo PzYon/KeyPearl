@@ -12,8 +12,8 @@
 
             scope.searchHelper = searchHelper;
 
-            scope.toggleSelectedTags = function (tags) {
-                searchHelper.toggleSelectedTags(tags);
+            scope.toggleSelectedTag = function (tag) {
+                searchHelper.toggleSelectedTag(tag);
                 onChangeWrapper();
             };
 
