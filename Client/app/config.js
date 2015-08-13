@@ -7,7 +7,8 @@
         serverApiTagsUrl: "tags",
         executeQueryAfter: 400,
         showPendingRequestsAfter: 500,
-        defaultElementSeparator: "|"
+        defaultElementSeparator: "|",
+        dropdownItemLimit: 25
     });
 
 })(keyPearlApp);

@@ -13,6 +13,7 @@
             scope.searchHelper = searchHelper;
 
             scope.toggleSelectedTag = function (tag) {
+                searchHelper.tagSearchString = "";
                 searchHelper.toggleSelectedTag(tag);
                 onChangeWrapper();
             };
@@ -20,7 +21,7 @@
             scope.resetAll = function () {
                 searchHelper.searchString = "";
                 scope.resetSelectedTags();
-                // no need to call scope.onChange() as resetSelectedTags() already does this
+                // no need to call onChangeWrapper() as resetSelectedTags() already does this
             };
 
             scope.resetSelectedTags = function () {

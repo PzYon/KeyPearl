@@ -1,7 +1,7 @@
 (function (app, angular) {
     "use strict";
 
-    var DropdownDirective = function ($document) {
+    var DropdownDirective = function ($document,config) {
 
         var keyCodes = {
             tab: 9,
@@ -33,6 +33,8 @@
                     break;
                 }
             };
+
+            scope.dropdownItemLimit = config.dropdownItemLimit;
 
             scope.moveActive = function (event, isDown) {
                 event.preventDefault();
@@ -69,7 +71,7 @@
 
     };
 
-    DropdownDirective.$inject = ["$document"];
+    DropdownDirective.$inject = ["$document", "config"];
     app.directive("dropdown", DropdownDirective);
 
 })(keyPearlApp, angular);

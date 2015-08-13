@@ -47,7 +47,7 @@
             serverApi.loadLinks(searchHelper.searchString, tagIds.join(";"), setLinks);
         };
 
-        c.toggleSelectedTag = function (tag) {
+        c.onToggleSelectedTag = function (tag) {
             searchHelper.toggleSelectedTag(tag);
             c.loadLinks();
         };
