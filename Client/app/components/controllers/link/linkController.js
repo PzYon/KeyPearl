@@ -27,7 +27,7 @@
 
             var deregisterWatch = $scope.$watch("c.link.id", function () {
                 if (c.link.id) {
-                    tagHelper.applySettings(tagTree.tagHash, {selectedIds: c.link.tagIds});
+                    tagHelper.applySettings(tagTree.tagHash, {isSelected: c.link.tagIds});
                     deregisterWatch();
                 }
             });
@@ -42,7 +42,7 @@
                 c.actionName = "Create";
             }
 
-            tagHelper.getTags(onTagsLoaded);
+            tagHelper.getTags("link", onTagsLoaded);
         };
 
         c.toggleAppliedTag = function (tag) {

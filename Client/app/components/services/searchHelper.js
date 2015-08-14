@@ -58,7 +58,7 @@
         };
 
         var ensureInitialized = function () {
-            tagHelper.getTags(function (tagTree) {
+            tagHelper.getTags("searchHelper", function (tagTree) {
                 instance.rootTag = tagTree.rootTag;
                 instance.tagHash = tagTree.tagHash;
                 ensureSelectedTags();

@@ -133,6 +133,7 @@ ul {
     display: inline-block;
     cursor: pointer;
     padding: 5px 15px 5px 0;
+    white-space: nowrap;
 
     &:last-child {
       padding-right: 5px;
@@ -239,6 +240,7 @@ form {
 
       input {
         width: calc(100% - 10px);
+        min-width: 200px;
       }
     }
   }
@@ -365,6 +367,12 @@ form {
     }
   }
 
+  .tag-tree-node {
+    .action-links {
+      display: block;
+    }
+  }
+
   .tag {
     .container {
       font-size: 0.9rem;
@@ -379,8 +387,8 @@ form {
   }
 
   .search-box {
-    &>.container {
-      width: 80%;
+    & > .container {
+      width: calc(100% - 20px);
     }
 
     .tag-tree {

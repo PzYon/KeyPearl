@@ -9,7 +9,7 @@
         c.getTags = function () {
             notifier.clear();
 
-            tagHelper.getTags(function (tagTree) {
+            tagHelper.getTags("tag", function (tagTree) {
                 c.tagTree = tagTree;
             });
         };
@@ -32,7 +32,7 @@
         };
 
         c.batchUpdateTags = function () {
-            tagHelper.updateTags(changedTagsHash, function (tagTree) {
+            tagHelper.updateTags("tag", changedTagsHash, function (tagTree) {
                 c.tagTree = tagTree;
             });
         };

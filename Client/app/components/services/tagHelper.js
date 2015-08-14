@@ -4,16 +4,25 @@
     var TagHelperService = function (serverApi, notifier) {
 
         var tagRowCache = null;
+        var instanceSettingsCache = {};
 
-        var getTags = function (onLoad, settings) {
+        var getTags = function (instanceKey, onLoad) {
             if (!tagRowCache) {
                 serverApi.loadTags(function (loadedTags) {
                     tagRowCache = loadedTags;
-                    onLoad(buildTree(tagRowCache, settings));
+                    onLoad(buildTree(instanceKey, tagRowCache));
                 });
             } else {
-                onLoad(buildTree(tagRowCache, settings));
+                onLoad(buildTree(instanceKey, tagRowCache));
             }
+        };
+
+        var getInstanceSettings = function (key) {
+            if (!instanceSettingsCache[key]) {
+                instanceSettingsCache[key] = {};
+            }
+
+            return instanceSettingsCache[key];
         };
 
         var toggleApplied = function (link, tagId) {
@@ -31,7 +40,7 @@
 
         var showAllTags = function (tagHash) {
             angular.forEach(tagHash, function (tag) {
-                tag.toggleVisibility(true);
+                tag.toggleHidden(false);
             });
         };
 
@@ -47,10 +56,10 @@
             });
 
             angular.forEach(tagHash, function (tag) {
-                tag.toggleVisibility(false);
+                tag.toggleHidden(true);
                 for (var i = 0; i < distinctIds.length; i++) {
                     if (tag.isRelatedWith(distinctIds[i])) {
-                        tag.toggleVisibility(true);
+                        tag.toggleHidden(false);
                         break;
                     }
                 }
@@ -59,13 +68,15 @@
             return distinctIds.length;
         };
 
-        var buildTree = function (tagRows) {
+        var buildTree = function (instanceKey, tagRows) {
 
-            var rootTag = new Tag();
+            var settings = getInstanceSettings(instanceKey);
+
+            var rootTag = new Tag({name: "root"}, null, settings);
 
             var tagHash = {"0": rootTag};
             tagRows.map(function (tagRow) {
-                tagHash[tagRow.id] = new Tag(tagRow, tagHash);
+                tagHash[tagRow.id] = new Tag(tagRow, tagHash, settings);
             });
 
             angular.forEach(tagRows, function (tagRow) {
@@ -73,6 +84,11 @@
                 var parentTag = tagRow.parentId ? tagHash[tagRow.parentId] : rootTag;
                 parentTag.addChild(tag);
             });
+
+            // todo: should this maybe be done by tag class directly (in ctor function)?
+            if (settings) {
+                applySettings(tagHash, settings);
+            }
 
             return {
                 rootTag: rootTag,
@@ -82,16 +98,16 @@
         };
 
         var applySettings = function (tagHash, settings) {
-            angular.forEach(settings.selectedIds, function (tagId) {
+            angular.forEach(settings.isSelected, function (tagId) {
                 tagHash[tagId].toggleSelected(true);
             });
 
-            angular.forEach(settings.expandedIds, function (tagId) {
-                tagHash[tagId].toggleCollapsed(true);
+            angular.forEach(settings.isExpanded, function (tagId) {
+                tagHash[tagId].toggleExpanded(true);
             });
 
-            angular.forEach(settings.hiddenIds, function (tagId) {
-                tagHash[tagId].toggleVisibility(false);
+            angular.forEach(settings.isHidden, function (tagId) {
+                tagHash[tagId].toggleHidden(true);
             });
         };
 
@@ -112,7 +128,7 @@
 
         };
 
-        var updateTags = function (changedTagsHash, onUpdated) {
+        var updateTags = function (settingsKey, changedTagsHash, onUpdated) {
 
             serverApi.updateTags(transformToTagRows(changedTagsHash), function (result) {
                 var message = "updated " + result.numberOfUpdatedTags + " tag(s) and adjusted " +
@@ -121,7 +137,7 @@
 
                 tagRowCache = result.tags;
 
-                onUpdated(buildTree(tagRowCache));
+                onUpdated(buildTree(settingsKey, tagRowCache));
             });
 
         };

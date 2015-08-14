@@ -34,7 +34,7 @@
             };
 
             scope.toggleTree = function () {
-                scope.showTree = !scope.showTree;
+                searchHelper.showTree = !searchHelper.showTree;
             };
 
             scope.setMatchingTags = function () {

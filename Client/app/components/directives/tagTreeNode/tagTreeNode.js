@@ -37,7 +37,7 @@
 
             scope.onDrop = function (draggedTag) {
                 scope.tag.addChild(draggedTag);
-                scope.tag.toggleCollapsed(true);
+                scope.tag.toggleExpanded(true);
                 scope.$apply();
             };
 
@@ -53,8 +53,8 @@
                     scope.parentTag.children.splice(index, 1);
                 }
 
-                notifier.addSuccess("moved '" + draggedTag.getDisplayName() +
-                                    "' to '" + draggedTag.getParent().getDisplayName() + "'");
+                notifier.addSuccess("moved '" + draggedTag.name +
+                                    "' to '" + draggedTag.getParent().name + "'");
 
                 scope.$apply();
             };

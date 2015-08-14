@@ -8,7 +8,7 @@
                 reset tags
             </span>
             <span data-action-link="toggleTree">
-                {{showTree ? "show tag search" : "show tag tree"}}
+                {{searchHelper.showTree ? "show tag search" : "show tag tree"}}
             </span>
         </span>
     </div>
@@ -24,7 +24,7 @@
 
     <div>
         <div>
-            <div class="tag-search sub-container" data-ng-if="!showTree">
+            <div class="tag-search sub-container" data-ng-if="!searchHelper.showTree">
                 <input type="text"
                        placeholder="search for tags..."
                        data-ng-model="searchHelper.tagSearchString"
@@ -44,7 +44,7 @@
           data-tag-hash="searchHelper.tagHash"></span>
 
     <div class="tag-tree"
-         data-ng-if="showTree"
+         data-ng-if="searchHelper.showTree"
          data-on-select="toggleSelectedTag(tag)"
          data-on-select-function="toggleSelectedTag"
          data-tag-tree="searchHelper.rootTag"></div>
