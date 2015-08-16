@@ -8,7 +8,8 @@
         executeQueryAfter: 400,
         showPendingRequestsAfter: 500,
         defaultElementSeparator: "|",
-        dropdownItemLimit: 25
+        dropdownItemLimit: 25,
+        cacheTagTrees: false,
     });
 
 })(keyPearlApp);
