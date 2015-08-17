@@ -5,11 +5,23 @@
     var TagTreeNodeTemplatesService = function () {
 
         var defaultTemplate = "" +
-            "<span class='tag-collapsor' data-ng-if='tag.hasChildren()' data-ng-click='tag.toggleExpanded()'>" +
-                "<span class='container'>{{tag.isExpanded ? '-' : '+'}}</span>" +
-            "</span>" +
-            "<span class='tag-label' data-ng-click='handleOnSelect(tag)' data-ng-class='{selected: tag.isSelected}'>" +
-                "{{tag.name}}" +
+            "<span data-ng-mouseover='isHover=true;' data-ng-mouseleave='isHover=false;'>" +
+                "<span class='tag-collapsor' data-ng-if='tag.hasChildren()' data-ng-click='tag.toggleExpanded()'>" +
+                    "<span class='container'>{{tag.isExpanded ? '-' : '+'}}</span>" +
+                "</span>" +
+                "<span class='tag-label' data-ng-click='handleOnSelect(tag)' data-ng-class='{selected: tag.isSelected}'>" +
+                    "{{tag.name}}" +
+                "</span>" +
+                "<span class='hide-animated-delayed-fast action-links' data-ng-if='isHover'>[" +
+                    "<span data-separated-elements>" +
+                        "<span data-action-link='navigator.goToTag(tag.id)'>" +
+                            "manage" +
+                        "</span>" +
+                        "<span data-action-link='tag.expandAllRecursive()' data-ng-if='tag.hasChildren()'>" +
+                            "expand all" +
+                        "</span>" +
+                    "]</span>" +
+                "</span>" +
             "</span>" +
             "<span data-tag-tree='tag' data-on-select='onSelectFunction(tag)' " +
                   "data-on-select-function='onSelectFunction' data-ng-if='tag.isExpanded'></span>";
@@ -28,9 +40,10 @@
                 "</span>" +
                 "<span class='tag-label' title='id: {{tag.id}}' " +
                       "data-draggable-target data-on-drop='onDrop' data-can-drop='canDrop'>" +
-                  "<input type='text' data-ng-change='handleOnChange(tag)' data-ng-model='tag.name' />" +
+                  "<input type='text' data-ng-change='handleOnChange(tag)' data-ng-model='tag.name' " +
+                          "data-ng-class='{highlighted: tag.isHighlighted}' />" +
                 "</span>" +
-                "<span class='hide-animated-delayed-fast action-links' data-ng-if='isHover'>" +
+                "<span class='hide-animated-delayed-fast action-links' data-ng-if='isHover'>[" +
                     "<span data-separated-elements>" +
                         "<span class='draggable' data-ng-if='!isTouch' " +
                               "data-draggable='tag' data-on-drag-start='onDragStart' data-on-drag-end='onDragEnd'>" +
@@ -42,7 +55,7 @@
                         "<span data-action-link='tag.expandAllRecursive()' data-ng-if='tag.hasChildren()'>" +
                             "expand all" +
                         "</span>" +
-                    "</span>" +
+                    "]</span>" +
                 "</span>" +
             "</span>" +
             "<span data-tag-tree='tag' data-is-editable='isEditable' data-on-change='onChangeFunction(tag)' " +

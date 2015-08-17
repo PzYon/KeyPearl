@@ -1,6 +1,7 @@
-(function (app) {
+(function (app, angular) {
     "use strict";
 
+    // todo: consider adding a template html containing pre- and after-elements (e.g. "[" and "]")
     var SeparatedElementsDirective = function (config) {
 
         var className = "separator-element";
@@ -46,7 +47,7 @@
             scope: {
                 separator: "=separatedElements"
             },
-            templateUrl: "",
+            template: "",
             link: link
         };
 
@@ -55,4 +56,4 @@
     SeparatedElementsDirective.$inject = ["config"];
     app.directive("separatedElements", SeparatedElementsDirective);
 
-})(keyPearlApp);
+})(keyPearlApp, angular);

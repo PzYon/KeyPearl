@@ -1,7 +1,7 @@
 (function (app) {
     "use strict";
 
-    var TagController = function (serverApi, tagHelper, notifier) {
+    var TagController = function ($routeParams, serverApi, tagHelper, notifier) {
 
         var c = this;
         var changedTagsHash = {};
@@ -11,6 +11,13 @@
 
             tagHelper.getTags("tag", function (tagTree) {
                 c.tagTree = tagTree;
+
+                var id = $routeParams.id;
+                if (id) {
+                    var tag = c.tagTree.tagHash[id];
+                    tag.ensureExpanded();
+                    tag.isHighlighted = true;
+                }
             });
         };
 
@@ -41,7 +48,7 @@
 
     };
 
-    TagController.$inject = ["serverApi", "tagHelper", "notifier"];
+    TagController.$inject = ["$routeParams", "serverApi", "tagHelper", "notifier"];
     app.controller("tagController", TagController);
 
 })(keyPearlApp);

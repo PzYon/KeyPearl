@@ -186,6 +186,10 @@ input {
       cursor: pointer;
     }
 
+    .action-links {
+      margin-left: 20px;
+    }
+
     .tag-label {
       cursor: pointer;
 
@@ -195,6 +199,10 @@ input {
 
       input {
         margin: 2px;
+
+        &.highlighted {
+          background-color: $action-active-color;
+        }
       }
     }
   }
@@ -367,9 +375,12 @@ form {
     }
   }
 
-  .tag-tree-node {
-    .action-links {
-      display: block;
+  .tag-tree {
+    .tag-tree-node {
+      .action-links {
+        display: block;
+        margin-left: 0;
+      }
     }
   }
 

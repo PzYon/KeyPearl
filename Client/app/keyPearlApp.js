@@ -12,7 +12,7 @@ var keyPearlApp = (function (angular) {
             controller: "linkController",
             controllerAs: "c",
             templateUrl: "components/controllers/link/linkController.html"
-        }).when("/tags/", {
+        }).when("/tags/:id?", {
             controller: "tagController",
             controllerAs: "c",
             templateUrl: "components/controllers/tag/tagController.html"

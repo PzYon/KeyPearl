@@ -50,10 +50,20 @@ var Tag = (function (angular) {
             return this.ensureSetting("isHidden", this.isHidden);
         };
 
+        // todo: if too many tags are expanded, then we get digest error
+        // (Error: [$rootScope:infdig] 10 $digest() iterations reached. Aborting!)
         Tag.prototype.expandAllRecursive = function () {
             this.toggleExpanded(true);
             for (var i = 0; i < this.children.length; i++) {
                 this.children[i].expandAllRecursive();
+            }
+        };
+
+        Tag.prototype.ensureExpanded = function () {
+            var tag = this;
+            while (tag && tag.id) {
+                tag.toggleExpanded(true);
+                tag = tagHash[tag.parentId];
             }
         };
 
@@ -93,7 +103,7 @@ var Tag = (function (angular) {
             var tags = [];
             var tag = this;
 
-            // todo: this can be cached!
+            // todo: this could be cached!
             do {
                 tags.push(tag);
                 tag = tag.getParent();

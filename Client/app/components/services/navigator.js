@@ -19,6 +19,10 @@
                 instance.goTo("/link/" + id);
             },
 
+            goToTag: function (id) {
+                instance.goTo("/tags/" + id);
+            },
+
             getCurrentPath: function () {
                 return $location.path();
             }
