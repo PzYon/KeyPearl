@@ -27,7 +27,10 @@
 
             var deregisterWatch = $scope.$watch("c.link.id", function () {
                 if (c.link.id) {
-                    tagHelper.applySettings(tagTree.tagHash, {isSelected: c.link.tagIds});
+                    angular.forEach(c.link.tagIds, function (tagId) {
+                        tagTree.tagHash[tagId].toggleSelected(true);
+                    });
+
                     deregisterWatch();
                 }
             });

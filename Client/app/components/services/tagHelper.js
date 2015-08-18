@@ -55,11 +55,6 @@
                 parentTag.addChild(tag);
             });
 
-            // todo: should this maybe be done by tag class directly (in ctor function)?
-            if (settings) {
-                applySettings(tagHash, settings);
-            }
-
             return {
                 rootTag: rootTag,
                 tagHash: tagHash
@@ -72,20 +67,6 @@
             }
 
             return instanceSettingsCache[key];
-        };
-
-        var applySettings = function (tagHash, settings) {
-            angular.forEach(settings.isSelected, function (tagId) {
-                tagHash[tagId].toggleSelected(true);
-            });
-
-            angular.forEach(settings.isExpanded, function (tagId) {
-                tagHash[tagId].toggleExpanded(true);
-            });
-
-            angular.forEach(settings.isHidden, function (tagId) {
-                tagHash[tagId].toggleHidden(true);
-            });
         };
 
         var transformToTagRows = function (tagHash) {
@@ -161,7 +142,6 @@
         return {
             getTags: getTags,
             updateTags: updateTags,
-            applySettings: applySettings,
             toggleApplied: toggleApplied,
             showAllTags: showAllTags,
             showAvailableTags: showAvailableTags

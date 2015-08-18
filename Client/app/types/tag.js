@@ -10,18 +10,15 @@ var Tag = (function (angular) {
                 return;
             }
 
-            if (!settings[settingsProperty]) {
-                settings[settingsProperty] = [];
-            }
-
-            var id = this.id;
-            var index = settings[settingsProperty].indexOf(id);
-
-            if (!value && index > -1) {
-                settings[settingsProperty].splice(index, 1);
-
-            } else if (value && index === -1) {
-                settings[settingsProperty].push(id);
+            // looks complicated, but we try to keep settings object as small as possible
+            // i.e. no empty objects, etc.
+            if (!value && settings[this.id] && angular.isDefined(settings[this.id][settingsProperty])) {
+                delete settings[this.id][settingsProperty];
+            } else if (value) {
+                if (!settings[this.id]) {
+                    settings[this.id] = {};
+                }
+                settings[this.id][settingsProperty] = true;
             }
 
             return value;
@@ -144,12 +141,13 @@ var Tag = (function (angular) {
             return tagHash[this.parentId];
         };
 
+        var getTagSetting = function (settingsKey) {
+            return !!(settings && settings[me.id] && settings[me.id][settingsKey]);
+        };
+
         var constructor = function () {
             me.id = 0;
             me.children = [];
-            me.isExpanded = false;
-            me.isSelected = false;
-            me.isHidden = false;
 
             if (tagRow) {
                 Object.keys(tagRow).map(function (key) {
@@ -157,6 +155,12 @@ var Tag = (function (angular) {
                     me[key] = value;
                 });
             }
+
+            // ensure settings after tagRow values have been applied to be sure we have an id and ensure settings by
+            // bypassing "toggle"-functions to prevent default value from being written to settings
+            me.isExpanded = getTagSetting("isExpanded");
+            me.isSelected = getTagSetting("isSelected");
+            me.isHidden = getTagSetting("isHidden");
         };
 
         constructor();

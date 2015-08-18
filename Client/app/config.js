@@ -9,7 +9,7 @@
         showPendingRequestsAfter: 500,
         defaultElementSeparator: "|",
         dropdownItemLimit: 25,
-        cacheTagTrees: false,
+        cacheTagTrees: true,
     });
 
 })(keyPearlApp);
