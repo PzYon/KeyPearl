@@ -74,6 +74,15 @@
 
         };
 
+        c.deleteLink = function () {
+            var name = c.link.name;
+
+            serverApi.deleteLink(c.link, function() {
+                navigator.goToNewLink();
+                notifier.addSuccess("deleted link '" + name + "'");
+            });
+        };
+
         initialize();
     };
 

@@ -22,8 +22,13 @@
              data-disabled="true"
              data-type="'text'"
              data-model="c.dateHelper.formatDate(c.link.modified)"></div>
-        <div class="buttons">
-            <button data-ng-click="c.updateLink()">{{c.actionName}}</button>
-        </div>
     </form>
+    <div class="buttons">
+        <button data-ng-click="c.updateLink()">
+            {{c.actionName}}
+        </button>
+        <button data-ng-if="c.link.id" data-ng-click="c.deleteLink()">
+            Delete
+        </button>
+    </div>
 </section>

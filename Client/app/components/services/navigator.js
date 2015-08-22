@@ -19,6 +19,10 @@
                 instance.goTo("/link/" + id);
             },
 
+            goToNewLink: function () {
+                instance.goToLink("");
+            },
+
             goToTag: function (id) {
                 instance.goTo("/tags/" + id);
             },

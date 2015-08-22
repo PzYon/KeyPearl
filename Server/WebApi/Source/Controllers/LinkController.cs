@@ -49,5 +49,12 @@ namespace KeyPearl.WebApi.Controllers
 
       return updatedLink;
     }
+
+    [Route(controllerUrl + "/{id}")]
+    public void Delete(int id)
+    {
+      DbContext.Delete<Link>(id);
+      DbContext.SaveChanges();
+    }
   }
 }

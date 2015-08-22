@@ -5,7 +5,7 @@
 
         var errorHandler = function (data, status, headers, config) {
             var message = status
-                ? config.url + ": " + data.exceptionMessage
+                ? config.url + ": " + data.message + " (" + data.messageDetail + ")"
                 : "cannot connect to server.. maybe it's down?";
             notifier.addError(message);
         };
@@ -31,6 +31,11 @@
             $http.post(url, data).success(getOnCompleteWrapper(onSuccess)).error(getOnErrorWrapper());
         };
 
+        var del = function (url, onSuccess) {
+            notifier.pendingRequests++;
+            $http.delete(url).success(getOnCompleteWrapper(onSuccess)).error(getOnErrorWrapper());
+        };
+
         var buildQuery = function (searchString, tagIds) {
             var searchQuery = "";
             if (searchString) {
@@ -54,12 +59,18 @@
                 get(linksUrl + "/getbyid/" + id, onSuccess);
             },
 
+            // todo: change so that search is done via specific method/url and get call to /links
+            // is "get by id" - then we have a more or less clean rest api and could use $resource
             loadLinks: function (searchString, tagIds, onSuccess) {
                 get(linksUrl + "/" + buildQuery(searchString, tagIds), onSuccess);
             },
 
             updateLink: function (link, onSuccess) {
                 post(linksUrl, link, onSuccess);
+            },
+
+            deleteLink: function (link, onSuccess) {
+                del(linksUrl + "/" + link.id, onSuccess);
             },
 
             loadTags: function (onSuccess) {

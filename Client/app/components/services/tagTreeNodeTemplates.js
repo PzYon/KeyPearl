@@ -43,7 +43,7 @@
                   "<input type='text' data-ng-change='handleOnChange(tag)' data-ng-model='tag.name' " +
                           "data-ng-class='{highlighted: tag.isHighlighted}' />" +
                 "</span>" +
-                "<span class='hide-animated-delayed-fast action-links' data-ng-if='isHover'>[" +
+                "<span class='hide-animated-delayed-fast action-links' data-ng-if='isHover && tag.isPersisted()'>[" +
                     "<span data-separated-elements>" +
                         "<span class='draggable' data-ng-if='!isTouch' " +
                               "data-draggable='tag' data-on-drag-start='onDragStart' data-on-drag-end='onDragEnd'>" +

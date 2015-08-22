@@ -45,6 +45,11 @@ namespace KeyPearl.Library.Tests.TestTypes
         .ToList();
     }
 
+    public void Delete<T>(int id) where T : class, IEntity
+    {
+      throw new NotImplementedException();
+    }
+
     public int SaveChanges()
     {
       throw new NotImplementedException();

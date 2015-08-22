@@ -14,6 +14,8 @@ namespace KeyPearl.Library.Persistance
 
     T Update<T>(T entity) where T : class, IEntity;
 
+    void Delete<T>(int id) where T : class, IEntity;
+
     List<T> BatchUpdate<T>(List<T> entities) where T : class, IEntity;
 
     int SaveChanges();

@@ -16,7 +16,7 @@ namespace KeyPearl.Library.Persistance
     public T Update<T>(T entity) where T : class, IEntity
     {
       DbSet<T> dbSet = Set<T>();
-      T existingEntity = dbSet.FirstOrDefault(s => s.Id == entity.Id);
+      T existingEntity = dbSet.FirstOrDefault(e => e.Id == entity.Id);
 
       DateTime currentDate = DateTime.Now;
 
@@ -34,6 +34,17 @@ namespace KeyPearl.Library.Persistance
       }
 
       return entity;
+    }
+
+    public void Delete<T>(int id) where T : class, IEntity
+    {
+      DbSet<T> dbSet = Set<T>();
+
+      var existingEntity = dbSet.FirstOrDefault(e => e.Id == id);
+      if (existingEntity != null)
+      {
+        dbSet.Remove(existingEntity);
+      }
     }
 
     public List<T> BatchUpdate<T>(List<T> entities) where T : class, IEntity

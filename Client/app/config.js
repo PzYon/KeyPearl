@@ -6,7 +6,7 @@
         serverApiLinksUrl: "links",
         serverApiTagsUrl: "tags",
         executeQueryAfter: 400,
-        showPendingRequestsAfter: 500,
+        showPendingRequestsAfter: 800,
         defaultElementSeparator: "|",
         dropdownItemLimit: 25,
         cacheTagTrees: true,
