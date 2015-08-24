@@ -1,0 +1,16 @@
+<section class="main-content">
+    <div class="tag-tree"
+         data-is-editable="true"
+         data-on-change="c.setChangedTags(tag)"
+         data-on-change-function="c.setChangedTags"
+         data-tag-tree="c.tagTree.rootTag"></div>
+
+    <div class="buttons">
+        <button data-ng-click="c.batchUpdateTags()">
+            Update
+        </button>
+        <button data-ng-click="c.getTags()">
+            Cancel
+        </button>
+    </div>
+</section>

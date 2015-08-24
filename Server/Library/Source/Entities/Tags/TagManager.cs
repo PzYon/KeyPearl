@@ -6,6 +6,9 @@ using KeyPearl.Library.Persistance;
 
 namespace KeyPearl.Library.Entities.Tags
 {
+  // todo: consider adding unit tests which check count (tags and links)!?
+  // --> methods: UpdateTags, DeleteTag
+
   public static class TagManager
   {
     public const char Separator = ';';
@@ -13,37 +16,46 @@ namespace KeyPearl.Library.Entities.Tags
     public const char PathStarter = '[';
     public const char PathEnder = ']';
 
-    public static UpdateTagsResult UpdateTags(IDbContext dbContext, List<Tag> changedTags)
+    public static ModifyTagsResult UpdateTags(IDbContext dbContext, List<Tag> changedTags)
     {
       dbContext.BatchUpdate(changedTags);
 
-      // todo: would be nice if logic is only done for tags which actually have changed hieararchy
-      // how? do server side? rely on flag from client?
-      int numberOfUpdatedLinks = UpdateLinkTagStrings(dbContext, changedTags);
+      int updatedLinksCount = UpdateTagStrings(dbContext, changedTags);
 
-      return new UpdateTagsResult
+      return new ModifyTagsResult
         {
-          NumberOfUpdatedLinks = numberOfUpdatedLinks,
-          NumberOfUpdatedTags = changedTags.Count
+          ModifiedLinksCount = updatedLinksCount,
+          ModifiedTagsCount = changedTags.Count
         };
     }
 
-    private static int UpdateLinkTagStrings(IDbContext dbContext, List<Tag> changedTags)
+    public static ModifyTagsResult DeleteTag(IDbContext dbContext, int tagId)
     {
-      string[] patterns = changedTags.Select(t => JoinTagPathElements(t.Id))
-                                     .ToArray();
-
-      // .ToList() is required in order to prevent entity framework exception
-      List<Link> linksToUpdate = dbContext.Links
-                                          .Where(l => patterns.Any(p => l.TagString.Contains(p)))
-                                          .ToList();
-
-      foreach (Link link in linksToUpdate)
+      List<Link> taggedLinks = GetTaggedLinks(dbContext, tagId);
+      foreach (Link link in taggedLinks)
       {
-        SyncTagStringWithTagIds(dbContext, link, true);
+        RemoveTag(link, tagId);
       }
 
-      return linksToUpdate.Count;
+      int deletedTagsCount = DeleteTagRecursive(dbContext, tagId);
+
+      return new ModifyTagsResult
+        {
+          ModifiedLinksCount = taggedLinks.Count,
+          ModifiedTagsCount = deletedTagsCount
+        };
+    }
+
+    public static void RemoveTag(ITaggable taggable, int tagId)
+    {
+      if (taggable == null || string.IsNullOrEmpty(taggable.TagString))
+      {
+        return;
+      }
+
+      taggable.TagString = string.Join(Separator.ToString(),
+                                       taggable.TagString.Split(Separator)
+                                               .Where(s => !s.Contains(JoinTagPathElements(tagId))));
     }
 
     public static int[] GetIdsFromTagString(string tagString)
@@ -139,6 +151,47 @@ namespace KeyPearl.Library.Entities.Tags
       return string.Concat(PathSeparator.ToString(),
                            string.Join(PathSeparator.ToString(), tagIds),
                            PathSeparator.ToString());
+    }
+
+    private static int UpdateTagStrings(IDbContext dbContext, List<Tag> changedTags)
+    {
+      // todo: would be nice if logic is only done for tags which actually have changed hieararchy
+      // how? do server side? rely on flag from client?
+      // or should we check/compare all tags first? but that would mean loading all tags first and
+      // then comparing..
+
+      List<Link> linksToUpdate = GetTaggedLinks(dbContext, changedTags.Select(t => t.Id).ToArray());
+
+      foreach (Link link in linksToUpdate)
+      {
+        SyncTagStringWithTagIds(dbContext, link, true);
+      }
+
+      return linksToUpdate.Count;
+    }
+
+    private static List<Link> GetTaggedLinks(IDbContext dbContext, params int[] changedTagIds)
+    {
+      string[] patterns = changedTagIds.Select(t => JoinTagPathElements(t))
+                                       .ToArray();
+
+      // .ToList() is required in order to prevent entity framework exception
+      return dbContext.Links
+                      .Where(l => patterns.Any(p => l.TagString.Contains(p)))
+                      .ToList();
+    }
+
+    private static int DeleteTagRecursive(IDbContext dbContext, int tagId)
+    {
+      int count = dbContext.Tags
+                           .Where(t => t.ParentId == tagId)
+                           .ToList()
+                           .Sum(childTag => DeleteTagRecursive(dbContext, childTag.Id));
+
+      count++;
+      dbContext.Delete<Tag>(tagId);
+
+      return count;
     }
   }
 }

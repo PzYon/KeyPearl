@@ -67,6 +67,11 @@ button:hover {
 
 button {
   cursor: pointer;
+
+  &:hover {
+    color: $action-active-color;
+    background-color: $page-background-color;
+  }
 }
 
 body {
@@ -143,6 +148,7 @@ ul {
     &.is-active {
       .action-link {
         background-color: $page-background-color;
+        border: 1px solid $action-active-color;
 
         a {
           color: $action-active-color;
@@ -179,29 +185,32 @@ input {
   .tag-tree-node {
     position: relative;
 
-    .tag-collapsor {
-      position: absolute;
-      height: 100%;
-      left: -12px;
-      cursor: pointer;
-    }
+    &>span {
 
-    .action-links {
-      margin-left: 20px;
-    }
-
-    .tag-label {
-      cursor: pointer;
-
-      &.selected {
-        font-weight: bold;
+      .tag-collapsor {
+        position: absolute;
+        height: 100%;
+        left: -12px;
+        cursor: pointer;
       }
 
-      input {
-        margin: 2px;
+      .action-links {
+        margin-left: 20px;
+      }
 
-        &.highlighted {
-          background-color: $action-active-color;
+      .tag-label {
+        cursor: pointer;
+
+        &.selected {
+          font-weight: bold;
+        }
+
+        input {
+          margin: 2px;
+
+          &.highlighted {
+            background-color: $action-active-color;
+          }
         }
       }
     }
@@ -412,14 +421,6 @@ form {
 .ng-enter {
   -webkit-animation: 0.5s fadeIn;
   animation: 0.5s fadeIn;
-}
-
-.hide-animated-delayed-fast.ng-leave,
-.hide-animated-delayed-fast.ng-hide {
-  -webkit-animation: 0.2s fadeOut;
-  animation: 0.2s fadeOut;
-  -webkit-animation-delay: 0.1s;
-  animation-delay: 0.1s;
 }
 
 @keyframes fadeIn {

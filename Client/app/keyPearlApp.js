@@ -13,6 +13,10 @@ var keyPearlApp = (function (angular) {
             controllerAs: "c",
             templateUrl: "components/controllers/link/linkController.html"
         }).when("/tags/:id?", {
+            controller: "tagTreeController",
+            controllerAs: "c",
+            templateUrl: "components/controllers/tagTree/tagTreeController.html"
+        }).when("/tag/:id", {
             controller: "tagController",
             controllerAs: "c",
             templateUrl: "components/controllers/tag/tagController.html"

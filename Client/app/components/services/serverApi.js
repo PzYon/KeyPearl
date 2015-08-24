@@ -79,6 +79,10 @@
 
             updateTags: function (tags, onSuccess) {
                 post(tagsUrl, tags, onSuccess);
+            },
+
+            deleteTag: function (tag, onSuccess) {
+                del(tagsUrl + "/" + tag.id, onSuccess);
             }
         };
     };

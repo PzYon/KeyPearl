@@ -7,21 +7,23 @@
         var tagTreeCache = {};
         var instanceSettingsCache = {};
 
-        var getTags = function (instanceKey, onLoad) {
+        var getTags = function (instanceKey, onLoad, forceRecreate) {
             if (!config.cacheTagTrees || !tagRowCache.length) {
                 serverApi.loadTags(function (tagRows) {
-                    onLoad(ensureTree(instanceKey, tagRows));
+                    onLoad(ensureTree(instanceKey, tagRows, forceRecreate));
                 });
             } else {
-                onLoad(ensureTree(instanceKey));
+                onLoad(ensureTree(instanceKey, null, forceRecreate));
             }
         };
 
-        var ensureTree = function (instanceKey, tagRows) {
+        var ensureTree = function (instanceKey, tagRows, forceRecreate) {
             if (config.cacheTagTrees) {
-                var cachedTree = tagTreeCache[instanceKey];
-                if (cachedTree) {
-                    return cachedTree;
+                if (!forceRecreate) {
+                    var cachedTree = tagTreeCache[instanceKey];
+                    if (cachedTree) {
+                        return cachedTree;
+                    }
                 }
 
                 if (tagRows) {
@@ -87,8 +89,8 @@
         var updateTags = function (instanceKey, changedTagsHash, onUpdated) {
             serverApi.updateTags(transformToTagRows(changedTagsHash), function (result) {
 
-                var message = "updated " + result.numberOfUpdatedTags + " tag(s) and adjusted " +
-                              result.numberOfUpdatedLinks + " link(s)";
+                var message = "updated " + result.modifiedTagsCount + " tag(s) and adjusted " +
+                              result.modifiedLinksCount + " link(s)";
                 notifier.addSuccess(message, "updateTagsInformation");
 
                 tagTreeCache = {};

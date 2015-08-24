@@ -276,6 +276,36 @@ namespace KeyPearl.Library.Tests.UnitTests
       Assert.AreEqual(originalTagString, secondTaggable.TagString);
     }
 
+    [TestMethod]
+    public void RemoveTag_RemovesAppliedTag()
+    {
+      var originalTagString = "[/1/2/3/];[/4/5/6/]";
+      var taggable = new Link {TagString = originalTagString};
+      TagManager.RemoveTag(taggable, 3);
+
+      Assert.AreEqual("[/4/5/6/]", taggable.TagString);
+    }
+
+    [TestMethod]
+    public void RemoveTag_RemovesInheritedTag()
+    {
+      var originalTagString = "[/1/2/3/];[/4/5/6/]";
+      var taggable = new Link { TagString = originalTagString };
+      TagManager.RemoveTag(taggable, 2);
+
+      Assert.AreEqual("[/4/5/6/]", taggable.TagString);
+    }
+
+    [TestMethod]
+    public void RemoveTag_RemovesMultipleInheritedTag()
+    {
+      var originalTagString = "[/1/2/3/];[/1/2/15/];[/4/5/6/]";
+      var taggable = new Link { TagString = originalTagString };
+      TagManager.RemoveTag(taggable, 2);
+
+      Assert.AreEqual("[/4/5/6/]", taggable.TagString);
+    }
+
     private static Tag GetLv1Tag()
     {
       return new Tag {ParentId = 0, Id = 1};

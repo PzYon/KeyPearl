@@ -23,8 +23,16 @@
                 instance.goToLink("");
             },
 
-            goToTag: function (id) {
+            goToTags: function () {
+                instance.goTo("/tags/");
+            },
+
+            goToTagInTree: function (id) {
                 instance.goTo("/tags/" + id);
+            },
+
+            goToTagDetails: function (id) {
+                instance.goTo("/tag/" + id);
             },
 
             getCurrentPath: function () {

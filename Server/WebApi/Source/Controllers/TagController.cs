@@ -17,9 +17,20 @@ namespace KeyPearl.WebApi.Controllers
     }
 
     [Route(controllerUrl)]
-    public UpdateTagsResult Post(List<Tag> tags)
+    public ModifyTagsResult Post(List<Tag> tags)
     {
-      UpdateTagsResult result = TagManager.UpdateTags(DbContext, tags);
+      ModifyTagsResult result = TagManager.UpdateTags(DbContext, tags);
+      DbContext.SaveChanges();
+
+      result.Tags = Get();
+
+      return result;
+    }
+
+    [Route(controllerUrl + "/{id}")]
+    public ModifyTagsResult Delete(int id)
+    {
+      ModifyTagsResult result = TagManager.DeleteTag(DbContext, id);
       DbContext.SaveChanges();
 
       result.Tags = Get();

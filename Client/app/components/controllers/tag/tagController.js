@@ -1,54 +1,45 @@
 (function (app) {
     "use strict";
 
-    var TagController = function ($routeParams, serverApi, tagHelper, notifier) {
+    var TagController = function ($routeParams, serverApi, dateHelper, tagHelper, notifier, navigator) {
 
         var c = this;
-        var changedTagsHash = {};
+        c.dateHelper = dateHelper;
+        c.navigator = navigator;
 
-        c.getTags = function () {
-            notifier.clear();
-
-            tagHelper.getTags("tag", function (tagTree) {
-                c.tagTree = tagTree;
-
-                var id = $routeParams.id;
-                if (id) {
-                    var tag = c.tagTree.tagHash[id];
-                    tag.ensureExpanded();
-                    tag.isHighlighted = true;
-                }
+        c.deleteTag = function () {
+            var name = c.tag.name;
+            serverApi.deleteTag(c.tag, function (result) {
+                navigator.goToTags();
+                notifier.addSuccess("deleted '" + name + "' and " + (result.modifiedTagsCount - 1)
+                                    + " child tag(s) and removed from " + result.modifiedLinksCount + " links.");
             });
         };
 
-        c.setChangedTags = function (tag) {
-            if (tag) {
-                c.tagTree.tagHash[tag.id] = tag;
-                changedTagsHash[tag.id] = tag;
-            } else {
-                changedTagsHash = {};
-            }
-
-            var notificationKey = "numberOfChangedTags";
-            var numberOfChangedTags = Object.keys(changedTagsHash).length;
-            if (numberOfChangedTags > 0) {
-                notifier.addSuccess("you have changed " + numberOfChangedTags + " tag(s)", notificationKey);
-            } else {
-                notifier.remove(notificationKey);
-            }
-        };
-
-        c.batchUpdateTags = function () {
-            tagHelper.updateTags("tag", changedTagsHash, function (tagTree) {
-                c.tagTree = tagTree;
+        c.updateTags = function () {
+            serverApi.updateTags([c.tag], function () {
+                alert("updated tag");
             });
         };
 
-        c.getTags();
+        var initialize = function () {
+            var id = $routeParams.id;
+            if (id) {
+                tagHelper.getTags("tag", function (tagTree) {
+                    c.tagTree = tagTree;
+                    c.tag = c.tagTree.tagHash[id];
 
+                    if (!c.tag) {
+                        navigator.goToTags();
+                    }
+                });
+            }
+        };
+
+        initialize();
     };
 
-    TagController.$inject = ["$routeParams", "serverApi", "tagHelper", "notifier"];
+    TagController.$inject = ["$routeParams", "serverApi", "dateHelper", "tagHelper", "notifier", "navigator"];
     app.controller("tagController", TagController);
 
 })(keyPearlApp);
