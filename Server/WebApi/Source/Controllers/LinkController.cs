@@ -11,30 +11,8 @@ namespace KeyPearl.WebApi.Controllers
   {
     private const string controllerUrl = "links";
 
-    [Route(controllerUrl)]
-    public LinkQueryResult Get(string queryString = null)
-    {
-      IEnumerable<Link> links = queryString == null
-                                  ? DbContext.Links
-                                  : QueryExecutor.Execute(DbContext.Links, queryString);
-
-      var maxResultSize = WebConfigReader.Get<int>("MaxResultSize");
-
-      Link[] loadedLinks = links.OrderByDescending(l => l.Modified)
-                                .Take(maxResultSize + 1)
-                                .ToArray();
-
-      return new LinkQueryResult
-        {
-          Links = loadedLinks.Take(maxResultSize).ToArray(),
-          TotalLinksCount = loadedLinks.Length > maxResultSize
-                              ? DbContext.Links.Count()
-                              : 0
-        };
-    }
-
-    [Route(controllerUrl + "/getbyid/{id}")]
-    public Link GetById(int id)
+    [Route(controllerUrl + "/{id}")]
+    public Link Get(int id)
     {
       return DbContext.Links.FirstOrDefault(l => l.Id == id);
     }
@@ -55,6 +33,29 @@ namespace KeyPearl.WebApi.Controllers
     {
       DbContext.Delete<Link>(id);
       DbContext.SaveChanges();
+    }
+
+    [HttpGet]
+    [Route(controllerUrl + "/search/")]
+    public LinkQueryResult Search(string queryString = null)
+    {
+      IEnumerable<Link> links = queryString == null
+                                  ? DbContext.Links
+                                  : QueryExecutor.Execute(DbContext.Links, queryString);
+
+      var maxResultSize = WebConfigReader.Get<int>("MaxResultSize");
+
+      Link[] loadedLinks = links.OrderByDescending(l => l.Modified)
+                                .Take(maxResultSize + 1)
+                                .ToArray();
+
+      return new LinkQueryResult
+        {
+          Links = loadedLinks.Take(maxResultSize).ToArray(),
+          TotalLinksCount = loadedLinks.Length > maxResultSize
+                              ? DbContext.Links.Count()
+                              : 0
+        };
     }
   }
 }

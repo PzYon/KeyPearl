@@ -44,7 +44,7 @@
                 tagIds.push(tag.id);
             });
 
-            serverApi.loadLinks(searchHelper.searchString, tagIds.join(";"), setLinks);
+            serverApi.searchLinks(searchHelper.searchString, tagIds.join(";"), setLinks);
         };
 
         c.onToggleSelectedTag = function (tag) {

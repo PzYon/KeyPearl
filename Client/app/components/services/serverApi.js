@@ -56,13 +56,11 @@
 
         return {
             loadLink: function (id, onSuccess) {
-                get(linksUrl + "/getbyid/" + id, onSuccess);
+                get(linksUrl + "/" + id, onSuccess);
             },
 
-            // todo: change so that search is done via specific method/url and get call to /links
-            // is "get by id" - then we have a more or less clean rest api and could use $resource
-            loadLinks: function (searchString, tagIds, onSuccess) {
-                get(linksUrl + "/" + buildQuery(searchString, tagIds), onSuccess);
+            searchLinks: function (searchString, tagIds, onSuccess) {
+                get(linksUrl + "/search/" + buildQuery(searchString, tagIds), onSuccess);
             },
 
             updateLink: function (link, onSuccess) {

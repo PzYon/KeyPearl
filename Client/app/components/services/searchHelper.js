@@ -6,6 +6,10 @@
         var selectedTagIds = [];
 
         var toggleSelectedTag = function (tag, isSelected) {
+            if (angular.isNumber(tag)){
+                tag = instance.tagHash[tag];
+            }
+
             isSelected = tag.toggleSelected(isSelected);
 
             var index = selectedTagIds.indexOf(tag.id);
@@ -18,15 +22,6 @@
             }
         };
 
-        var toggleSelectedTags = function (tags) {
-            instance.clearTagSearchString();
-            if (angular.isArray(tags)) {
-                angular.forEach(tags, toggleSelectedTag);
-            } else {
-                toggleSelectedTag(tags);
-            }
-        };
-
         var showAllTags = function () {
             tagHelper.showAllTags(instance.tagHash);
         };
@@ -36,7 +31,16 @@
         };
 
         var resetSelectedTags = function () {
-            toggleSelectedTags(instance.selectedTags);
+            instance.clearTagSearchString();
+
+            // we need to copy array in order to have a different reference than
+            // what toggleSelectedTag is using, as otherwise we chang the array
+            // we are iterating over
+            var tagIds = angular.copy(selectedTagIds);
+
+            angular.forEach(tagIds, function (tagId) {
+                toggleSelectedTag(tagId, false);
+            });
         };
 
         var showAvailableTags = function (links) {
@@ -48,12 +52,12 @@
         };
 
         var ensureSelectedTags = function () {
-            var tagIds = selectedTagIds.slice(0, selectedTagIds.length);
+            var tagIds = angular.copy(selectedTagIds);
             selectedTagIds = [];
             instance.selectedTags = [];
 
             angular.forEach(tagIds, function (tagId) {
-                toggleSelectedTag(instance.tagHash[tagId], true);
+                toggleSelectedTag(tagId, true);
             });
         };
 
