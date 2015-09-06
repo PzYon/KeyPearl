@@ -1,31 +1,13 @@
-/* <colors> */
-
-/* general */
 $page-background-color: #FFF;
 $main-font-color: #333333;
 $error-font-color: #BD2C00;
 $success-font-color: #6CC644;
-
-/* navigation */
 $navigation-background-color: #999999;
-
-/* search box */
 $searchbox-background-color: #CCCCCC;
-
-/* actions */
 $action-color: #808080;
 $action-active-color: #FF9900;
-
-/* hoverables */
 $hoverable-background-color: #E6E6E6;
-
-/*</colors> */
-
-/* <sizes> */
-
 $border-radius: 6px;
-
-/* </sizes> */
 
 html,
 body,
@@ -33,7 +15,7 @@ input,
 button, {
   color: $main-font-color;
   font-size: 16px;
-  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", "sans-serif";
 }
 
 input::-webkit-input-placeholder {
@@ -186,7 +168,7 @@ input {
   .tag-tree-node {
     position: relative;
 
-    &>span {
+    & > span {
 
       .tag-collapsor {
         position: absolute;
@@ -196,7 +178,7 @@ input {
       }
 
       .action-links {
-        margin-left: 20px;
+        margin-left: 10px;
       }
 
       .tag-label {
@@ -271,18 +253,15 @@ form {
       border-radius: $border-radius;
       border: 1px solid $page-background-color;
 
-      .title {
-        font-size: 1.2rem;
-        cursor: pointer;
-      }
-
-      .additional {
-        font-size: 0.9rem;
+      .authoring-infos {
+        margin-top: 5px;
+        font-size: 0.8rem;
         color: $action-color;
       }
 
-      .details {
-        font-size: 0.9rem;
+      .title {
+        font-size: 1.3rem;
+        cursor: pointer;
       }
 
       &:hover {
@@ -387,9 +366,11 @@ form {
 
   .tag-tree {
     .tag-tree-node {
-      .action-links {
-        display: block;
-        margin-left: 0;
+      & > span {
+        .action-links {
+          display: block;
+          margin-left: 0;
+        }
       }
     }
   }

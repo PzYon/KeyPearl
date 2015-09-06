@@ -32,7 +32,7 @@
                           " what you are actually looking for.";
             } else {
                 var availableTagsCount = searchHelper.showAvailableTags(c.links);
-                message = "found " + c.links.length + " links with " + availableTagsCount + " different tags applied.";
+                message = "found " + c.links.length + " links with " + availableTagsCount + " different tags applied";
             }
 
             notifier.addSuccess(message, "searchResultInformation");

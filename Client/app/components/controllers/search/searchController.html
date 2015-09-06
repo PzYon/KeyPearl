@@ -9,28 +9,25 @@
             data-ng-mouseover="isHover=true;"
             data-ng-mouseleave="isHover=false;">
 
-            <a class="title" data-ng-href="{{link.url}}" title="{{link.url}}" target="_blank">
-                {{link.name}}
-            </a>
-
-            <span class="additional" data-ng-if="isHover">[
-                <span data-separated-elements>
-                    <span data-authoring-infos="link"></span>
-                    <span class="action-links">
-                        <span data-action-link="c.navigator.goToLink(link.id)">edit</span>
-                    </span>
-                </span>
-            ]</span>
-
-            <div class="details" data-ng-if="link.description">
-                {{link.description}}
-            </div>
-
             <div class="tags"
                  data-ng-if="c.searchHelper.tagHash"
                  data-tag-hash="c.searchHelper.tagHash"
                  data-tags="link.tagIds"
                  data-on-click="c.onToggleSelectedTag"></div>
+
+            <a class="title" data-ng-href="{{link.url}}" title="{{link.url}}" target="_blank">
+                {{link.name}}
+            </a>
+
+            <span class="action-links" data-ng-if="isHover">
+                [<span data-action-link="c.navigator.goToLink(link.id)">edit</span>]
+            </span>
+
+            <div class="details" data-ng-if="isHover && link.description">
+                {{link.description}}
+            </div>
+
+            <div data-authoring-infos="link" class="authoring-infos" data-ng-if="isHover"></div>
 
         </li>
     </ul>
