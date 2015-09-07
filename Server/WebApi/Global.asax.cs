@@ -3,6 +3,8 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.Cors;
 using KeyPearl.Library.Persistance.Initialization;
+using Microsoft.AspNet.WebApi.MessageHandlers.Compression;
+using Microsoft.AspNet.WebApi.MessageHandlers.Compression.Compressors;
 using Newtonsoft.Json.Serialization;
 
 namespace KeyPearl.WebApi
@@ -28,6 +30,9 @@ namespace KeyPearl.WebApi
 
       // all routes are defined on the controller-methods themselves
       config.MapHttpAttributeRoutes();
+
+      // add compression in order to improve performance (recommended by Google PageSpeed)
+      config.MessageHandlers.Insert(0, new ServerCompressionHandler(new GZipCompressor(), new DeflateCompressor()));
     }
   }
 }

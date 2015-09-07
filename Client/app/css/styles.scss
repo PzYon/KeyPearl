@@ -375,7 +375,16 @@ form {
     }
   }
 
+  .link {
+    .title {
+      margin: 10px 0;
+      display: inline-block;
+    }
+  }
+
   .tag {
+    padding: 10px 10px 5px 0;
+
     .container {
       font-size: 0.9rem;
       margin: 3px 3px 0 0;
@@ -396,6 +405,11 @@ form {
     .tag-tree {
       margin-left: 15px;
     }
+  }
+
+  .action-link {
+    padding: 10px;
+    display: inline-block;
   }
 }
 

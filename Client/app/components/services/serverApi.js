@@ -56,11 +56,11 @@
 
         return {
             loadLink: function (id, onSuccess) {
-                get(linksUrl + "/" + id, onSuccess);
+                get(linksUrl + id, onSuccess);
             },
 
             searchLinks: function (searchString, tagIds, onSuccess) {
-                get(linksUrl + "/search/" + buildQuery(searchString, tagIds), onSuccess);
+                get(linksUrl + "search/" + buildQuery(searchString, tagIds), onSuccess);
             },
 
             updateLink: function (link, onSuccess) {
@@ -68,7 +68,7 @@
             },
 
             deleteLink: function (link, onSuccess) {
-                del(linksUrl + "/" + link.id, onSuccess);
+                del(linksUrl + link.id, onSuccess);
             },
 
             loadTags: function (onSuccess) {
@@ -80,7 +80,7 @@
             },
 
             deleteTag: function (tag, onSuccess) {
-                del(tagsUrl + "/" + tag.id, onSuccess);
+                del(tagsUrl + tag.id, onSuccess);
             }
         };
     };

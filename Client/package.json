@@ -6,8 +6,12 @@
   "devDependencies": {
     "del": "^1.2.0",
     "gulp": "^3.9.0",
+    "gulp-angular-templatecache": "^1.7.0",
     "gulp-concat": "^2.6.0",
     "gulp-if": "^1.2.5",
+    "gulp-inline": "0.0.12",
+    "gulp-minify-html": "^1.0.4",
+    "gulp-replace": "^0.5.4",
     "gulp-sass": "^2.0.4",
     "gulp-sourcemaps": "^1.5.2",
     "gulp-uglify": "^1.2.0",

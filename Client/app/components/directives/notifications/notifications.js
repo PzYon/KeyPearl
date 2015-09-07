@@ -3,7 +3,7 @@
 
     var NotificationsDirective = function ($timeout, config, notifier) {
 
-        var delayNotifications = function (scope) {
+        var delayPendingRequests = function (scope) {
             scope.hidePendingRequests = true;
 
             $timeout(function () {
@@ -18,7 +18,7 @@
 
             scope.$watch("notifier.pendingRequests", function (newValue, oldValue) {
                 if (newValue !== oldValue) {
-                    delayNotifications(scope);
+                    delayPendingRequests(scope);
                 }
             });
         };

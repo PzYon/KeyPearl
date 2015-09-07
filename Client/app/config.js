@@ -2,9 +2,9 @@
     "use strict";
 
     app.constant("config", {
-        serverApiBaseUrl: "http://localhost:61345/",
-        serverApiLinksUrl: "links",
-        serverApiTagsUrl: "tags",
+        serverApiBaseUrl: "$build:serverApiBaseUrl$",
+        serverApiLinksUrl: "links/",
+        serverApiTagsUrl: "tags/",
         executeQueryAfter: 400,
         showPendingRequestsAfter: 800,
         defaultElementSeparator: "|",
