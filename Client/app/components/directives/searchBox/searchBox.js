@@ -43,7 +43,8 @@
                 var tagSearchString = searchHelper.tagSearchString ? searchHelper.tagSearchString.toLowerCase() : "";
 
                 angular.forEach(scope.searchHelper.tagHash, function (tag) {
-                    var isMatchAndVisible = !tag.isHidden
+                    var isMatchAndVisible = !tag.isRoot()
+                                            &&!tag.isHidden
                                             && tag.name
                                             && tag.name.toLowerCase().indexOf(tagSearchString) > -1;
                     if (isMatchAndVisible) {

@@ -119,7 +119,7 @@
         gulp.watch(paths.allHtmlButIndex, ["templates"]);
         gulp.watch(paths.indexHtml, ["index.html"]);
         gulp.watch(paths.appAllRecursive + ".scss", ["scss"]);
-        gulp.watch(paths.appAllRecursive + ".js", ["scripts"]);
+        gulp.watch(paths.appAllRecursive + ".js", ["scriptsApp"]);
     });
 
 })(require);
