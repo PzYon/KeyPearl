@@ -30,6 +30,8 @@ namespace KeyPearl.Library.Persistance
       else
       {
         entity.Modified = currentDate;
+        entity.Created = existingEntity.Created;
+
         Entry(existingEntity).CurrentValues.SetValues(entity);
       }
 
@@ -40,7 +42,7 @@ namespace KeyPearl.Library.Persistance
     {
       DbSet<T> dbSet = Set<T>();
 
-      var existingEntity = dbSet.FirstOrDefault(e => e.Id == id);
+      T existingEntity = dbSet.FirstOrDefault(e => e.Id == id);
       if (existingEntity != null)
       {
         dbSet.Remove(existingEntity);

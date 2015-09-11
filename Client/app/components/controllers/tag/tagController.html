@@ -17,8 +17,10 @@
         <button data-ng-click="c.updateTag()">
             Update
         </button>
-        <button data-ng-click="c.deleteTag()">
+        <span data-confirmation
+              data-message-getter="c.getDeleteTagConfirmationMessage"
+              data-on-ok-action="c.deleteTag">
             Delete
-        </button>
+        </span>
     </div>
 </section>

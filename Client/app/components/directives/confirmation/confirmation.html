@@ -1,0 +1,14 @@
+<button data-ng-click="toggleConfirmationMessage(true)">
+    <ng-transclude></ng-transclude>
+</button>
+<div data-ng-if="showConfirmationMessage" class="confirmation-message full-screen">
+    <div class="content">
+        <h2>really..!?</h2>
+        {{confirmationMessage}}
+        <div class="buttons">
+            <button data-ng-click="onOkAction()">Yep</button>
+            <button data-ng-click="toggleConfirmationMessage(false)">Nope</button>
+        </div>
+    </div>
+</div>
+<div data-ng-if="showConfirmationMessage" class="confirmation-message-background full-screen"></div>

@@ -27,8 +27,10 @@
         <button data-ng-click="c.updateLink()">
             {{c.actionName}}
         </button>
-        <button data-ng-if="c.link.id" data-ng-click="c.deleteLink()">
+        <span data-ng-if="c.link.id"
+              data-confirmation="'are you sure you want to delete \'' + c.link.name + '\'?'"
+              data-on-ok-action="c.deleteLink">
             Delete
-        </button>
+        </span>
     </div>
 </section>

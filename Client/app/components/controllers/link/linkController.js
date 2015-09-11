@@ -39,7 +39,7 @@
         var initialize = function () {
             var id = $routeParams.id;
             if (id) {
-                c.actionName = "Change";
+                c.actionName = "Save";
                 serverApi.loadLink(id, setLink);
             } else {
                 c.actionName = "Create";

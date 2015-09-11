@@ -49,6 +49,7 @@ button:hover {
 
 button {
   cursor: pointer;
+  min-width: 70px;
 
   &:hover {
     color: $action-active-color;
@@ -341,6 +342,36 @@ form {
 
 .separator-element {
   padding: 0 5px;
+}
+
+.full-screen {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.confirmation-message-background {
+  z-index: 10;
+  background-color: $page-background-color;
+}
+
+.confirmation-message {
+  z-index: 11;
+  text-align: center;
+  color: $action-color;
+  padding-top: 20vh;
+
+  .content {
+    margin: auto auto;
+  }
+
+  .buttons {
+    margin: 10px;
+  }
 }
 
 /* touch/mobile */

@@ -16,10 +16,19 @@
             });
         };
 
-        c.updateTags = function () {
-            serverApi.updateTags([c.tag], function () {
-                alert("updated tag");
+        c.updateTag = function () {
+            var tagHash = {};
+            tagHash[c.tag.id] = c.tag;
+
+            tagHelper.updateTags("tag", tagHash, function (tagTree) {
+                c.tag = tagTree.tagHash[c.tag.id];
+                notifier.addSuccess("updated '" + c.tag.name + "'");
             });
+        };
+
+        c.getDeleteTagConfirmationMessage = function () {
+            return "are you sure you want to delete tag '" + c.tag.name + "' and "
+                   + (c.tag.countChildren() - 1) + " child tag(s)?";
         };
 
         var initialize = function () {

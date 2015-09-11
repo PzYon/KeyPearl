@@ -72,6 +72,16 @@ var Tag = (function (angular) {
             return this.children && this.children.length > 0;
         };
 
+        Tag.prototype.countChildren = function () {
+            var count = 1;
+            if (this.hasChildren()) {
+                angular.forEach(this.children, function (childTag) {
+                    count += childTag.countChildren();
+                });
+            }
+            return count;
+        };
+
         Tag.prototype.isPersisted = function () {
             return this.id && this.id > 0;
         };

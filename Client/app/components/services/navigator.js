@@ -15,6 +15,10 @@
                 $location.path(url);
             },
 
+            goToHome: function () {
+                instance.goTo("/");
+            },
+
             goToLink: function (id) {
                 instance.goTo("/link/" + id);
             },
