@@ -106,17 +106,22 @@ var Tag = (function (angular) {
             return this.isDescendantOf(relatedTag) || relatedTag.isDescendantOf(this);
         };
 
+        this.__hierarchyTopDown = null;
+
         Tag.prototype.getHierarchyTopDown = function () {
-            var tags = [];
-            var tag = this;
+            if (!this.__hierarchyTopDown) {
+                var tags = [];
+                var tag = this;
 
-            // todo: this could be cached!
-            do {
-                tags.push(tag);
-                tag = tag.getParent();
-            } while (!tag.isRoot());
+                do {
+                    tags.push(tag);
+                    tag = tag.getParent();
+                } while (!tag.isRoot());
 
-            return tags.reverse();
+                this.__hierarchyTopDown = tags.reverse();
+            }
+
+            return this.__hierarchyTopDown;
         };
 
         Tag.prototype.addChild = function (tag, showExpanded) {

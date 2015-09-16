@@ -27,7 +27,7 @@
             };
 
             scope.onDragStart = function (event) {
-                // todo: don't we need to do anything here?
+                // for the moment we don't need to do anything here
             };
 
             scope.canDrop = function (draggedTag) {

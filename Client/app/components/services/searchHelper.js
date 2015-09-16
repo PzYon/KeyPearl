@@ -5,6 +5,8 @@
 
         var selectedTagIds = [];
 
+        var tagHelperId = "searchHelper";
+
         var toggleSelectedTag = function (tag, isSelected) {
             if (angular.isNumber(tag)){
                 tag = instance.tagHash[tag];
@@ -62,7 +64,7 @@
         };
 
         var ensureInitialized = function () {
-            tagHelper.getTags("searchHelper", function (tagTree) {
+            tagHelper.getTags(tagHelperId, function (tagTree) {
                 instance.rootTag = tagTree.rootTag;
                 instance.tagHash = tagTree.tagHash;
                 ensureSelectedTags();

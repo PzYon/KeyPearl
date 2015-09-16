@@ -7,13 +7,11 @@
         c.dateHelper = dateHelper;
         c.navigator = navigator;
 
+        var tagHelperId = "tag";
+
         c.deleteTag = function () {
-            var name = c.tag.name;
-            serverApi.deleteTag(c.tag, function (result) {
-                navigator.goToTags();
-                notifier.addSuccess("deleted '" + name + "' and " + (result.modifiedTagsCount - 1)
-                                    + " child tag(s) and removed from " + result.modifiedLinksCount + " links in "
-                                    + result.serverTimeInMs + "ms.");
+            tagHelper.deleteTag(tagHelperId, c.tag, function (reult) {
+                navigator.goToTags(true);
             });
         };
 
@@ -21,7 +19,7 @@
             var tagHash = {};
             tagHash[c.tag.id] = c.tag;
 
-            tagHelper.updateTags("tag", tagHash, function (tagTree) {
+            tagHelper.updateTags(tagHelperId, tagHash, function (tagTree) {
                 c.tag = tagTree.tagHash[c.tag.id];
                 notifier.addSuccess("updated '" + c.tag.name + "'");
             });
@@ -35,7 +33,7 @@
         var initialize = function () {
             var id = $routeParams.id;
             if (id) {
-                tagHelper.getTags("tag", function (tagTree) {
+                tagHelper.getTags(tagHelperId, function (tagTree) {
                     c.tagTree = tagTree;
                     c.tag = c.tagTree.tagHash[id];
 

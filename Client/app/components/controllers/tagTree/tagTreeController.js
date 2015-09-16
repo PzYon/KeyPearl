@@ -6,8 +6,10 @@
         var c = this;
         var changedTagsHash = {};
 
+        var tagHelperId = "tagTree";
+
         c.getTags = function () {
-            tagHelper.getTags("tagTree", function (tagTree) {
+            tagHelper.getTags(tagHelperId, function (tagTree) {
                 c.tagTree = tagTree;
 
                 var id = $routeParams.id;
@@ -37,7 +39,8 @@
         };
 
         c.batchUpdateTags = function () {
-            tagHelper.updateTags("tagTree", changedTagsHash, function (tagTree) {
+            tagHelper.updateTags(tagHelperId, changedTagsHash, function (tagTree) {
+                c.setChangedTags();
                 c.tagTree = tagTree;
             });
         };

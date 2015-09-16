@@ -92,12 +92,26 @@
                 var message = "updated " + result.modifiedTagsCount + " tag(s) and adjusted "
                               + result.modifiedLinksCount + " link(s) in "
                               + result.serverTimeInMs + "ms.";
-                notifier.addSuccess(message, "updateTagsInformation");
 
-                tagTreeCache = {};
-
-                onUpdated(ensureTree(instanceKey, result.tags));
+                handleTagResult(instanceKey, result, onUpdated, "updateTagsInformation", message);
             });
+        };
+
+        var deleteTag = function (instanceKey, tag, onDeleted) {
+            serverApi.deleteTag(tag, function (result) {
+
+                var message = "deleted '" + tag.name + "' and " + (result.modifiedTagsCount - 1)
+                              + " child tag(s) and removed from " + result.modifiedLinksCount + " links in "
+                              + result.serverTimeInMs + "ms.";
+
+                handleTagResult(instanceKey, result, onDeleted, "deleteTagsInformation", message);
+            });
+        };
+
+        var handleTagResult = function (instanceKey, result, callback, notificationKey, message) {
+            notifier.addSuccess(message, notificationKey);
+            tagTreeCache = {};
+            callback(ensureTree(instanceKey, result.tags));
         };
 
         var toggleApplied = function (link, tagId) {
@@ -145,6 +159,7 @@
         return {
             getTags: getTags,
             updateTags: updateTags,
+            deleteTag: deleteTag,
             toggleApplied: toggleApplied,
             showAllTags: showAllTags,
             showAvailableTags: showAvailableTags

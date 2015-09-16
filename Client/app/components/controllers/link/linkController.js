@@ -14,6 +14,8 @@
             id: 0
         };
 
+        var tagHelperId = "link";
+
         var setLink = function (link) {
             if (link) {
                 c.link = link;
@@ -45,7 +47,7 @@
                 c.actionName = "Create";
             }
 
-            tagHelper.getTags("link", onTagsLoaded);
+            tagHelper.getTags(tagHelperId, onTagsLoaded);
         };
 
         c.toggleAppliedTag = function (tag) {

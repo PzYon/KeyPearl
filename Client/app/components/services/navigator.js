@@ -10,8 +10,11 @@
                 {url: "/tags/", label: "manage tags"}
             ],
 
-            goTo: function (url) {
-                notifier.clear();
+            goTo: function (url, retainNotifications) {
+                if (!retainNotifications) {
+                    notifier.clear();
+                }
+
                 $location.path(url);
             },
 
@@ -27,8 +30,8 @@
                 instance.goToLink("");
             },
 
-            goToTags: function () {
-                instance.goTo("/tags/");
+            goToTags: function (retainNotifications) {
+                instance.goTo("/tags/", retainNotifications);
             },
 
             goToTagInTree: function (id) {

@@ -53,7 +53,7 @@
         // otherwise use a default config object - for the moment it works the way it is, but there's room for
         // improvement here
 
-        // todo: make sure source maps still work
+        // todo: make sure source maps still work - because at the moment they don't
 
         return gulp.src(definition.srcs)
             .pipe(sourcemaps.init())
