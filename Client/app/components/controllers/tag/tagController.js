@@ -12,7 +12,8 @@
             serverApi.deleteTag(c.tag, function (result) {
                 navigator.goToTags();
                 notifier.addSuccess("deleted '" + name + "' and " + (result.modifiedTagsCount - 1)
-                                    + " child tag(s) and removed from " + result.modifiedLinksCount + " links.");
+                                    + " child tag(s) and removed from " + result.modifiedLinksCount + " links in "
+                                    + result.serverTimeInMs + "ms.");
             });
         };
 

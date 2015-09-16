@@ -15,8 +15,8 @@ namespace KeyPearl.WebApi
     {
       GlobalConfiguration.Configure(RegisterWebApiRoutes);
 
-      Database.SetInitializer(new KeyPearlDbContextLoadInitializer());
-      // Database.SetInitializer(new KeyPearlDbContextInitializer());
+      // Database.SetInitializer(new KeyPearlDbContextLoadInitializer());
+      Database.SetInitializer(new KeyPearlDbContextInitializer());
     }
 
     private static void RegisterWebApiRoutes(HttpConfiguration config)

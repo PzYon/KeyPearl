@@ -31,7 +31,7 @@ namespace KeyPearl.Library.Entities.Tags
 
     public static ModifyTagsResult DeleteTag(IDbContext dbContext, int tagId)
     {
-      List<Link> taggedLinks = GetTaggedLinks(dbContext, tagId);
+      Link[] taggedLinks = GetTaggedLinks(dbContext, tagId);
       foreach (Link link in taggedLinks)
       {
         RemoveTag(link, tagId);
@@ -41,7 +41,7 @@ namespace KeyPearl.Library.Entities.Tags
 
       return new ModifyTagsResult
         {
-          ModifiedLinksCount = taggedLinks.Count,
+          ModifiedLinksCount = taggedLinks.Length,
           ModifiedTagsCount = deletedTagsCount
         };
     }
@@ -75,17 +75,14 @@ namespace KeyPearl.Library.Entities.Tags
                       .ToArray();
     }
 
-    public static void SyncTagStringWithTagIds(IDbContext dbContext, Link link, bool force = false)
+    public static void SyncTagStringWithTagIds(IDbContext dbContext, Link link)
     {
-      Link existingLink = dbContext.Links.FirstOrDefault(l => l.Id == link.Id);
-      if (existingLink != null && !force && existingLink.TagIds.SequenceEqual(link.TagIds))
-      {
-        return;
-      }
+      SyncTagStringWithTagIds(dbContext, dbContext.Tags.ToArray(), link);
+    }
 
+    public static void SyncTagStringWithTagIds(IDbContext dbContext, Tag[] allTags, Link link)
+    {
       link.ClearTagString();
-
-      Tag[] allTags = dbContext.Tags.ToArray();
 
       foreach (Tag tag in link.TagIds
                               .Select(tagId => allTags.FirstOrDefault(t => t.Id == tagId))
@@ -115,6 +112,12 @@ namespace KeyPearl.Library.Entities.Tags
 
     public static void EnsureTag(Tag[] allTags, ITaggable taggable, Tag tag)
     {
+      // we change taggable (e.g. Link) but do not call dbContext.Update as this is done
+      // by caller. this way we can prevent Modified-property on taggable being updated, 
+      // just because TagString changed (e.g. when tag hierarchy has changed). if we add
+      // a tag to a taggable, dbContext.Update should be called by caller, as he is actually
+      // changing the taggable.
+
       string currentTagString = taggable.TagString ?? string.Empty;
       bool hasTags = !string.IsNullOrEmpty(currentTagString);
 
@@ -155,30 +158,26 @@ namespace KeyPearl.Library.Entities.Tags
 
     private static int UpdateTagStrings(IDbContext dbContext, List<Tag> changedTags)
     {
-      // todo: would be nice if logic is only done for tags which actually have changed hieararchy
-      // how? do server side? rely on flag from client?
-      // or should we check/compare all tags first? but that would mean loading all tags first and
-      // then comparing..
+      Link[] taggedLinks = GetTaggedLinks(dbContext, changedTags.Select(t => t.Id).ToArray());
+      Tag[] allTags = dbContext.Tags.ToArray();
 
-      List<Link> linksToUpdate = GetTaggedLinks(dbContext, changedTags.Select(t => t.Id).ToArray());
-
-      foreach (Link link in linksToUpdate)
+      foreach (Link link in taggedLinks)
       {
-        SyncTagStringWithTagIds(dbContext, link, true);
+        SyncTagStringWithTagIds(dbContext, allTags, link);
       }
 
-      return linksToUpdate.Count;
+      return taggedLinks.Length;
     }
 
-    private static List<Link> GetTaggedLinks(IDbContext dbContext, params int[] changedTagIds)
+    private static Link[] GetTaggedLinks(IDbContext dbContext, params int[] changedTagIds)
     {
       string[] patterns = changedTagIds.Select(t => JoinTagPathElements(t))
                                        .ToArray();
 
-      // .ToList() is required in order to prevent entity framework exception
+      // .ToArray() is required in order to prevent entity framework exception
       return dbContext.Links
                       .Where(l => patterns.Any(p => l.TagString.Contains(p)))
-                      .ToList();
+                      .ToArray();
     }
 
     private static int DeleteTagRecursive(IDbContext dbContext, int tagId)

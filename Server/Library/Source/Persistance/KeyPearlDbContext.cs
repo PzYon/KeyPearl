@@ -15,21 +15,21 @@ namespace KeyPearl.Library.Persistance
 
     public T Update<T>(T entity) where T : class, IEntity
     {
+      // we always need to set Created and Modified as they are not returned from the client
+      DateTime currentDate = DateTime.Now;
+      entity.Modified = currentDate;
+
       DbSet<T> dbSet = Set<T>();
       T existingEntity = dbSet.FirstOrDefault(e => e.Id == entity.Id);
-
-      DateTime currentDate = DateTime.Now;
 
       if (existingEntity == null)
       {
         entity.Created = currentDate;
-        entity.Modified = currentDate;
 
         dbSet.Add(entity);
       }
       else
       {
-        entity.Modified = currentDate;
         entity.Created = existingEntity.Created;
 
         Entry(existingEntity).CurrentValues.SetValues(entity);

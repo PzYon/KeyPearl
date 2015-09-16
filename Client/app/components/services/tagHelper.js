@@ -89,8 +89,9 @@
         var updateTags = function (instanceKey, changedTagsHash, onUpdated) {
             serverApi.updateTags(transformToTagRows(changedTagsHash), function (result) {
 
-                var message = "updated " + result.modifiedTagsCount + " tag(s) and adjusted " +
-                              result.modifiedLinksCount + " link(s)";
+                var message = "updated " + result.modifiedTagsCount + " tag(s) and adjusted "
+                              + result.modifiedLinksCount + " link(s) in "
+                              + result.serverTimeInMs + "ms.";
                 notifier.addSuccess(message, "updateTagsInformation");
 
                 tagTreeCache = {};

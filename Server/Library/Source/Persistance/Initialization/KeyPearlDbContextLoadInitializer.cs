@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using KeyPearl.Library.Entities.Links;
 using KeyPearl.Library.Entities.Tags;
 
@@ -23,6 +24,8 @@ namespace KeyPearl.Library.Persistance.Initialization
 
     private void AddLinks(IDbContext dbContext)
     {
+      Tag[] allTags = dbContext.Tags.ToArray();
+
       for (var i = 1; i <= numberOfLinks; i++)
       {
         var link = new Link
@@ -33,7 +36,7 @@ namespace KeyPearl.Library.Persistance.Initialization
             TagIds = GetRandomTagIds()
           };
 
-        TagManager.SyncTagStringWithTagIds(dbContext, link, true);
+        TagManager.SyncTagStringWithTagIds(dbContext, allTags, link);
 
         dbContext.Update(link);
       }
