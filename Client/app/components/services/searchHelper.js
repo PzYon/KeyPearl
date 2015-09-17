@@ -50,7 +50,7 @@
         };
 
         var hasQuery = function () {
-            return !!instance.tagSearchString || (selectedTagIds && selectedTagIds.length);
+            return !!instance.searchString || (selectedTagIds && selectedTagIds.length);
         };
 
         var ensureSelectedTags = function () {
