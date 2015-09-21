@@ -212,6 +212,16 @@ form {
       display: table-cell;
       padding: 10px 10px 10px 0;
 
+      &.active {
+        .ng-valid {
+          border: 1px solid $success-font-color;
+        }
+
+        .ng-invalid {
+          border: 1px solid $error-font-color;
+        }
+      }
+
       &.control {
         width: 100%;
       }

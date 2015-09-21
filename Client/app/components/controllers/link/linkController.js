@@ -3,8 +3,6 @@
 
     var LinkController = function ($scope, $routeParams, $interval, serverApi, tagHelper, dateHelper, navigator, notifier) {
 
-        // todo: add some validation (required: yes/no, format: regex, etc.)
-
         var c = this;
 
         c.dateHelper = dateHelper;

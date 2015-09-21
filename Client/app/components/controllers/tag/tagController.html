@@ -1,6 +1,10 @@
 <section class="main-content">
-    <form>
-        <div data-form-element data-label="'Name'" data-type="'text'" data-model="c.tag.name"></div>
+    <form name="tagForm">
+        <div data-form-element
+             data-label="'Name'"
+             data-type="'text'"
+             data-model="c.tag.name"
+             data-required="true"></div>
         <div data-form-element data-label="'Added'"
              data-disabled="true"
              data-type="'text'"
@@ -18,7 +22,7 @@
                 data-ng-click="c.navigator.goToTagDetails(c.tag.parentId)">
             Go to parent
         </button>
-        <button data-ng-click="c.updateTag()">
+        <button data-ng-click="c.updateTag()" data-ng-if="tagForm.$valid">
             Update
         </button>
         <span data-confirmation

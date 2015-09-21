@@ -1,9 +1,12 @@
 <div class="form-row">
     <div class="form-cell label">
-        {{label}}
+        {{label}} {{required ? "*" : ""}}
     </div>
-    <div class="form-cell control">
-        <input type="{{type}}" data-ng-hide="disabled" data-ng-model="model"/>
-        <input type="{{type}}" data-ng-show="disabled" disabled="disabled" value="{{model}}"/>
+    <div class="form-cell control" data-ng-class="{'active': !disabled}">
+        <input type="{{type}}"
+               data-ng-pattern="pattern"
+               data-ng-disabled="disabled"
+               data-ng-model="model"
+               data-ng-required="required"/>
     </div>
 </div>

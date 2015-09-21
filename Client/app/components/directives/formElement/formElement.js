@@ -9,9 +9,11 @@
                 label: "=",
                 type: "=",
                 model: "=",
-                disabled: "="
+                disabled: "=",
+                required: "=",
+                pattern: "="
             },
-            templateUrl: "components/directives/formElement/formElement.html",
+            templateUrl: "components/directives/formElement/formElement.html"
         };
     };
 

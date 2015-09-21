@@ -1,8 +1,20 @@
 <section class="main-content">
-    <form>
-        <div data-form-element data-label="'Name'" data-type="'text'" data-model="c.link.name"></div>
-        <div data-form-element data-label="'Description'" data-type="'text'" data-model="c.link.description"></div>
-        <div data-form-element data-label="'Url'" data-type="'text'" data-model="c.link.url"></div>
+    <form name="linkForm">
+        <div data-form-element
+             data-label="'Name'"
+             data-type="'text'"
+             data-required="true"
+             data-model="c.link.name"></div>
+        <div data-form-element
+             data-label="'Description'"
+             data-type="'text'"
+             data-model="c.link.description"></div>
+        <div data-form-element
+             data-label="'Url'"
+             data-type="'text'"
+             data-pattern="'(http|ftp|https)\:\/\/.+'"
+             data-required="true"
+             data-model="c.link.url"></div>
         <div class="form-row">
             <div class="form-cell label">
                 Tags
@@ -24,7 +36,7 @@
              data-model="c.dateHelper.formatDate(c.link.modified)"></div>
     </form>
     <div class="buttons">
-        <button data-ng-click="c.updateLink()">
+        <button data-ng-click="c.updateLink()" data-ng-if="linkForm.$valid">
             {{c.actionName}}
         </button>
         <span data-ng-if="c.link.id"
