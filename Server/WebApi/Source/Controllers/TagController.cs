@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using KeyPearl.Library.Entities;
+using KeyPearl.Library.Entities.Serialization;
 using KeyPearl.Library.Entities.Tags;
 
 namespace KeyPearl.WebApi.Controllers
@@ -12,36 +12,40 @@ namespace KeyPearl.WebApi.Controllers
     private const string controllerUrl = "tags";
 
     [Route(controllerUrl)]
-    public Tag[] Get()
+    public ServerResult<List<Tag>, NullInfo> Get()
     {
-      return DbContext.Tags
-                      .ToArray();
+      return CreateResult<List<Tag>, NullInfo>(result => result.Data = GetAllTags());
     }
 
     [Route(controllerUrl)]
-    public ModifyTagsResult Post(List<Tag> tags)
+    public ServerResult<List<Tag>, TagModificationInfo> Post(List<Tag> tags)
     {
-      return PerformTagModification(() => TagManager.UpdateTags(DbContext, tags));
+      return CreateResult<List<Tag>, TagModificationInfo>(result => Post(tags, result));
     }
 
     [Route(controllerUrl + "/{id}")]
-    public ModifyTagsResult Delete(int id)
+    public ServerResult<List<Tag>, TagModificationInfo> Delete(int id)
     {
-      return PerformTagModification(() => TagManager.DeleteTag(DbContext, id));
+      return CreateResult<List<Tag>, TagModificationInfo>(result => Delete(id, result));
     }
 
-    private ModifyTagsResult PerformTagModification(Func<ModifyTagsResult> modificationFunction)
+    private void Post(List<Tag> tags, ServerResult<List<Tag>, TagModificationInfo> result)
     {
-      var watch = new Stopwatch();
-      watch.Start();
-
-      ModifyTagsResult result = modificationFunction();
+      result.Info = TagManager.UpdateTags(DbContext, tags);
       DbContext.SaveChanges();
+      result.Data = GetAllTags();
+    }
 
-      result.ServerTimeInMs = watch.ElapsedMilliseconds;
-      result.Tags = Get();
+    private void Delete(int id, ServerResult<List<Tag>, TagModificationInfo> result)
+    {
+      result.Info = TagManager.DeleteTag(DbContext, id);
+      DbContext.SaveChanges();
+      result.Data = GetAllTags();
+    }
 
-      return result;
+    private List<Tag> GetAllTags()
+    {
+      return DbContext.Tags.ToList();
     }
   }
 }

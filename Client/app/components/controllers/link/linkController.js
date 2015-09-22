@@ -14,9 +14,11 @@
 
         var tagHelperId = "link";
 
-        var setLink = function (link) {
+        var setLink = function (result) {
+            var link = result.data;
             if (link) {
                 c.link = link;
+                notifier.addSuccess("loaded link '" + link.name + "' in " + result.serverTimeInMs + "ms");
             } else {
                 notifier.addError("cannot find link.. maybe it doesn't exist anymore?");
             }
@@ -57,7 +59,9 @@
 
             var isCreate = !c.link.id;
 
-            serverApi.updateLink(c.link, function (updatedLink) {
+            serverApi.updateLink(c.link, function (result) {
+                var updatedLink = result.data;
+
                 var executedAction;
                 if (isCreate) {
                     // we need to navigate to correct url
@@ -69,7 +73,8 @@
                     c.link = updatedLink;
                 }
 
-                notifier.addSuccess(executedAction + " link '" + updatedLink.name + "'");
+                notifier.addSuccess(executedAction + " link '" + updatedLink.name
+                                    + "' in " + result.serverTimeInMs + "ms");
             });
 
         };
@@ -77,9 +82,9 @@
         c.deleteLink = function () {
             var name = c.link.name;
 
-            serverApi.deleteLink(c.link, function() {
+            serverApi.deleteLink(c.link, function(result) {
                 navigator.goToNewLink();
-                notifier.addSuccess("deleted link '" + name + "'");
+                notifier.addSuccess("deleted link '" + name + "' in " + result.serverTimeInMs + "ms");
             });
         };
 

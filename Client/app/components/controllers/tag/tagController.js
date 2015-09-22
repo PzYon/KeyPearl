@@ -21,7 +21,6 @@
 
             tagHelper.updateTags(tagHelperId, tagHash, function (tagTree) {
                 c.tag = tagTree.tagHash[c.tag.id];
-                notifier.addSuccess("updated '" + c.tag.name + "'");
             });
         };
 

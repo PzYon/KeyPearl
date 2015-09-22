@@ -9,8 +9,8 @@
 
         var getTags = function (instanceKey, onLoad, forceRecreate) {
             if (!config.cacheTagTrees || !tagRowCache.length) {
-                serverApi.loadTags(function (tagRows) {
-                    onLoad(ensureTree(instanceKey, tagRows, forceRecreate));
+                serverApi.loadTags(function (result) {
+                    onLoad(ensureTree(instanceKey, result.data, forceRecreate));
                 });
             } else {
                 onLoad(ensureTree(instanceKey, null, forceRecreate));
@@ -89,8 +89,8 @@
         var updateTags = function (instanceKey, changedTagsHash, onUpdated) {
             serverApi.updateTags(transformToTagRows(changedTagsHash), function (result) {
 
-                var message = "updated " + result.modifiedTagsCount + " tag(s) and adjusted "
-                              + result.modifiedLinksCount + " link(s) in "
+                var message = "updated " + result.info.modifiedTagsCount + " tag(s) and adjusted "
+                              + result.info.modifiedLinksCount + " link(s) in "
                               + result.serverTimeInMs + "ms.";
 
                 handleTagResult(instanceKey, result, onUpdated, "updateTagsInformation", message);
@@ -100,8 +100,8 @@
         var deleteTag = function (instanceKey, tag, onDeleted) {
             serverApi.deleteTag(tag, function (result) {
 
-                var message = "deleted '" + tag.name + "' and " + (result.modifiedTagsCount - 1)
-                              + " child tag(s) and removed from " + result.modifiedLinksCount + " links in "
+                var message = "deleted '" + tag.name + "' and " + (result.info.modifiedTagsCount - 1)
+                              + " child tag(s) and removed from " + result.info.modifiedLinksCount + " links in "
                               + result.serverTimeInMs + "ms.";
 
                 handleTagResult(instanceKey, result, onDeleted, "deleteTagsInformation", message);
@@ -111,7 +111,7 @@
         var handleTagResult = function (instanceKey, result, callback, notificationKey, message) {
             notifier.addSuccess(message, notificationKey);
             tagTreeCache = {};
-            callback(ensureTree(instanceKey, result.tags));
+            callback(ensureTree(instanceKey, result.data));
         };
 
         var toggleApplied = function (link, tagId) {

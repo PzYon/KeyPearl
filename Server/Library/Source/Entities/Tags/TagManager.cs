@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using KeyPearl.Library.Entities.Links;
+using KeyPearl.Library.Entities.Serialization;
 using KeyPearl.Library.Persistance;
 
 namespace KeyPearl.Library.Entities.Tags
@@ -16,20 +17,20 @@ namespace KeyPearl.Library.Entities.Tags
     public const char PathStarter = '[';
     public const char PathEnder = ']';
 
-    public static ModifyTagsResult UpdateTags(IDbContext dbContext, List<Tag> changedTags)
+    public static TagModificationInfo UpdateTags(IDbContext dbContext, List<Tag> changedTags)
     {
       dbContext.BatchUpdate(changedTags);
 
       int updatedLinksCount = UpdateTagStrings(dbContext, changedTags);
 
-      return new ModifyTagsResult
+      return new TagModificationInfo
         {
           ModifiedLinksCount = updatedLinksCount,
           ModifiedTagsCount = changedTags.Count
         };
     }
 
-    public static ModifyTagsResult DeleteTag(IDbContext dbContext, int tagId)
+    public static TagModificationInfo DeleteTag(IDbContext dbContext, int tagId)
     {
       Link[] taggedLinks = GetTaggedLinks(dbContext, tagId);
       foreach (Link link in taggedLinks)
@@ -39,7 +40,7 @@ namespace KeyPearl.Library.Entities.Tags
 
       int deletedTagsCount = DeleteTagRecursive(dbContext, tagId);
 
-      return new ModifyTagsResult
+      return new TagModificationInfo
         {
           ModifiedLinksCount = taggedLinks.Length,
           ModifiedTagsCount = deletedTagsCount

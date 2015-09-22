@@ -10,7 +10,7 @@
 
         var setLinks = function (result) {
 
-            c.links = result.links;
+            c.links = result.data;
 
             notifier.clear();
 
@@ -25,17 +25,18 @@
 
             var message;
 
-            if (result.totalLinksCount) {
+            var totalLinksCount = result.info.totalLinksCount;
+            if (totalLinksCount) {
                 searchHelper.showAllTags();
                 message = "loaded " + c.links.length + " links. results are truncated, in total there are " +
-                          result.totalLinksCount + " links. you might need to be more precise in order to find" +
+                          totalLinksCount + " links. you might need to be more precise in order to find" +
                           " what you are actually looking for.";
             } else {
                 var availableTagsCount = searchHelper.showAvailableTags(c.links);
-                message = "found " + c.links.length + " links with " + availableTagsCount + " different tags applied";
+                message = "found " + c.links.length + " links with " + availableTagsCount + " different tags applied.";
             }
 
-            notifier.addSuccess(message, "searchResultInformation");
+            notifier.addSuccess(message + " time used: " + result.serverTimeInMs + "ms", "searchResultInformation");
         };
 
         c.loadLinks = function () {
