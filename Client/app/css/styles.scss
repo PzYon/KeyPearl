@@ -108,6 +108,28 @@ ul {
       border: 1px solid $error-font-color;
       color: $error-font-color;
     }
+
+    .message,
+    .server-time {
+      display: table-cell;
+      vertical-align: middle;
+    }
+
+    .message {
+      display: table-cell;
+      width: 100%;
+    }
+
+    .server-time {
+      white-space: nowrap;
+      margin-right: 5px;
+      margin-left: 20px;
+      font-weight: normal;
+
+      .value {
+        font-weight: bold;
+      }
+    }
   }
 }
 

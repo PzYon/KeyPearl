@@ -36,7 +36,7 @@
                 message = "found " + c.links.length + " links with " + availableTagsCount + " different tags applied.";
             }
 
-            notifier.addSuccess(message + " time used: " + result.serverTimeInMs + "ms", "searchResultInformation");
+            notifier.addSuccess({message: message, serverTime: result.serverTimeInMs}, "searchResultInformation");
         };
 
         c.loadLinks = function () {

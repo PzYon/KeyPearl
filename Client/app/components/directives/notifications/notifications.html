@@ -4,7 +4,12 @@
             data-ng-class="{'error': notification.isError}"
             data-ng-click="notifier.remove(notification)"
             class="notification">
-            {{notification.message}}
+            <span class="message">
+                {{notification.message}}
+            </span>
+            <span data-ng-if="notification.serverTime !== undefined" class="server-time">
+                server time: <span class="value">{{notification.serverTime}}ms</span>
+            </span>
         </li>
     </ul>
     <div data-ng-if="!hidePendingRequests && notifier.pendingRequests > 0" class="notification">

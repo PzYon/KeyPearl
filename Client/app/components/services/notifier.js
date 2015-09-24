@@ -4,15 +4,18 @@
     var NotifierService = function () {
 
         var add = function (message, isError, key) {
+            var messageObject = !angular.isObject(message)
+                ? {message: message}
+                : message;
+
+            messageObject.isError = messageObject.isError || isError;
+            messageObject.key = messageObject.key || key;
+
             if (key) {
-                remove(key);
+                remove(messageObject.key);
             }
 
-            instance.notifications.push({
-                key: key,
-                message: message,
-                isError: isError
-            });
+            instance.notifications.push(messageObject);
         };
 
         var addError = function addError(message) {

@@ -90,8 +90,7 @@
             serverApi.updateTags(transformToTagRows(changedTagsHash), function (result) {
 
                 var message = "updated " + result.info.modifiedTagsCount + " tag(s) and adjusted "
-                              + result.info.modifiedLinksCount + " link(s) in "
-                              + result.serverTimeInMs + "ms.";
+                              + result.info.modifiedLinksCount + " link(s)";
 
                 handleTagResult(instanceKey, result, onUpdated, "updateTagsInformation", message);
             });
@@ -101,15 +100,14 @@
             serverApi.deleteTag(tag, function (result) {
 
                 var message = "deleted '" + tag.name + "' and " + (result.info.modifiedTagsCount - 1)
-                              + " child tag(s) and removed from " + result.info.modifiedLinksCount + " links in "
-                              + result.serverTimeInMs + "ms.";
+                              + " child tag(s) and removed from " + result.info.modifiedLinksCount + " links";
 
                 handleTagResult(instanceKey, result, onDeleted, "deleteTagsInformation", message);
             });
         };
 
         var handleTagResult = function (instanceKey, result, callback, notificationKey, message) {
-            notifier.addSuccess(message, notificationKey);
+            notifier.addSuccess({message: message, serverTime: result.serverTimeInMs}, notificationKey);
             tagTreeCache = {};
             callback(ensureTree(instanceKey, result.data));
         };

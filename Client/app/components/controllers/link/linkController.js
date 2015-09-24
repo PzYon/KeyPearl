@@ -18,7 +18,10 @@
             var link = result.data;
             if (link) {
                 c.link = link;
-                notifier.addSuccess("loaded link '" + link.name + "' in " + result.serverTimeInMs + "ms");
+                notifier.addSuccess({
+                    message: "loaded link '" + link.name + "'",
+                    serverTime: result.serverTimeInMs
+                });
             } else {
                 notifier.addError("cannot find link.. maybe it doesn't exist anymore?");
             }
@@ -73,8 +76,10 @@
                     c.link = updatedLink;
                 }
 
-                notifier.addSuccess(executedAction + " link '" + updatedLink.name
-                                    + "' in " + result.serverTimeInMs + "ms");
+                notifier.addSuccess({
+                    message: executedAction + " link '" + updatedLink.name +"'",
+                    serverTime: result.serverTimeInMs
+                });
             });
 
         };
@@ -84,7 +89,10 @@
 
             serverApi.deleteLink(c.link, function(result) {
                 navigator.goToNewLink();
-                notifier.addSuccess("deleted link '" + name + "' in " + result.serverTimeInMs + "ms");
+                notifier.addSuccess({
+                    message: "deleted link '" + name + "'",
+                    serverTime: result.serverTimeInMs
+                });
             });
         };
 
