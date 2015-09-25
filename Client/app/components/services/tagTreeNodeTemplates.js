@@ -5,7 +5,7 @@
     var TagTreeNodeTemplatesService = function () {
 
         var defaultTemplate = "" +
-            "<span data-ng-mouseover='isHover=true;' data-ng-mouseleave='isHover=false;'>" +
+            "<span data-ng-mouseover='isHover=true;' class='container' data-ng-mouseleave='isHover=false;'>" +
                 "<span class='tag-collapsor' data-ng-if='tag.hasChildren()' data-ng-click='tag.toggleExpanded()'>" +
                     "<span class='container'>{{tag.isExpanded ? '-' : '+'}}</span>" +
                 "</span>" +
@@ -27,7 +27,7 @@
                   "data-on-select-function='onSelectFunction' data-ng-if='tag.isExpanded'></span>";
 
         var editableTemplate = "" +
-            "<span data-ng-mouseover='isHover=true;' data-ng-mouseleave='isHover=false;'>" +
+            "<span data-ng-mouseover='isHover=true;' class='container' data-ng-mouseleave='isHover=false;'>" +
                 "<span class='tag-collapsor' data-ng-if='tag.hasChildren()' data-action-link='tag.toggleExpanded()'>" +
                     "{{tag.isExpanded ? '-' : '+'}}" +
                 "</span>" +

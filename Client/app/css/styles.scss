@@ -191,7 +191,9 @@ input {
   .tag-tree-node {
     position: relative;
 
-    & > span {
+    .container {
+      display: inline-block !important;
+      width: 100% !important;
 
       .tag-collapsor {
         position: absolute;
@@ -429,7 +431,7 @@ form {
 
   .tag-tree {
     .tag-tree-node {
-      & > span {
+      .container {
         .action-links {
           display: block;
           margin-left: 0;
