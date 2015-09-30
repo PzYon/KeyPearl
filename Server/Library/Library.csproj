@@ -42,11 +42,12 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Source\Entities\Serialization\BaseInfo.cs" />
-    <Compile Include="Source\Entities\Serialization\ServerResult.cs" />
+    <Compile Include="Source\Entities\Serialization\ResponseData.cs" />
     <Compile Include="Source\Persistance\Initialization\BaseKeyPearlDbContextInitializer.cs" />
     <Compile Include="Source\Persistance\IEntity.cs" />
     <Compile Include="Source\Persistance\Initialization\KeyPearlDbContextLoadInitializer.cs" />

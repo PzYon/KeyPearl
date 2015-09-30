@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Web.Http;
-using KeyPearl.Library.Entities;
 using KeyPearl.Library.Entities.Links;
 using KeyPearl.Library.Entities.Serialization;
 using KeyPearl.Library.Entities.Tags;
@@ -14,41 +15,44 @@ namespace KeyPearl.WebApi.Controllers
     private const string controllerUrl = "links";
 
     [Route(controllerUrl + "/{id}")]
-    public ServerResult<Link, NullInfo> Get(int id)
+    public HttpResponseMessage Get(int id)
     {
-      return CreateResult<Link, NullInfo>(result => Get(id, result));
+      return GetResponse<Link, NullInfo>(result => Get(id, result));
     }
 
     [Route(controllerUrl)]
-    public ServerResult<Link, NullInfo> Post(Link link)
+    public HttpResponseMessage Post(Link link)
     {
-      return CreateResult<Link, NullInfo>(result => Post(link, result));
+      return GetResponse<Link, NullInfo>(result => Post(link, result));
     }
 
     [Route(controllerUrl + "/{id}")]
-    public ServerResult<Link, NullInfo> Delete(int id)
+    public HttpResponseMessage Delete(int id)
     {
-      return CreateResult<Link, NullInfo>(result =>
-                                            {
-                                              DbContext.Delete<Link>(id);
-                                              DbContext.SaveChanges();
-                                            });
+      return GetResponse<Link, NullInfo>(result =>
+                                           {
+                                             DbContext.Delete<Link>(id);
+                                             DbContext.SaveChanges();
+                                           });
     }
 
     [HttpGet]
     [Route(controllerUrl + "/search/")]
-    public ServerResult<List<Link>, LinkSearchInfo> Search(string queryString = null)
+    public HttpResponseMessage Search(string queryString = null)
     {
-      return CreateResult<List<Link>, LinkSearchInfo>(result => Search(queryString, result));
+      return GetResponse<List<Link>, LinkSearchInfo>(result => Search(queryString, result));
     }
 
-    private Link Get(int id, ServerResult<Link, NullInfo> result)
+    private Link Get(int id, ResponseData<Link, NullInfo> result)
     {
       return result.Data = DbContext.Links.FirstOrDefault(l => l.Id == id);
     }
 
-    private void Post(Link link, ServerResult<Link, NullInfo> result)
+    private void Post(Link link, ResponseData<Link, NullInfo> result)
     {
+      // encode URL
+      link.Url = new Uri(link.Url).AbsoluteUri;
+
       TagManager.SyncTagStringWithTagIds(DbContext, link);
 
       Link updatedLink = DbContext.Update(link);
@@ -57,7 +61,7 @@ namespace KeyPearl.WebApi.Controllers
       result.Data = updatedLink;
     }
 
-    private void Search(string queryString, ServerResult<List<Link>, LinkSearchInfo> result)
+    private void Search(string queryString, ResponseData<List<Link>, LinkSearchInfo> result)
     {
       IEnumerable<Link> links = queryString == null
                                   ? DbContext.Links
@@ -71,8 +75,8 @@ namespace KeyPearl.WebApi.Controllers
 
       result.Data = loadedLinks.Take(maxResultSize).ToList();
       result.Info.TotalLinksCount = loadedLinks.Length > maxResultSize
-                                       ? DbContext.Links.Count()
-                                       : 0;
+                                      ? DbContext.Links.Count()
+                                      : 0;
     }
   }
 }

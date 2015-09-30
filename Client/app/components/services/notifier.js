@@ -18,8 +18,8 @@
             instance.notifications.push(messageObject);
         };
 
-        var addError = function addError(message) {
-            add(message, true);
+        var addError = function addError(message, key) {
+            add(message, true, key);
         };
 
         var addSuccess = function addSuccess(message, key) {

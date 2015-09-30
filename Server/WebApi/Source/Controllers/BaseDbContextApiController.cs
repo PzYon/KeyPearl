@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Net;
+using System.Net.Http;
 using System.Web.Http;
-using KeyPearl.Library.Entities;
 using KeyPearl.Library.Entities.Serialization;
 using KeyPearl.Library.Persistance;
 
@@ -17,22 +18,30 @@ namespace KeyPearl.WebApi.Controllers
                                         WebConfigReader.Get<bool>("LogSqlQueries"));
     }
 
-    protected ServerResult<TData, TInfo> CreateResult<TData, TInfo>(Action<ServerResult<TData, TInfo>> processAction)
+    protected HttpResponseMessage GetResponse<TData, TInfo>(Action<ResponseData<TData, TInfo>> processAction)
       where TInfo : class, new()
       where TData : class, new()
     {
       var watch = new Stopwatch();
       watch.Start();
 
-      var result = new ServerResult<TData, TInfo>();
-      result.Info = new TInfo();
+      var responseData = new ResponseData<TData, TInfo>();
 
-      processAction(result);
+      HttpResponseMessage response;
+      try
+      {
+        processAction(responseData);
+        response = Request.CreateResponse(HttpStatusCode.OK, responseData);
+      }
+      catch (Exception ex)
+      {
+        responseData.ErrorMessage = string.Format("{0}: '{1}'", ex.GetType().Name, ex.Message);
+        response = Request.CreateResponse(HttpStatusCode.InternalServerError, responseData);
+      }
 
-      watch.Stop();
-      result.ServerTimeInMs = watch.ElapsedMilliseconds;
+      responseData.ServerTimeInMs = watch.ElapsedMilliseconds;
 
-      return result;
+      return response;
     }
 
     protected override void Dispose(bool disposing)

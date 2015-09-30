@@ -4,10 +4,14 @@
     var ServerApiService = function ($http, $timeout, config, notifier) {
 
         var errorHandler = function (data, status, headers, config) {
-            var message = status
-                ? config.url + ": " + data.message + " (" + data.messageDetail + ")"
-                : "cannot connect to server.. maybe it's down?";
-            notifier.addError(message);
+            if (status) {
+                notifier.addError({
+                    message: data.errorMessage + " | " + config.url,
+                    serverTime: data.serverTimeInMs
+                });
+            } else {
+                notifier.addError("cannot connect to server.. maybe it's down?", "serverDown");
+            }
         };
 
         var getOnErrorWrapper = function () {
