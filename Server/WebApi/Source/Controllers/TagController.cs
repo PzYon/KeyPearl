@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Web.Http;
-using KeyPearl.Library.Entities.Serialization;
+using KeyPearl.Library.Actions.Tags;
 using KeyPearl.Library.Entities.Tags;
 
 namespace KeyPearl.WebApi.Controllers
@@ -12,44 +10,21 @@ namespace KeyPearl.WebApi.Controllers
     private const string controllerUrl = "tags";
 
     [Route(controllerUrl)]
-    public HttpResponseMessage Get()
+    public IHttpActionResult Get()
     {
-      return GetResponse<List<Tag>, NullInfo>(result => result.Data = GetAllTags());
+      return new GetTagsAction(Request, DbContext);
     }
 
     [Route(controllerUrl)]
-    public HttpResponseMessage Post(List<Tag> tags)
+    public IHttpActionResult Post(List<Tag> tags)
     {
-      return GetResponse<List<Tag>, TagModificationInfo>(result => Post(tags, result));
+      return new UpdateTagsAction(Request, DbContext, tags);
     }
 
     [Route(controllerUrl + "/{id}")]
-    public HttpResponseMessage Delete(int id)
+    public IHttpActionResult Delete(int id)
     {
-      return GetResponse<List<Tag>, TagModificationInfo>(result => Delete(id, result));
-    }
-
-    private void Post(List<Tag> tags, ResponseData<List<Tag>, TagModificationInfo> result)
-    {
-      result.Info = TagManager.UpdateTags(DbContext, tags);
-      result.Data = SaveAndGetAllTags();
-    }
-
-    private void Delete(int id, ResponseData<List<Tag>, TagModificationInfo> result)
-    {
-      result.Info = TagManager.DeleteTag(DbContext, id);
-      result.Data = SaveAndGetAllTags();
-    }
-
-    private List<Tag> SaveAndGetAllTags()
-    {
-      DbContext.SaveChanges();
-      return GetAllTags();
-    }
-
-    private List<Tag> GetAllTags()
-    {
-      return DbContext.Tags.ToList();
+      return new DeleteTagAction(Request, DbContext, id);
     }
   }
 }

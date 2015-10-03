@@ -1,4 +1,4 @@
-﻿namespace KeyPearl.Library.Entities.Serialization
+﻿namespace KeyPearl.Library.Actions
 {
   public abstract class BaseInfo
   {
