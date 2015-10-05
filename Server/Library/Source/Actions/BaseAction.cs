@@ -39,7 +39,7 @@ namespace KeyPearl.Library.Actions
       }
       catch (Exception ex)
       {
-        actionResult.ErrorMessage = string.Format("{0}: '{1}'", ex.GetType().Name, ex.Message);
+        actionResult.ErrorMessage = string.Format("{0} - {1}: '{2}'", GetType().Name, ex.GetType().Name, ex.Message);
         statusCode = HttpStatusCode.InternalServerError;
       }
 

@@ -4,9 +4,9 @@
     var ServerApiService = function ($http, $timeout, config, notifier) {
 
         var errorHandler = function (data, status, headers, config) {
-            if (status) {
+            if (status !== -1) {
                 notifier.addError({
-                    message: data.errorMessage + " | " + config.url,
+                    message: config.url + " | " + data.errorMessage,
                     serverTime: data.serverTimeInMs
                 });
             } else {
