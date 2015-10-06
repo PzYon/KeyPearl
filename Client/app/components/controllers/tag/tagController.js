@@ -40,6 +40,11 @@
                         navigator.goToTags();
                     }
                 });
+
+                serverApi.loadTagStatistics(id, function (result){
+                    c.tagStatistics = result.data;
+                    notifier.addSuccess({message: "loaded tag statistics", serverTime: result.serverTimeInMs});
+                });
             }
         };
 

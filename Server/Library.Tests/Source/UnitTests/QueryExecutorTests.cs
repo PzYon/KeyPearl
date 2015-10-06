@@ -56,7 +56,7 @@ namespace KeyPearl.Library.Tests.UnitTests
 
     private static IEnumerable<Link> GetFilteredData(string tagIds, string searchString)
     {
-      DbSet<Link> links = GetTestData("foo X", string.Empty, null, "/1/2/3/;/1/2/4/");
+      DbSet<Link> links = GetTestData("foo X", string.Empty, null, "[/1/2/3/];[/1/2/4/]");
       return QueryExecutor.Execute(links, GetQueryString(tagIds, searchString));
     }
 
@@ -80,7 +80,7 @@ namespace KeyPearl.Library.Tests.UnitTests
           {
             Description = test,
             Name = test,
-            TagString = "/5/6/7/"
+            TagString = "[/5/6/7/]"
           });
       }
 

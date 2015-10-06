@@ -482,6 +482,14 @@ form {
   }
 }
 
+.tag-statistics {
+  border: 1px solid $action-color;
+  border-radius: $border-radius;
+  padding: 5px;
+  margin-top: 15px;
+  font-size: 0.9rem;
+}
+
 /* animations */
 .ng-enter {
   -webkit-animation: 0.5s fadeIn;

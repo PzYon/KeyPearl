@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using KeyPearl.Library.Actions;
 using KeyPearl.Library.Entities.Links;
 using KeyPearl.Library.Persistance;
@@ -16,6 +17,17 @@ namespace KeyPearl.Library.Entities.Tags
     public const char PathSeparator = '/';
     public const char PathStarter = '[';
     public const char PathEnder = ']';
+
+    private static readonly Regex validateTagStringRegex = new Regex(@"^(\[\/(\d+\/)+\](;(?=\[)|$))*$",
+                                                                     RegexOptions.Compiled);
+
+    public static void EnsureValidTagString(string tagString)
+    {
+      if (tagString != null && !validateTagStringRegex.IsMatch(tagString))
+      {
+        throw new InvalidTagStringException(tagString);
+      }
+    }
 
     public static TagModificationInfo UpdateTags(IDbContext dbContext, List<Tag> changedTags)
     {
@@ -54,26 +66,27 @@ namespace KeyPearl.Library.Entities.Tags
         return;
       }
 
+      var tagStringElement = JoinTagPathElements(tagId);
       taggable.TagString = string.Join(Separator.ToString(),
-                                       taggable.TagString.Split(Separator)
-                                               .Where(s => !s.Contains(JoinTagPathElements(tagId))));
+                                       GetPathSegments(taggable.TagString).Where(s => !s.Contains(tagStringElement)));
     }
 
     public static int[] GetIdsFromTagString(string tagString)
     {
+      EnsureValidTagString(tagString);
+
       if (string.IsNullOrEmpty(tagString))
       {
         return new int[0];
       }
 
-      return tagString.Split(Separator)
-                      .Select(p => int.Parse(p.Trim(PathStarter, PathEnder)
-                                              .Split(new[] {PathSeparator},
-                                                     StringSplitOptions.RemoveEmptyEntries)
-                                              .Last()))
-                      .Distinct()
-                      .OrderBy(i => i)
-                      .ToArray();
+      return GetPathSegments(tagString).Select(p => int.Parse(p.Trim(PathStarter, PathEnder)
+                                                               .Split(new[] {PathSeparator},
+                                                                      StringSplitOptions.RemoveEmptyEntries)
+                                                               .Last()))
+                                       .Distinct()
+                                       .OrderBy(i => i)
+                                       .ToArray();
     }
 
     public static void SyncTagStringWithTagIds(IDbContext dbContext, Link link)
@@ -134,6 +147,48 @@ namespace KeyPearl.Library.Entities.Tags
                              : tagPath;
     }
 
+    public static TagStatistics GetTagStatistics(IDbContext dbContext, int tagId)
+    {
+      ITaggable[] taggedLinks = GetTaggedLinks(dbContext, tagId).OfType<ITaggable>().ToArray();
+
+      return new TagStatistics
+        {
+          TagId = tagId,
+          InheritedCount = CountInheritedTags(taggedLinks, tagId),
+          DirectCount = CountDirectTags(taggedLinks, tagId),
+          TaggedLinksCount = taggedLinks.Length
+      };
+    }
+
+    private static int CountDirectTags(ITaggable[] taggables, int tagId)
+    {
+      string tagIdSegment = JoinTagPathElements(tagId);
+      return taggables.Count(t => IsDirectTag(t, tagIdSegment));
+    }
+
+    private static int CountInheritedTags(ITaggable[] taggables, int tagId)
+    {
+      string tagIdSegment = JoinTagPathElements(tagId);
+      return taggables.Count(t => IsInheritedTag(t, tagIdSegment));
+    }
+
+    private static bool IsDirectTag(ITaggable taggable, string tagStringSegment)
+    {
+      return GetPathSegments(taggable.TagString).Any(ts => IsDirectTag(tagStringSegment, ts));
+    }
+
+    private static bool IsDirectTag(string tagIdSegment, string ts)
+    {
+      return ts.EndsWith(tagIdSegment + PathEnder);
+    }
+
+    private static bool IsInheritedTag(ITaggable taggable, string tagStringSegment)
+    {
+      return GetPathSegments(taggable.TagString).Any(ts => ts != tagStringSegment
+                                                           && !ts.EndsWith(tagStringSegment)
+                                                           && ts.Contains(tagStringSegment));
+    }
+
     private static string GetTagPath(Tag[] allTags, Tag tag)
     {
       Tag current = tag;
@@ -150,11 +205,15 @@ namespace KeyPearl.Library.Entities.Tags
       return string.Concat(PathStarter, JoinTagPathElements(tagIds.ToArray()), PathEnder);
     }
 
-    private static string JoinTagPathElements(params int[] tagIds)
+    private static Link[] GetTaggedLinks(IDbContext dbContext, params int[] tagIds)
     {
-      return string.Concat(PathSeparator.ToString(),
-                           string.Join(PathSeparator.ToString(), tagIds),
-                           PathSeparator.ToString());
+      string[] patterns = tagIds.Select(t => JoinTagPathElements(t))
+                                .ToArray();
+
+      // .ToArray() is required in order to prevent entity framework exception
+      return dbContext.Links
+                      .Where(l => patterns.Any(p => l.TagString.Contains(p)))
+                      .ToArray();
     }
 
     private static int UpdateTagStrings(IDbContext dbContext, List<Tag> changedTags)
@@ -170,17 +229,6 @@ namespace KeyPearl.Library.Entities.Tags
       return taggedLinks.Length;
     }
 
-    private static Link[] GetTaggedLinks(IDbContext dbContext, params int[] changedTagIds)
-    {
-      string[] patterns = changedTagIds.Select(t => JoinTagPathElements(t))
-                                       .ToArray();
-
-      // .ToArray() is required in order to prevent entity framework exception
-      return dbContext.Links
-                      .Where(l => patterns.Any(p => l.TagString.Contains(p)))
-                      .ToArray();
-    }
-
     private static int DeleteTagRecursive(IDbContext dbContext, int tagId)
     {
       int count = dbContext.Tags
@@ -192,6 +240,20 @@ namespace KeyPearl.Library.Entities.Tags
       dbContext.Delete<Tag>(tagId);
 
       return count;
+    }
+
+    private static string JoinTagPathElements(params int[] tagIds)
+    {
+      return string.Concat(PathSeparator.ToString(),
+                           string.Join(PathSeparator.ToString(), tagIds),
+                           PathSeparator.ToString());
+    }
+
+    private static string[] GetPathSegments(string tagString)
+    {
+      return string.IsNullOrEmpty(tagString)
+               ? new string[0]
+               : tagString.Split(Separator);
     }
   }
 }

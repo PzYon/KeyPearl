@@ -11,7 +11,7 @@
             messageObject.isError = messageObject.isError || isError;
             messageObject.key = messageObject.key || key;
 
-            if (key) {
+            if (messageObject.key) {
                 remove(messageObject.key);
             }
 

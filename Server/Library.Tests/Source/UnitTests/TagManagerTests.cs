@@ -306,6 +306,62 @@ namespace KeyPearl.Library.Tests.UnitTests
       Assert.AreEqual("[/4/5/6/]", taggable.TagString);
     }
 
+    [TestMethod]
+    public void GetTagStatistics_CountsCorrectInheritedTags()
+    {
+      TagStatistics tagStatistics = TagManager.GetTagStatistics(dbContext, 1);
+
+      Assert.AreEqual(1, tagStatistics.InheritedCount);
+    }
+
+    [TestMethod]
+    public void GetTagStatistics_CountsCorrectInheritedTagsForTagStringsWithMultipleTags()
+    {
+      dbContext.Links.Add(new Link { TagString = "[/1/2/3/];[/1/2/4/]" });
+
+      TagStatistics tagStatistics = TagManager.GetTagStatistics(dbContext, 2);
+
+      Assert.AreEqual(2, tagStatistics.InheritedCount);
+    }
+
+    [TestMethod]
+    public void GetTagStatistics_CountsCorrectDirectTagsForNonRootTags()
+    {
+      TagStatistics tagStatistics = TagManager.GetTagStatistics(dbContext, 2);
+
+      Assert.AreEqual(1, tagStatistics.DirectCount);
+    }
+
+    [TestMethod]
+    public void GetTagStatistics_CountsCorrectDirectTagsForRootTags()
+    {
+      dbContext.Links.Add(new Link {TagString = lv1TagString});
+
+      TagStatistics tagStatistics = TagManager.GetTagStatistics(dbContext, 1);
+
+      Assert.AreEqual(1, tagStatistics.DirectCount);
+    }
+
+    [TestMethod]
+    public void GetTagStatistics_CountsCorrectDirectTagsForTagStringsWithMultipleTags()
+    {
+      dbContext.Links.Add(new Link { TagString = "[/1/2/3/];[/1/2/4/]" });
+
+      TagStatistics tagStatistics = TagManager.GetTagStatistics(dbContext, 3);
+
+      Assert.AreEqual(1, tagStatistics.DirectCount);
+    }
+
+    [TestMethod]
+    public void GetTagStatistics_TotalCountIsCorrect()
+    {
+      dbContext.Links.Add(new Link { TagString = "[/1/23/];[/1/23/24/]" });
+
+      TagStatistics tagStatistics = TagManager.GetTagStatistics(dbContext, 23);
+
+      Assert.AreEqual(tagStatistics.TotalCount, tagStatistics.DirectCount + tagStatistics.InheritedCount);
+    }
+
     private static Tag GetLv1Tag()
     {
       return new Tag {ParentId = 0, Id = 1};

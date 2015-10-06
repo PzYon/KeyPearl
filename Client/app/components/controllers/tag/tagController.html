@@ -31,4 +31,12 @@
             Delete
         </span>
     </div>
+    <div class="tag-statistics" data-ng-if="c.tagStatistics">
+        <ul>
+            <li>{{c.tagStatistics.taggedLinksCount}} link(s) have this tag applied</li>
+            <li>tag is applied {{c.tagStatistics.totalCount}} time(s) in total</li>
+            <li>it is inherited {{c.tagStatistics.inheritedCount}} time(s)</li>
+            <li>it is applied directly {{c.tagStatistics.directCount}} time(s)</li>
+        </ul>
+    </div>
 </section>

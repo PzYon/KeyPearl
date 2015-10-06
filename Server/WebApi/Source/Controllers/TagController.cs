@@ -26,5 +26,12 @@ namespace KeyPearl.WebApi.Controllers
     {
       return new DeleteTagAction(Request, DbContext, id);
     }
+
+    [HttpGet]
+    [Route(controllerUrl + "/statistics/{tagId}")]
+    public IHttpActionResult Statistics(int tagId)
+    {
+      return new GetTagStatisticsAction(Request, DbContext, tagId);
+    }
   }
 }

@@ -58,7 +58,10 @@
     <Compile Include="Source\Actions\BaseInfo.cs" />
     <Compile Include="Source\Actions\ActionResult.cs" />
     <Compile Include="Source\Actions\Tags\DeleteTagAction.cs" />
+    <Compile Include="Source\Actions\Tags\GetTagStatisticsAction.cs" />
     <Compile Include="Source\Actions\Tags\GetTagsAction.cs" />
+    <Compile Include="Source\Entities\Tags\InvalidTagStringException.cs" />
+    <Compile Include="Source\Entities\Tags\TagStatistics.cs" />
     <Compile Include="Source\Actions\Tags\UpdateTagsAction.cs" />
     <Compile Include="Source\Persistance\Initialization\BaseKeyPearlDbContextInitializer.cs" />
     <Compile Include="Source\Persistance\IEntity.cs" />

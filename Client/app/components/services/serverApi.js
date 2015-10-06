@@ -4,14 +4,25 @@
     var ServerApiService = function ($http, $timeout, config, notifier) {
 
         var errorHandler = function (data, status, headers, config) {
-            if (status !== -1) {
-                notifier.addError({
-                    message: config.url + " | " + data.errorMessage,
-                    serverTime: data.serverTimeInMs
-                });
-            } else {
-                notifier.addError("cannot connect to server.. maybe it's down?", "serverDown");
+            var notification;
+            switch (status) {
+                case -1:
+                    notification = {message: "cannot connect to server.. maybe it's down?", key: "serverDown"};
+                    break;
+
+                case 500:
+                    notification = {message: config.url + " | " + data.errorMessage, serverTime: data.serverTimeInMs};
+                    break;
+
+                default:
+                    notification = config.url + " | " + status + ": " + data.message;
+                    if (data.messageDetail) {
+                        notification += " (" + data.messageDetail + ")";
+                    }
+                    break;
             }
+
+            notifier.addError(notification);
         };
 
         var getOnErrorWrapper = function () {
@@ -85,6 +96,10 @@
 
             deleteTag: function (tag, onSuccess) {
                 del(tagsUrl + tag.id, onSuccess);
+            },
+
+            loadTagStatistics: function (tagId, onSuccess) {
+                get(tagsUrl + "statistics/" + tagId, onSuccess);
             }
         };
     };

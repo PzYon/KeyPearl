@@ -20,9 +20,9 @@ namespace KeyPearl.Library.Tests.TestTypes
     {
       Links = new TestDbSet<Link>
         {
-          new Link {TagString = "/1/2/3/"},
-          new Link {TagString = "/1/2/"},
-          new Link {TagString = "/1/"}
+          new Link {TagString = "[/1/2/3/]"},
+          new Link {TagString = "[/1/2/]"},
+          new Link {TagString = "[/1/]"}
         };
     }
 

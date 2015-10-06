@@ -18,13 +18,23 @@ namespace KeyPearl.Library.Entities.Links
 
     public string Description { get; set; }
 
-    public string TagString { get; set; }
+    public string TagString
+    {
+      get { return _tagString; }
+      set
+      {
+        TagManager.EnsureValidTagString(value);
+        _tagString = value;
+      }
+    }
 
     public int[] TagIds
     {
       get { return _tagIds ?? (_tagIds = TagManager.GetIdsFromTagString(TagString)); }
       set { _tagIds = value; }
     }
+
+    private string _tagString;
 
     private int[] _tagIds;
 
