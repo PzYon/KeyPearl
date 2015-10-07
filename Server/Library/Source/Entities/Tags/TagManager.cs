@@ -18,12 +18,13 @@ namespace KeyPearl.Library.Entities.Tags
     public const char PathStarter = '[';
     public const char PathEnder = ']';
 
-    private static readonly Regex validateTagStringRegex = new Regex(@"^(\[\/(\d+\/)+\](;(?=\[)|$))*$",
+    // http://stackoverflow.com/questions/32985871/performance-and-readability-of-regex-using-positive-look-ahead
+    private static readonly Regex validateTagStringRegex = new Regex(@"^\[/(\d+/)+\](?:;\[/(\d+/)+\])*$",
                                                                      RegexOptions.Compiled);
 
     public static void EnsureValidTagString(string tagString)
     {
-      if (tagString != null && !validateTagStringRegex.IsMatch(tagString))
+      if (!string.IsNullOrEmpty(tagString) && !validateTagStringRegex.IsMatch(tagString))
       {
         throw new InvalidTagStringException(tagString);
       }
