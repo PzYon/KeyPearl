@@ -7,7 +7,7 @@
     "bower": "^1.5.3",
     "del": "^1.2.0",
     "gulp": "^3.9.0",
-    "gulp-angular-templatecache": "^1.7.0",
+    "gulp-angular-templatecache": "^1.8.0",
     "gulp-concat": "^2.6.0",
     "gulp-if": "^1.2.5",
     "gulp-inline": "0.0.12",
@@ -18,7 +18,7 @@
     "gulp-uglify": "^1.4.1",
     "gulp-watch": "^4.3.4",
     "run-sequence": "^1.1.2",
-    "yargs": "^3.17.1"
+    "yargs": "^3.27.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

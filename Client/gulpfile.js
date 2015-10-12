@@ -53,13 +53,13 @@
         // otherwise use a default config object - for the moment it works the way it is, but there's room for
         // improvement here
 
-        // todo: make sure source maps still work - because at the moment they don't
-
         return gulp.src(definition.srcs)
             .pipe(sourcemaps.init())
             .pipe(replace("$build:serverApiBaseUrl$", args.serverApiBaseUrl || "http://localhost:61345/"))
-            .pipe(gulpif(isPublish, uglify()))
+            .pipe(gulp.dest(targetFolder + "/temp1"))
             .pipe(concat(definition.targetFile))
+            .pipe(gulp.dest(targetFolder + "/temp2"))
+            .pipe(gulpif(isPublish, uglify()))
             .pipe(sourcemaps.write("./"))
             .pipe(gulp.dest(targetFolder));
     };
@@ -96,23 +96,23 @@
             .pipe(gulp.dest(paths.target));
     });
 
+    gulp.task("default", function (callback) {
+        return runSequence("clean", ["scss", "scriptsLib", "scriptsApp", "index.html", "templates"], callback);
+    });
+
+    gulp.task("publish", function (callback) {
+        isPublish = true;
+        return runSequence("default", "inline", "deleteInlined", callback);
+    });
+
     gulp.task("inline", function () {
         return gulp.src(paths.target + "index.html")
             .pipe(inline({base: paths.target}))
             .pipe(gulp.dest(paths.target));
     });
 
-    gulp.task("default", function (callback) {
-        return runSequence("clean", ["scss", "scriptsLib", "scriptsApp", "index.html", "templates"], callback);
-    });
-
     gulp.task("deleteInlined", function () {
         return del.sync([paths.target + "*.js", paths.target + "*.css"]);
-    });
-
-    gulp.task("publish", function (callback) {
-        isPublish = true;
-        return runSequence("default", "inline", "deleteInlined", callback);
     });
 
     gulp.task("watch", function () {
